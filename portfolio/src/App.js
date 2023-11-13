@@ -58,7 +58,7 @@ function App() {
                   href="#projects"
                   className="hidden sm:block hover:text-zinc-600 my-4 mx-4 text-base leading-normal font-mono text-zinc-500 transition"
                 >
-                  Use keys or scroll to continue{" "}
+                  Scroll or use keys to continue{" "}
                   <ArrowDown className="inline animate-bounce" />
                 </a>
               </div>
