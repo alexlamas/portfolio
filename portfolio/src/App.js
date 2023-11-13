@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import Nav from "./components/Nav";
-import { Cube } from "@phosphor-icons/react";
+import { Cube, ArrowDown } from "@phosphor-icons/react";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -50,7 +50,7 @@ function App() {
                 </p>
               </div>
               <div className="h-full flex items-center">
-                {/* <a
+                <a
                   href="#projects"
                   className="sm:hidden hover:text-zinc-600 my-4 mx-4 text-base leading-normal font-mono text-zinc-500 transition"
                 >
@@ -63,17 +63,11 @@ function App() {
                 >
                   Scroll or use keys to continue{" "}
                   <ArrowDown className="inline animate-bounce" />
-                </a> */}
-                <a
-                  href="#projects"
-                  className="block hover:text-zinc-600 my-4 mx-4 text-base leading-normal font-mono text-zinc-500 transition"
-                >
-                  Work in progress, sorry!
                 </a>
               </div>
             </div>
           </header>
-          {/* <div className="w-9/12 xl:w-[1022px] mx-auto relative bg-zinc-100 shadow border-y border-zinc-300 dark:border-zinc-200/20">
+          <div className="w-9/12 xl:w-[1022px] mx-auto relative bg-zinc-100 shadow border-y border-zinc-300 dark:border-zinc-200/20">
             <div>
               <img src="/assets/timeline.png" alt="Airtable app" />
             </div>
@@ -82,7 +76,7 @@ function App() {
                 2023<span className="mx-2">·</span>Airtable
               </p>
             </div>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>

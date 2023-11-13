@@ -1,6 +1,5 @@
 import ThemeToggle from "./ThemeToggle";
 import NavLink from "./NavLink";
-import { List } from "@phosphor-icons/react";
 
 function Nav({ toggleDarkMode }) {
   return (
