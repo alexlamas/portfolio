@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import Nav from "./components/Nav";
-import { Cube, ArrowDown } from "@phosphor-icons/react";
+import { Cube, ArrowDown, Spinner } from "@phosphor-icons/react";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -17,8 +17,8 @@ function App() {
           <header className="w-9/12 xl:w-[1024px] mx-auto h-screen relative">
             <div className="fixed left-[calc(12.5vw-1px)] xl:left-[calc(50vw-512px)] h-screen w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
             <div className="fixed right-[calc(12.5vw-1px)] xl:left-[calc(50vw+511px)] h-screen w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
-            <div className="h-screen flex flex-col justify-center">
-              <div className="h-full"></div>
+            <div className="sm:h-screen flex flex-col sm:justify-center">
+              <div className="sm:h-full"></div>
               <Nav toggleDarkMode={toggleDarkMode} />
               <div className="hover:bg-zinc-200/20 dark:hover:bg-zinc-800/20">
                 <div className="hidden sm:block mx-4 text-[7.2vw] leading-normal xl:text-[100px] xl:leading-normal  font-serif">
@@ -32,7 +32,10 @@ function App() {
                 <p className="mx-4 my-4 text-2xl leading-normal">
                   Product designer at{" "}
                   <span className=" decoration-[3px] group text-pink-700 dark:text-yellow-500 underline underline-offset-[6px] decoration-pink-700/20 dark:decoration-yellow-400/30 dark:hover:decoration-yellow-400 hover:decoration-pink-700 leading-tight ">
-                    <a href="https://www.airtable.com">
+                    <a
+                      href="https://www.airtable.com"
+                      className="whitespace-nowrap"
+                    >
                       <Cube
                         weight="duotone"
                         className="group-hover:animate-spin inline mb-1"
@@ -47,7 +50,7 @@ function App() {
                 </p>
               </div>
               <div className="h-full flex items-center">
-                <a
+                {/* <a
                   href="#projects"
                   className="sm:hidden hover:text-zinc-600 my-4 mx-4 text-base leading-normal font-mono text-zinc-500 transition"
                 >
@@ -60,11 +63,17 @@ function App() {
                 >
                   Scroll or use keys to continue{" "}
                   <ArrowDown className="inline animate-bounce" />
+                </a> */}
+                <a
+                  href="#projects"
+                  className="block hover:text-zinc-600 my-4 mx-4 text-base leading-normal font-mono text-zinc-500 transition"
+                >
+                  Work in progress, sorry!
                 </a>
               </div>
             </div>
           </header>
-          <div className="w-9/12 xl:w-[1022px] mx-auto relative bg-zinc-100 shadow border-y border-zinc-300 dark:border-zinc-200/20">
+          {/* <div className="w-9/12 xl:w-[1022px] mx-auto relative bg-zinc-100 shadow border-y border-zinc-300 dark:border-zinc-200/20">
             <div>
               <img src="/assets/timeline.png" alt="Airtable app" />
             </div>
@@ -73,7 +82,7 @@ function App() {
                 2023<span className="mx-2">·</span>Airtable
               </p>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

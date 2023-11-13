@@ -1,7 +1,11 @@
 function NavLink(props) {
   return (
     <a
-      className="font-mono px-6 py-4 group flex flex-row gap-2 items-center "
+      className={`${
+        props.hidden ? "lg:flex hidden" : "flex"
+      } ${
+        props.email && "pr-0"
+      } font-mono px-6 py-4 group flex-row gap-2 items-center "`}
       href={props.href}
       target={props.target}
     >
