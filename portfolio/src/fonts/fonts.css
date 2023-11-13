@@ -1,0 +1,31 @@
+@font-face {
+  font-family: "pp_moriregular";
+  src: url("ppmori-regular-webfont.woff2") format("woff2"),
+    url("ppmori-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "pp_writerbold";
+  src: url("ppwriter-bold-webfont.woff2") format("woff2"),
+    url("ppwriter-bold-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "pp_neue_montreal_monobook";
+  src: url("ppneuemontrealmono-book-webfont.woff2") format("woff2"),
+    url("ppneuemontrealmono-book-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "pp_moriregular_italic";
+  src: url("ppmori-regularitalic-webfont.woff2") format("woff2"),
+    url("ppmori-regularitalic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
