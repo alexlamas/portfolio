@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import Nav from "./components/Nav";
-import { Cube, ArrowDown, Spinner } from "@phosphor-icons/react";
+import { Cube } from "@phosphor-icons/react";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
