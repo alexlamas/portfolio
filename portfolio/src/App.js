@@ -3,7 +3,6 @@ import "./styles.css";
 import "./fonts/fonts.css";
 import Nav from "./components/Nav";
 import Projects from "./components/Projects";
-import ScrollIndicator from "./components/ScrollIndicator";
 import { Cube } from "@phosphor-icons/react";
 import VanillaTilt from "vanilla-tilt";
 
