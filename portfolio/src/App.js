@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import Nav from "./components/Nav";
+import Project from "./components/Project";
 import { Cube, ArrowDown } from "@phosphor-icons/react";
+import VanillaTilt from "vanilla-tilt";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const toggleDarkMode = (value) => {
     setIsDarkMode(value);
   };
+
+  useEffect(() => {
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 10,
+      perspective: 2000,
+      speed: 2000,
+      glare: false,
+    });
+  });
 
   return (
     <div className="app">
@@ -71,68 +82,47 @@ function App() {
             </div>
           </header>
           <div className="mt-24 pb-24">
-            <div data-tilt className="bg-black w-48 h-48 ">
-              box
+            <div className="border-y border-zinc-300 dark:border-zinc-200/20 ">
+              <div className="w-9/12 xl:w-[1024px] mx-auto p-2">
+                <Project
+                  title="App platform for teams"
+                  year="2023"
+                  company="Airtable"
+                  image="/assets/timeline.png"
+                  link="https://www.figma.com/proto/1YSUL5Qxkgdhxr4YLzVGaH/Portfolio-2023?page-id=12702%3A7241&type=design&node-id=12702-7242&viewport=734%2C397%2C0.02&t=JebLpjCz96onc8hH-8&scaling=scale-down&hotspot-hints=0&hide-ui=1"
+                />
+              </div>
             </div>
-            <div className="border-y border-zinc-300">
-              <a
-                href="https://www.figma.com/proto/1YSUL5Qxkgdhxr4YLzVGaH/Portfolio-2023?page-id=12702%3A7241&type=design&node-id=12702-7242&t=IN3fOnuhDr1eqgAh-0&scaling=min-zoom"
-                className="rounded data-tilt z-40 w-9/12 xl:w-[1024px] mx-auto flex flex-col relative bg-zinc-100/5 hover:bg-zinc-100/50 hover:shadow-2xl  dark:border-zinc-200/20"
-              >
-                <div>
-                  <img src="/assets/timeline.png" alt="Airtable app" />
-                </div>
-                <div className="bg-white py-6 px-8 border-t" id="projects">
-                  <p className="text-base mb-2 text-zinc-500 font-mono">
-                    2023<span className="mx-2 text-zinc-200">·</span>Airtable
-                  </p>
-                  <p className="text-2xl font-serif leading-normal">
-                    App platform for teams
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div className="border-y border-zinc-300 my-24 relative">
+            <div className="border-y border-zinc-300 dark:border-zinc-200/20 my-24 relative">
               <div className="absolute top-[-98px] left-[calc(50vw-48px)] h-[calc(100%+98px)] w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
               <div className="absolute top-[-98px] right-[calc(50vw-48px)] h-[calc(100%+98px)] w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
               <div className="fixed right-[calc(12.5vw-1px)] xl:left-[calc(50vw+48px)] h-screen w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
               <div className="w-9/12 xl:w-[1024px] mx-auto flex gap-24  ">
-                <a
-                  href="https://www.figma.com/proto/1YSUL5Qxkgdhxr4YLzVGaH/Portfolio-2023?page-id=12702%3A7241&type=design&node-id=12702-7242&t=IN3fOnuhDr1eqgAh-0&scaling=min-zoom"
-                  className=" flex flex-col  relative bg-zinc-100/5 hover:bg-zinc-100/50 hover:shadow-2xl  dark:border-zinc-200/20"
-                >
-                  <div>
-                    <img src="/assets/timeline.png" alt="Airtable app" />
-                  </div>
-                  <div className="bg-white py-6 px-8 border-t" id="projects">
-                    <p className="text-base mb-2 text-zinc-500 font-mono">
-                      2023<span className="mx-2 text-zinc-200">·</span>
-                      Airtable
-                    </p>
-                    <p className="text-2xl font-serif leading-normal">
-                      App platform for teams
-                    </p>
-                  </div>
-                </a>
-                <a
-                  href="https://www.figma.com/proto/1YSUL5Qxkgdhxr4YLzVGaH/Portfolio-2023?page-id=12702%3A7241&type=design&node-id=12702-7242&t=IN3fOnuhDr1eqgAh-0&scaling=min-zoom"
-                  className=" flex flex-col relative bg-zinc-100/5 hover:bg-zinc-100/50 hover:shadow-2xl  dark:border-zinc-200/20"
-                >
-                  <div>
-                    <img src="/assets/timeline.png" alt="Airtable app" />
-                  </div>
-                  <div className="bg-white py-6 px-8 border-t" id="projects">
-                    <p className="text-base mb-2 text-zinc-500 font-mono">
-                      2023<span className="mx-2 text-zinc-200">·</span>
-                      Airtable
-                    </p>
-                    <p className="text-2xl font-serif leading-normal">
-                      App platform for teams
-                    </p>
-                  </div>
-                </a>
+                <div className="p-4">
+                  <Project
+                    title="Simulation platform"
+                    year="2018"
+                    company="Simudyne"
+                    image="/assets/simudyne.png"
+                  />
+                </div>
+                <div className="p-4">
+                  <Project
+                    title="Low code automation platform"
+                    year="2020"
+                    company="Tray.io"
+                    image="/assets/tray.png"
+                  />
+                </div>
               </div>
             </div>
+            {/* <iframe
+              width="800"
+              height="450"
+              title="Airtable app"
+              src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1YSUL5Qxkgdhxr4YLzVGaH%2FPortfolio-2023%3Fpage-id%3D12702%253A7241%26type%3Ddesign%26node-id%3D12702-7242%26viewport%3D734%252C397%252C0.02%26t%3DJebLpjCz96onc8hH-1%26scaling%3Dscale-down%26hotspot-hints%3D0%26mode%3Ddesign"
+              allowfullscreen
+            ></iframe> */}
           </div>
         </div>
       </div>

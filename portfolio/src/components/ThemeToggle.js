@@ -1,6 +1,6 @@
 import { MoonStars, SunDim } from "@phosphor-icons/react";
 
-const ThemeToggle = ({ isDarkMode, toggleDarkMode }) => {
+const ThemeToggle = ({ toggleDarkMode }) => {
   const enableDarkMode = () => {
     toggleDarkMode(true);
   };
