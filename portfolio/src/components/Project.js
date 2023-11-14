@@ -23,12 +23,12 @@ function Project(props) {
           />
         </div>
         <div className="py-6 px-8">
-          <p className="text-base mb-2 text-zinc-400 flex ">
+          <p className="text-sm lg:text-base mb-2 text-zinc-400 flex ">
             {props.company}
             <span className="mx-2 text-zinc-300">·</span>
             {props.year}
           </p>
-          <p className="text-left text-2xl font-serif leading-normal">
+          <p className="text-left text-xl lg:text-2xl font-serif leading-normal">
             {props.title}
           </p>
         </div>

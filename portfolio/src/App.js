@@ -83,7 +83,7 @@ function App() {
           </header>
           <div className="mt-24 pb-24">
             <div className="border-y border-zinc-300 dark:border-zinc-200/20 ">
-              <div className="w-9/12 xl:w-[1024px] mx-auto p-2">
+              <div className="w-9/12 xl:w-[1024px] mx-auto p-4">
                 <Project
                   title="App platform for teams"
                   year="2023"
@@ -93,22 +93,31 @@ function App() {
                 />
               </div>
             </div>
-            <div className="border-y border-zinc-300 dark:border-zinc-200/20 my-24 relative">
-              <div className="absolute top-[-98px] left-[calc(50vw-48px)] h-[calc(100% + 98px)] w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
-              <div className="absolute top-[-98px] right-[calc(50vw-48px)] h-[calc(100% + 98px)] w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
-              <div className="fixed right-[calc(12.5vw-1px)] xl:left-[calc(50vw+48px)] h-screen w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
-              <div className="w-9/12 xl:w-[1024px] mx-auto flex gap-24  ">
-                <div className="p-4">
+            <div className="relative border-b border-zinc-300 dark:border-zinc-200/20">
+              <div className="w-9/12 xl:w-[1024px] mx-auto flex flex-wrap md:flex-nowrap ">
+                <div className="p-4 md:border-r border-zinc-300 dark:border-zinc-200/20">
                   <Project
-                    title="Simulation platform"
+                    title="Modelling tool"
                     year="2018"
                     company="Simudyne"
                     image="/assets/simudyne.png"
                   />
                 </div>
+                <div className="p-4 hidden md:block">
+                  <Project
+                    title="Automation builder"
+                    year="2020"
+                    company="Tray.io"
+                    image="/assets/tray.png"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="relative border-b border-zinc-300 dark:border-zinc-200/20 md:hidden">
+              <div className="w-9/12 xl:w-[1024px] mx-auto flex flex-wrap md:flex-nowrap ">
                 <div className="p-4">
                   <Project
-                    title="Low code automation platform"
+                    title="Automation builder"
                     year="2020"
                     company="Tray.io"
                     image="/assets/tray.png"

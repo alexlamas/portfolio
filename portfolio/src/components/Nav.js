@@ -30,7 +30,7 @@ function Nav({ toggleDarkMode }) {
         >
           <X size={24} />
         </button>
-        <NavLink href="#" text="work" shortcut="W" hidden={!isOpen} />
+        <NavLink href="#" text="stories" shortcut="S" hidden={!isOpen} />
         <NavLink href="#" text="about" shortcut="A" hidden={!isOpen} />
         <NavLink href="#" text="curriculum" shortcut="C" hidden={!isOpen} />
         <NavLink
