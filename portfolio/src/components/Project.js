@@ -7,7 +7,7 @@ function Project(props) {
     setIsModalOpen(!isModalOpen);
   };
   return (
-    <div>
+    <div >
       {/* {isModalOpen && <Blur handleCardClick={handleCardClick} />} */}
       <button
         data-tilt
@@ -17,7 +17,7 @@ function Project(props) {
       >
         <div className="p-1">
           <img
-            className="rounded shadow"
+            className="rounded shadow border border-black/10"
             src={props.image}
             alt="Airtable app"
           />
