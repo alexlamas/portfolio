@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Blur from "./Blur";
+// import Blur from "./Blur";
 
 function Project(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
