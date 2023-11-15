@@ -20,7 +20,7 @@ function Project(props) {
           <img
             className="rounded group-hover:shadow border border-black/10 transition"
             src={props.image}
-            alt="Airtable app"
+            alt="A screenshot of the project"
           />
         </div>
         <div className="pt-7 pb-5 px-6 group-hover:pt-2 group-hover:pb-10 transition-all">
@@ -32,7 +32,7 @@ function Project(props) {
           <p className="text-left text-xl lg:text-2xl leading-normal group-hover:mb-1 transition-all">
             {props.title}
           </p>
-          <p className=" flex items-center gap-[6px] hover:gap-2 text-left text-pink-700 dark:text-yellow-400 text-sm absolute bottom-[-40px] group-hover:bottom-4 transition-all">
+          <p className=" flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-pink-700 dark:text-yellow-400 text-sm absolute bottom-[-10px] group-hover:bottom-4 transition-all">
             Learn more <ArrowRight className="mt-[1.5px]" />
           </p>
         </div>

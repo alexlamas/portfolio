@@ -7,7 +7,7 @@ function Projects() {
         <div className="w-9/12 xl:w-[1024px] mx-auto flex flex-wrap md:flex-nowrap ">
           <div className="p-4 md:border-r border-zinc-300 dark:border-zinc-200/20">
             <Project
-              title="App platform for teams"
+              title="Build your own app"
               year="This year"
               company="Airtable"
               image="/assets/timeline.png"
