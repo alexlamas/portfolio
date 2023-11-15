@@ -18,7 +18,7 @@ function Nav({ toggleDarkMode }) {
         }`}
       >
         <button
-          className={` m-3 p-2 lg:hidden ${isOpen && "hidden"}`}
+          className={` m-2 p-2 lg:hidden ${isOpen && "hidden"}`}
           onClick={toggleNav}
         >
           <List size={24} />

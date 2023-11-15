@@ -24,12 +24,12 @@ function Project(props) {
           />
         </div>
         <div className="pt-7 pb-5 px-6 group-hover:pt-2 group-hover:pb-10 transition-all">
-          <p className="text-xs lg:text-sm mb-2 group-hover:mb-1 text-zinc-400 flex transition-all">
+          <p className="font-mono text-xs lg:text-sm mb-2 group-hover:mb-1 text-zinc-500 flex transition-all">
             {props.company}
-            <span className="font-mono mx-2 text-zinc-300">·</span>
+            <span className=" mx-2 text-zinc-400">·</span>
             {props.year}
           </p>
-          <p className="text-left text-xl lg:text-2xl leading-normal group-hover:mb-1 transition-all">
+          <p className="font-bold text-zinc-700 text-left text-xl lg:text-2xl leading-normal group-hover:mb-1 transition-all">
             {props.title}
           </p>
           <p className=" flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-pink-700 dark:text-yellow-400 text-sm absolute bottom-[-10px] group-hover:bottom-4 transition-all">
