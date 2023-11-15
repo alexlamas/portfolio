@@ -8,16 +8,15 @@ import VanillaTilt from "vanilla-tilt";
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const toggleDarkMode = (value) => {
-    setIsDarkMode(value);
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
   };
 
   useEffect(() => {
     VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
       max: 10,
-      perspective: 2000,
-      speed: 2000,
-      glare: false,
+      perspective: 3000,
+      speed: 1000,
     });
   });
 

@@ -5,10 +5,8 @@ import { List, X } from "@phosphor-icons/react";
 
 function Nav({ toggleDarkMode }) {
   const [isOpen, setIsOpen] = useState(false);
-
   const toggleNav = () => {
     setIsOpen(!isOpen);
-    console.log(isOpen);
   };
 
   return (
