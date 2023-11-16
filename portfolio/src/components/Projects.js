@@ -1,14 +1,26 @@
+import { useState } from "react";
 import Project from "./Project";
 import Border from "./Border";
 import Row from "./Row";
+import Modal from "./Modal";
 
 function Projects() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleCardClick = () => {
+    setIsModalOpen(!isModalOpen);
+    console.log("clicked");
+  };
+
   return (
     <div className="pb-24">
+      <Modal isOpen={isModalOpen} handleCardClick={handleCardClick} />
       <Border />
       <Row>
         <div className="flex">
-          <div className="p-4 md:border-r border-zinc-300 dark:border-zinc-200/20">
+          <div
+            onClick={handleCardClick}
+            className="md:border-r border-zinc-300 dark:border-zinc-200/20"
+          >
             <Project
               title="Build apps for anything"
               year="This year"
@@ -16,7 +28,8 @@ function Projects() {
               image="/assets/timeline.png"
             />
           </div>
-          <div className="p-4 hidden md:block">
+
+          <div className="hidden md:block">
             <Project
               title="Connect your tools"
               year="2 years ago"
@@ -30,7 +43,7 @@ function Projects() {
       <div className=" md:hidden">
         <Row>
           <div className="flex">
-            <div className="p-4">
+            <div className="">
               <Project
                 title="Connect your tools"
                 year="2 years ago"
@@ -44,7 +57,7 @@ function Projects() {
       </div>
       <Row>
         <div className="flex">
-          <div className="p-4 md:border-r border-zinc-300 dark:border-zinc-200/20">
+          <div className=" md:border-r border-zinc-300 dark:border-zinc-200/20">
             <Project
               title="Modelling tool"
               year="5 years ago"
@@ -52,7 +65,7 @@ function Projects() {
               image="/assets/simudyne.png"
             />
           </div>
-          <div className="p-4 hidden md:block">
+          <div className=" hidden md:block">
             <Project
               title="Pitch shifter"
               year="4 years ago"
@@ -66,7 +79,7 @@ function Projects() {
       <div className="md:hidden">
         <Row>
           <div className="flex">
-            <div className="p-4">
+            <div className="">
               <Project
                 title="Pitch shifter"
                 year="2019"
