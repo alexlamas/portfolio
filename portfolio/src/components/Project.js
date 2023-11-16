@@ -19,7 +19,7 @@ function Project(props) {
         <div className="p-4 pb-0 flex items-center justify-center">
           {!props.gif && (
             <img
-              className="rounded-xl group-hover:shadow border border-black/10 transition"
+              className="rounded-lg group-hover:shadow border border-black/10 transition"
               src={props.image}
               alt="A screenshot of the project"
             />
