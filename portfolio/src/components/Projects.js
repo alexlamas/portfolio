@@ -5,20 +5,19 @@ import Row from "./Row";
 import Modal from "./Modal";
 
 function Projects() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleCardClick = () => {
-    setIsModalOpen(!isModalOpen);
-    console.log("clicked");
+  const [isModalOpen, setModalState] = useState(false);
+  const projectClick = () => {
+    setModalState(!isModalOpen);
   };
 
   return (
     <div className="pb-24">
-      <Modal isOpen={isModalOpen} handleCardClick={handleCardClick} />
+      <Modal isOpen={isModalOpen} closeModal={projectClick} />
       <Border />
       <Row>
         <div className="flex">
           <div
-            onClick={handleCardClick}
+            onClick={projectClick}
             className="md:border-r border-zinc-300 dark:border-zinc-200/20"
           >
             <Project
