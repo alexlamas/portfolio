@@ -15,19 +15,27 @@ const Form = () => {
       <h1 className="text-left text-md leading-normal dark:text-white">
         Enter the magic word to continue
       </h1>
-      <input
-        className="w-full dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-600 p-2 bg-neutral-100 hover:bg-neutral-200 focus:bg-white rounded"
-        type="password"
-        id="password"
-        required
-        autoComplete="new-password"
-      />
-      <button
-        className="rounded bg-black px-4 py-2 font-bold text-white w-full"
-        onClick={checkPassword}
-      >
-        Submit
-      </button>
+      <form autoComplete="off">
+        <input
+          autocomplete="false"
+          name="hidden"
+          type="text"
+          style={{ display: "none" }}
+        />
+        <input
+          className="mb-4 w-full dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-600 px-2 py-1 bg-neutral-100 hover:bg-neutral-200 focus:bg-white rounded"
+          type="password"
+          id="password"
+          required
+          autoComplete="new-password"
+        />
+        <button
+          className="rounded bg-black px-4 py-2 font-bold text-white w-full"
+          onClick={checkPassword}
+        >
+          Submit
+        </button>
+      </form>
     </div>
   );
 };

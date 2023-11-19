@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { X } from "@phosphor-icons/react";
 import Form from "./Form";
 
-const Modal = ({ isOpen, toggleModal, projectID }) => {
+const Modal = ({ isOpen, toggleModal, project }) => {
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Escape") {
@@ -25,12 +25,9 @@ const Modal = ({ isOpen, toggleModal, projectID }) => {
     <>
       <div
         onClick={() => toggleModal(false)}
-        style={{
-          backdropFilter: "blur(10px)",
-        }}
         className={
           isOpen
-            ? "visible transition-all duration-300 h-screen opacity-100 fixed group cursor-pointer inset-0 bg-black/10 flex items-center justify-center z-50 "
+            ? "visible backdrop-blur-lg transition-all duration-300 h-screen opacity-100 fixed group cursor-pointer inset-0 bg-black/10 flex items-center justify-center z-50 "
             : "hidden transition-all duration-300 fixed items-center justify-center z-50 inset-0 flex opacity-0"
         }
       >
@@ -54,8 +51,7 @@ const Modal = ({ isOpen, toggleModal, projectID }) => {
               title="bomba"
               width="90%"
               height="90%"
-              src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1YSUL5Qxkgdhxr4YLzVGaH%2FPortfolio-2023%3Fpage-id%3D12702%253A7241%26type%3Ddesign%26node-id%3D12702-7242%26viewport%3D-14717%252C-8525%252C1.46%26t%3DLxjq9ZTd1iCoWr7R-1%26scaling%3Dmin-zoom%26mode%3Ddesign"
-              allowfullscreen
+              src={project.figma}
             ></iframe>
           </div>
         </div>

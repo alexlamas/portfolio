@@ -12,8 +12,7 @@ function Nav({ setTheme, currentTheme }) {
   return (
     <div className="sticky z-40 top-0 hover:bg-neutral-200/20 dark:hover:bg-neutral-900/20 border-b border-border">
       <nav
-        style={{ backdropFilter: "blur(6px)" }}
-        className={` bg-background/90 w-9/12 xl:w-[1024px] mx-auto flex-wrap text-base flex flex-row justify-between ${
+        className={` backdrop-blur-sm	 bg-background/90 w-9/12 xl:w-[1024px] mx-auto flex-wrap text-base flex flex-row justify-between ${
           isOpen && "flex-col lg:flex-row items-start"
         }`}
       >
