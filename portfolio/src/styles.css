@@ -529,6 +529,10 @@ video {
   visibility: visible;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .fixed {
   position: fixed;
 }
@@ -1027,6 +1031,22 @@ video {
   color: hsl(var(--twc-foreground) / 0.5);
 }
 
+.text-\[\] {
+  color: ;
+}
+
+.text-\[colorArray\[props\.color\]\] {
+  color: colorArray[props.color];
+}
+
+.text-\[\`colorArray\[props\.color\]\`\] {
+  color: `colorArray[props.color]`;
+}
+
+.text-\[\`colorArray\[props\.projectID\]\`\] {
+  color: `colorArray[props.projectID]`;
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1144,6 +1164,10 @@ body {
 .focus\:bg-white:focus {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.group:hover .group-hover\:visible {
+  visibility: visible;
 }
 
 .group:hover .group-hover\:bottom-4 {

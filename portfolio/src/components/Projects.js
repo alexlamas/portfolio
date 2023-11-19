@@ -34,7 +34,7 @@ function Projects() {
             title="Golden datasets"
             year="1 year ago"
             company="Airtable"
-            image="/assets/relationships.svg"
+            image="/assets/relationships.png"
             cta="Read"
             type="case"
             projectID={1}
@@ -48,7 +48,7 @@ function Projects() {
             title="Agent-based modelling"
             year="5 years ago"
             company="Simudyne"
-            image="/assets/simudyne.svg"
+            image="/assets/simudyne.png"
             type="case"
             luminosity
             cta="Read"
