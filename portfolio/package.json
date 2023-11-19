@@ -48,6 +48,7 @@
   "devDependencies": {
     "@babel/core": "^7.23.3",
     "@babel/preset-env": "^7.23.3",
-    "@types/jquery": "^3.5.27"
+    "@types/jquery": "^3.5.27",
+    "tw-colors": "^3.3.1"
   }
 }

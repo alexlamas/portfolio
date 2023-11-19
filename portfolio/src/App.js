@@ -1,48 +1,50 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import Nav from "./components/Nav";
 import Row from "./components/Row";
-import Border from "./components/Border";
 import Projects from "./components/Projects";
-import { Cube } from "@phosphor-icons/react";
 import VanillaTilt from "vanilla-tilt";
+import { Cube } from "@phosphor-icons/react/dist/ssr";
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
   useEffect(() => {
     VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-      max: 15,
-      perspective: 2000,
-      speed: 1000,
+      max: 10,
+      perspective: 3000,
+      speed: 500,
+      glare: true,
+      "max-glare": 0.2,
+      scale: 1.01,
     });
   });
 
-  return (
-    <div className={isDarkMode ? "dark " : ""}>
-      <div className="text-zinc-900 dark:text-white dark:bg-zinc-900 bg-zinc-100 ">
-        <div className="fixed left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
-        <div className="fixed right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-zinc-300 dark:bg-zinc-200/20 "></div>
+  const [currentTheme, setCurrentTheme] = useState("light");
+  const setTheme = (theme) => {
+    setCurrentTheme(theme);
+  };
 
-        <Nav toggleDarkMode={toggleDarkMode} />
+  return (
+    <div className={currentTheme}>
+      <div className="text-foreground bg-background ">
+        <div className="fixed left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-border "></div>
+        <div className="fixed right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-border "></div>
+
+        <Nav setTheme={setTheme} currentTheme={currentTheme} />
         <div className=" flex flex-col sm:justify-center">
           <Row>
-            <div className="hidden sm:block pt-2 mx-4 text-[7.2vw] xl:text-[100px] leading-normal font-serif">
+            <div className="hidden sm:block pt-2 mx-6 text-[7.2vw] xl:text-[100px] leading-normal font-serif">
               Alex Lama-Noujaim
             </div>
-            <div className="sm:hidden pt-1 mx-4 text-[16vw] xl:text-[100px] leading-normal font-serif">
+            <div className="sm:hidden pt-1 mx-6 text-[16vw] xl:text-[100px] leading-normal font-serif">
               Alex
             </div>
           </Row>
-          <Border />
+
           <Row>
-            <p className="mx-4 my-4 text-2xl leading-normal">
+            <p className="mx-6 my-4 text-2xl leading-normal">
               Product designer at{" "}
-              <span className="decoration-[3px] group text-pink-700 dark:text-yellow-500 underline underline-offset-[6px] decoration-pink-700/20 dark:decoration-yellow-400/30 dark:hover:decoration-yellow-500 hover:decoration-pink-700">
+              <span className="decoration-[3px] group underline underline-offset-[6px] decoration-foreground/10 hover:decoration-foreground">
                 <a
                   href="https://www.airtable.com"
                   className="whitespace-nowrap"

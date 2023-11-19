@@ -3,17 +3,17 @@ import ThemeToggle from "./ThemeToggle";
 import NavLink from "./NavLink";
 import { List, X } from "@phosphor-icons/react";
 
-function Nav({ toggleDarkMode }) {
+function Nav({ setTheme, currentTheme }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggleNav = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className="sticky z-40  top-0 hover:bg-zinc-200/20 dark:hover:bg-zinc-800/20 sm:border-y border-b border-zinc-300 dark:border-zinc-700">
+    <div className="sticky z-40 top-0 hover:bg-neutral-200/20 dark:hover:bg-neutral-900/20 border-b border-border">
       <nav
         style={{ backdropFilter: "blur(6px)" }}
-        className={`bg-zinc-100/80 dark:bg-zinc-900/50 w-100 w-9/12 xl:w-[1024px] mx-auto flex-wrap text-base flex flex-row justify-between ${
+        className={` bg-background/90 w-9/12 xl:w-[1024px] mx-auto flex-wrap text-base flex flex-row justify-between ${
           isOpen && "flex-col lg:flex-row items-start"
         }`}
       >
@@ -36,7 +36,7 @@ function Nav({ toggleDarkMode }) {
           text="lamanoujaim@gmail.com"
           hidden={!isOpen}
         />
-        <ThemeToggle toggleDarkMode={toggleDarkMode} />
+        <ThemeToggle setTheme={setTheme} currentTheme={currentTheme} />
       </nav>
     </div>
   );

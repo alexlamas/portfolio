@@ -9,7 +9,7 @@ function NavLink(props) {
     >
       {props.text}{" "}
       {props.shortcut && (
-        <div className=" rounded dark:bg-zinc-100/10 bg-zinc-200 w-5 h-5 flex items-center justify-center font-semibold text-[10px] group-hover:bg-zinc-300  dark:group-hover:bg-zinc-200/20">
+        <div className=" rounded dark:bg-neutral-100/10 bg-neutral-200 w-5 h-5 flex items-center justify-center font-semibold text-[10px] group-hover:bg-neutral-300  dark:group-hover:bg-neutral-200/20">
           {props.shortcut}
         </div>
       )}
