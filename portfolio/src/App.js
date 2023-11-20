@@ -61,6 +61,12 @@ function App() {
               Fourier transform music plugins, and low code creation platforms.
             </p>
           </Row>
+          {/* <Row>
+            <p className="font-mono px-6 my-4 text-md leading-normal overflow-scroll w-full whitespace-nowrap">
+              Design systems · Research · Product strategy · Data · Coding ·
+              English · Spanish · French · Italian · Arabic
+            </p>
+          </Row> */}
         </div>
         <Projects />
       </div>

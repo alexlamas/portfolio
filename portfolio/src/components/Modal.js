@@ -5,15 +5,10 @@ import Form from "./Form";
 const Modal = ({ isModalOpen, setModalState, project }) => {
   const [isAuthenticated, setAuthentication] = useState(false);
 
-  const closeModal = () => {
-    console.log("close modal");
-    setModalState(false);
-  };
-
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Escape") {
-        closeModal();
+        setModalState(false);
       }
     };
     if (isModalOpen) {
@@ -32,7 +27,7 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
     <>
       {isModalOpen && (
         <div
-          onClick={() => closeModal()}
+          onClick={() => setModalState(false)}
           className="transition-all items-center fixed justify-center z-50 inset-0 backdrop-blur-lg h-screen opacity-100 flex group cursor-pointer bg-background/50 "
         >
           {!isAuthenticated && (
@@ -68,7 +63,7 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
               </div>
             </>
           )}
-          <button onClick={closeModal}>
+          <button onClick={() => setModalState(false)}>
             <X
               className="group-hover:opacity-100 opacity-40 fixed right-12 top-12 peer-hover:opacity-40 transition"
               size={24}
