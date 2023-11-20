@@ -1112,6 +1112,10 @@ body {
   background-color: rgb(212 212 212 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-foreground\/5:hover {
+  background-color: hsl(var(--twc-foreground) / 0.05);
+}
+
 .hover\:text-neutral-600:hover {
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity));

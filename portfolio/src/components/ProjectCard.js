@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, LockSimple } from "@phosphor-icons/react/dist/ssr";
+import { ArrowRight, Clock, LockSimple, Play } from "@phosphor-icons/react/dist/ssr";
 
 function ProjectCard({ project, clickProject }) {
   const addNoise = () => {
@@ -7,7 +7,7 @@ function ProjectCard({ project, clickProject }) {
 
   return (
     <>
-      <div className="hover:bg-[#00000004] transition h-full">
+      <div className="hover:bg-foreground/5 transition h-full">
         <button
           className={` group relative flex flex-col border border-transparent h-full w-full `}
           onClick={() => clickProject(project)}
@@ -48,7 +48,16 @@ function ProjectCard({ project, clickProject }) {
                   <span className="">·</span>{" "}
                   <span className="flex items-center gap-1">
                     <LockSimple weight="duotone" />
-                    <span>Case study</span>
+                    <span>Deep dive</span>
+                  </span>
+                </>
+              )}
+              {project.type === "video" && (
+                <>
+                  <span className="">·</span>{" "}
+                  <span className="flex items-center gap-1">
+                    <Play weight="duotone" />
+                    <span>Video</span>
                   </span>
                 </>
               )}

@@ -43,6 +43,17 @@ function Projects() {
         "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1YSUL5Qxkgdhxr4YLzVGaH%2FPortfolio-2023%3Fpage-id%3D12702%253A7241%26type%3Ddesign%26node-id%3D12702-7242%26viewport%3D-14717%252C-8525%252C1.46%26t%3DLxjq9ZTd1iCoWr7R-1%26scaling%3Dscale-down-width%26hotspot-hints%3D0%26mode%3Ddesign",
     },
     {
+      title: "Pitch shifter",
+      year: "4 years ago",
+      company: "SoundX",
+      image: "/assets/shifter.png",
+      id: 3,
+      cta: "Watch the video",
+      color: "#31a685",
+      link: "https://www.youtube.com/watch?v=-B-8Jd34lpU",
+      type: "video",
+    },
+    {
       title: "Agent-based modelling",
       year: "5 years ago",
       company: "Simudyne",
@@ -54,16 +65,6 @@ function Projects() {
       color: "#48A2CF",
       figma:
         "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1YSUL5Qxkgdhxr4YLzVGaH%2FPortfolio%3Fpage-id%3D13476%253A66968%26type%3Ddesign%26node-id%3D13476-66969%26viewport%3D7784%252C382%252C0.51%26t%3DjhPQPcRwfC08QXeI-1%26scaling%3Dscale-down-width%26hotspot-hints%3D0%26mode%3Ddesign",
-    },
-    {
-      title: "Pitch shifter",
-      year: "4 years ago",
-      company: "SoundX",
-      image: "/assets/shifter.png",
-      id: 3,
-      cta: "Watch the video",
-      color: "#31a685",
-      link: "https://www.youtube.com/watch?v=-B-8Jd34lpU",
     },
   ];
   return (
