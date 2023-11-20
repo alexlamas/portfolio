@@ -1,42 +1,41 @@
-const Form = () => {
+const Form = ({ setAuthentication, isAuthenticated }) => {
   const checkPassword = () => {
-    console.log("checking password");
     var password = document.getElementById("password").value;
     if (password === "bomba") {
-      document.getElementById("password").value = "";
-      document.getElementById("figma").classList.remove("hidden");
-      document.getElementById("form").classList.add("hidden");
+      setAuthentication(true);
     } else {
       alert("Incorrect password");
     }
   };
   return (
-    <div id="form" className="flex flex-col gap-4 align-start cursor-default">
-      <h1 className="text-left text-md leading-normal dark:text-white">
-        Enter the magic word to continue
-      </h1>
-      <form autoComplete="off">
-        <input
-          autocomplete="false"
-          name="hidden"
-          type="text"
-          style={{ display: "none" }}
-        />
-        <input
-          className="mb-4 w-full dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-600 px-2 py-1 bg-neutral-100 hover:bg-neutral-200 focus:bg-white rounded"
-          type="password"
-          id="password"
-          required
-          autoComplete="new-password"
-        />
-        <button
-          className="rounded bg-black px-4 py-2 font-bold text-white w-full"
-          onClick={checkPassword}
+    <>
+      {isAuthenticated === false && (
+        <div
+          id="form"
+          className="flex flex-col gap-4 align-start cursor-default"
         >
-          Submit
-        </button>
-      </form>
-    </div>
+          <h1 className="text-left text-md leading-normal dark:text-white">
+            Enter the magic word to continue
+          </h1>
+          <form autoComplete="off">
+            <input
+              className="mb-5 w-full dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-600 p-2 bg-neutral-200 hover:bg-neutral-300 focus:bg-white rounded transition"
+              type="password"
+              id="password"
+              required
+              autoFocus
+              autoComplete="new-password"
+            />
+            <button
+              className="rounded bg-black px-4 py-3 font-bold text-white w-full"
+              onClick={checkPassword}
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      )}
+    </>
   );
 };
 

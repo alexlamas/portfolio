@@ -1,13 +1,6 @@
 import { ArrowRight, Clock, LockSimple } from "@phosphor-icons/react/dist/ssr";
 
-function ProjectCard({ project, toggleModal, setOpenProject }) {
-  console.log(
-    "project rendered with project: ",
-    project,
-    "toggleModal: ",
-    toggleModal
-  );
-
+function ProjectCard({ project, clickProject }) {
   const addNoise = () => {
     return "url(assets/noise.png), " + project.color;
   };
@@ -17,7 +10,7 @@ function ProjectCard({ project, toggleModal, setOpenProject }) {
       <div className="hover:bg-[#00000004] transition h-full">
         <button
           className={` group relative flex flex-col border border-transparent h-full w-full `}
-          onClick={() => toggleModal(true) && setOpenProject(project)}
+          onClick={() => clickProject(project)}
         >
           <div className="p-5 pb-0 flex justify-items-center h-full w-full ">
             {!project.gif && (

@@ -10,6 +10,9 @@ module.exports = {
       serif: ["pp_writerbold"],
       mono: ["pp_neue_montreal_monobook"],
     },
+    animation: {
+      "spin-slow": "spin 3s linear infinite",
+    },
     extend: {},
   },
   plugins: [

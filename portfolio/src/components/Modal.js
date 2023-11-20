@@ -1,21 +1,23 @@
-import React, { useEffect } from "react";
-import { X } from "@phosphor-icons/react";
+import React, { useState, useEffect } from "react";
+import { X, Spinner } from "@phosphor-icons/react";
 import Form from "./Form";
 
-const Modal = ({ isOpen, toggleModal, project }) => {
+const Modal = ({ isModalOpen, setModalState, project }) => {
+  const [isAuthenticated, setAuthentication] = useState(false);
+
   useEffect(() => {
     const handleKeyPress = (event) => {
       if (event.key === "Escape") {
-        toggleModal(false);
+        setModalState(false);
       }
     };
-    if (isOpen) {
+    if (isModalOpen) {
       document.addEventListener("keydown", handleKeyPress);
     }
     return () => {
       document.removeEventListener("keydown", handleKeyPress);
     };
-  }, [isOpen, toggleModal]);
+  }, [isModalOpen, setModalState]);
 
   const handleClick = (event) => {
     event.stopPropagation();
@@ -23,45 +25,47 @@ const Modal = ({ isOpen, toggleModal, project }) => {
 
   return (
     <>
-      <div
-        onClick={() => toggleModal(false)}
-        className={
-          isOpen
-            ? "visible backdrop-blur-lg transition-all duration-300 h-screen opacity-100 fixed group cursor-pointer inset-0 bg-black/10 flex items-center justify-center z-50 "
-            : "hidden transition-all duration-300 fixed items-center justify-center z-50 inset-0 flex opacity-0"
-        }
-      >
+      {isModalOpen && (
         <div
-          onClick={handleClick}
-          className={
-            `cursor-default transition-all ` + isOpen
-              ? " peer shadow-2xl scale-100 rounded dark:bg-neutral-800 bg-white border dark:border-neutral-700 border-neutral-300 p-6 "
-              : " scale-75 "
-          }
+          onClick={() => setModalState()}
+          className="transition-all items-center fixed justify-center z-50 inset-0 visible backdrop-blur-lg h-screen opacity-100 flex group cursor-pointer bg-background/50 "
         >
-          <div onClick={handleClick}>
-            <Form />
-          </div>
+          {!isAuthenticated && (
+            <div
+              onClick={handleClick}
+              className="peer shadow-2xl rounded bg-background border dark:border-neutral-700 border-neutral-300 p-6"
+            >
+              <div onClick={handleClick}>
+                <Form
+                  isAuthenticated={isAuthenticated}
+                  setAuthentication={setAuthentication}
+                />
+              </div>{" "}
+            </div>
+          )}
 
-          <div
-            id="figma"
-            className="w-9/12 h-9/12 rounded overflow-hidden shadow-2xl hidden"
-          >
-            <iframe
-              title="bomba"
-              width="90%"
-              height="90%"
-              src={project.figma}
-            ></iframe>
-          </div>
+          {isAuthenticated && (
+            <>
+              <Spinner
+                size={32}
+                className=" text-foreground/50 z-30 animate-spin-slow fixed left-2/4 top-2/4 justify-center"
+              />
+              <div className=" z-50 max-w-[1200px] max-h-[900px] w-[80vw] h-[62vw] rounded overflow-hidden">
+                <iframe
+                  title="bomba"
+                  width="100%"
+                  height="100%"
+                  src={project.figma}
+                ></iframe>
+              </div>
+            </>
+          )}
+          <X
+            className="peer-hover:opacity-50 group-hover:opacity-100 opacity-50 fixed right-12 top-12"
+            size={24}
+          />
         </div>
-        <button
-          className="peer-hover:opacity-50 group-hover:opacity-100 opacity-50 fixed right-12 top-12"
-          onClick={toggleModal}
-        >
-          <X size={24} />
-        </button>
-      </div>
+      )}
     </>
   );
 };
