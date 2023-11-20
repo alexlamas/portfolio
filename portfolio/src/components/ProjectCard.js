@@ -1,4 +1,9 @@
-import { ArrowRight, Clock, LockSimple, Play } from "@phosphor-icons/react/dist/ssr";
+import {
+  ArrowRight,
+  Clock,
+  LockSimple,
+  Play,
+} from "@phosphor-icons/react/dist/ssr";
 
 function ProjectCard({ project, clickProject }) {
   const addNoise = () => {
@@ -39,14 +44,14 @@ function ProjectCard({ project, clickProject }) {
             <p className="px-[1px] text-xs lg:text-sm mb-2 group-hover:mb-1 text-neutral-500 dark:text-neutral-400 group-hover:dark:text-neutral-300 flex gap-2 transition-all">
               <span className="">{project.company}</span>
               <span className="">·</span>
-              <span className="flex items-center gap-1">
+              <span className="flex items-center gap-1 whitespace-nowrap">
                 <Clock weight="duotone" />
                 {project.year}
               </span>
               {project.type === "case" && (
                 <>
                   <span className="">·</span>{" "}
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 whitespace-nowrap">
                     <LockSimple weight="duotone" />
                     <span>Deep dive</span>
                   </span>
@@ -55,7 +60,7 @@ function ProjectCard({ project, clickProject }) {
               {project.type === "video" && (
                 <>
                   <span className="">·</span>{" "}
-                  <span className="flex items-center gap-1">
+                  <span className="flex items-center gap-1 whitespace-nowrap">
                     <Play weight="duotone" />
                     <span>Video</span>
                   </span>
@@ -69,7 +74,7 @@ function ProjectCard({ project, clickProject }) {
 
             <p
               style={{ color: project.color }}
-              className={`px-[1px] font-bold flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all]`}
+              className={`px-[1px] font-bold flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all`}
             >
               {project.cta && (
                 <>
