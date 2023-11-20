@@ -14,7 +14,12 @@ module.exports = {
       "spin-slow": "spin 3s linear infinite",
       spin: "spin 1s linear infinite",
     },
-    extend: {},
+    extend: {
+      opacity: {
+        '1': '0.01',
+        '3': '0.03',
+      },
+    },
   },
   plugins: [
     createThemes({

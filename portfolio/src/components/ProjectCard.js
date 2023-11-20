@@ -32,7 +32,7 @@ function ProjectCard({ project, clickProject }) {
                     mixBlendMode: project.luminosity && "luminosity",
                     transform: "translateZ(20px)",
                   }}
-                  className={` w-100 rounded drop-shadow-sm group-hover:drop-shadow-md group-hover:scale-[1.005] group-active:opacity-80 items-center justify-center transition `}
+                  className={` select-none w-100 rounded drop-shadow-sm group-hover:drop-shadow-md group-hover:scale-[1.005] group-active:opacity-80 items-center justify-center transition `}
                   src={project.image}
                   alt={project.alt}
                 />

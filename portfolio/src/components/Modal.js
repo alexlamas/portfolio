@@ -33,12 +33,15 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
       {isModalOpen && (
         <div
           onClick={() => closeModal()}
-          className="transition-all items-center fixed justify-center z-50 inset-0 visible backdrop-blur-lg h-screen opacity-100 flex group cursor-pointer bg-background/50 "
+          className="transition-all items-center fixed justify-center z-50 inset-0 backdrop-blur-lg h-screen opacity-100 flex group cursor-pointer bg-background/50 "
         >
           {!isAuthenticated && (
             <div
               onClick={handleClick}
-              className="peer shadow-2xl rounded bg-background border dark:border-foreground/10 p-6"
+              className={
+                (isModalOpen ? "visible" : "invisible") +
+                ` peer shadow-2xl rounded bg-background border dark:border-foreground/10 transition-all duration-1000`
+              }
             >
               <div onClick={handleClick}>
                 <Form
@@ -67,7 +70,7 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
           )}
           <button onClick={closeModal}>
             <X
-              className="peer-hover:opacity-50 group-hover:opacity-100 opacity-40 fixed right-12 top-12 peer-hover:opacity-40 transition"
+              className="group-hover:opacity-100 opacity-40 fixed right-12 top-12 peer-hover:opacity-40 transition"
               size={24}
             />
           </button>
