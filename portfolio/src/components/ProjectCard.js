@@ -32,7 +32,7 @@ function ProjectCard({ project, clickProject }) {
                     mixBlendMode: project.luminosity && "luminosity",
                     transform: "translateZ(20px)",
                   }}
-                  className={` w-100 rounded drop-shadow-sm group-hover:drop-shadow-md group-hover:scale-[1.005] items-center justify-center transition `}
+                  className={` w-100 rounded drop-shadow-sm group-hover:drop-shadow-md group-hover:scale-[1.005] group-active:opacity-80 items-center justify-center transition `}
                   src={project.image}
                   alt={project.alt}
                 />
@@ -45,14 +45,14 @@ function ProjectCard({ project, clickProject }) {
               <span className="">{project.company}</span>
               <span className="">·</span>
               <span className="flex items-center gap-1 whitespace-nowrap">
-                <Clock weight="duotone" />
+                <Clock weight="light" />
                 {project.year}
               </span>
               {project.type === "case" && (
                 <>
                   <span className="">·</span>{" "}
                   <span className="flex items-center gap-1 whitespace-nowrap">
-                    <LockSimple weight="duotone" />
+                    <LockSimple weight="light" />
                     <span>Deep dive</span>
                   </span>
                 </>
@@ -61,7 +61,7 @@ function ProjectCard({ project, clickProject }) {
                 <>
                   <span className="">·</span>{" "}
                   <span className="flex items-center gap-1 whitespace-nowrap">
-                    <Play weight="duotone" />
+                    <Play weight="light" />
                     <span>Video</span>
                   </span>
                 </>

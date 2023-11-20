@@ -10,16 +10,13 @@ const Form = ({ setAuthentication, isAuthenticated }) => {
   return (
     <>
       {isAuthenticated === false && (
-        <div
-          id="form"
-          className="flex flex-col gap-4 align-start cursor-default"
-        >
-          <h1 className="text-left text-md leading-normal dark:text-white">
+        <div id="form" className="flex flex-col gap-4 cursor-default">
+          <h1 className="text-left text-md leading-normal ">
             Enter the magic word to continue
           </h1>
           <form autoComplete="off">
             <input
-              className="mb-5 w-full dark:text-white dark:bg-neutral-700 hover:dark:bg-neutral-600 p-2 bg-neutral-200 hover:bg-neutral-300 focus:bg-white rounded transition"
+              className="focus:outline-none focus:ring-2 mb-5 w-full p-2 bg-foreground/5 hover:bg-foreground/10 focus:bg-foreground/10 rounded transition"
               type="password"
               id="password"
               required
@@ -27,7 +24,7 @@ const Form = ({ setAuthentication, isAuthenticated }) => {
               autoComplete="new-password"
             />
             <button
-              className="rounded bg-black px-4 py-3 font-bold text-white w-full"
+              className="focus:outline-none focus:ring-2 rounded bg-black px-4 py-3 font-bold text-white w-full"
               onClick={checkPassword}
             >
               Submit
