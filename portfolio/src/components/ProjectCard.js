@@ -53,13 +53,14 @@ function ProjectCard({ project, clickProject }) {
                 </>
               )}
             </p>
-            <p className="font-bold text-left text-xl lg:text-2xl leading-normal group-hover:mb-1 transition-all ">
+
+            <p className="font-bold text-left text-xl lg:text-2xl leading-normal group-hover:mb-1 transition-all">
               {project.title}
             </p>
 
             <p
               style={{ color: project.color }}
-              className={`px-[1px] font-bold flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all`}
+              className={`px-[1px] font-bold flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all]`}
             >
               {project.cta && (
                 <>
