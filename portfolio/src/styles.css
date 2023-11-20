@@ -1488,6 +1488,11 @@ input.key {
   .md\:border-r {
     border-right-width: 1px;
   }
+
+  .md\:text-2xl {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }
 
 @media (min-width: 1024px) {

@@ -42,7 +42,7 @@ function App() {
           </Row>
 
           <Row>
-            <p className="mx-6 my-4 text-2xl leading-normal">
+            <p className="mx-6 my-4 text-xl md:text-2xl leading-normal">
               Product designer at{" "}
               <span className="decoration-[3px] group underline underline-offset-[6px] decoration-foreground/10 hover:decoration-foreground">
                 <a
