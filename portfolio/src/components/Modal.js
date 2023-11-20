@@ -55,6 +55,7 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
               />
               <div className=" z-50 max-w-[1200px] max-h-[900px] w-[80vw] h-[60vw] rounded overflow-hidden drop-shadow-2xl peer cursor-default ">
                 <iframe
+                  allowFullScreen
                   title="bomba"
                   width="100%"
                   height="100%"

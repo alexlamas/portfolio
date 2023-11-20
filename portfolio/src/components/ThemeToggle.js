@@ -6,19 +6,19 @@ function ThemeToggle({ setTheme, currentTheme }) {
       <button onClick={() => setTheme("dark")} className="p-2 group">
         {currentTheme === "dark" ? (
           <MoonStars
-            className="text-foreground transition-all"
+            className="text-purple-400 transition-all"
             weight="fill"
             size={20}
           />
         ) : (
-          <div className="group">
+          <div className="group ">
             <Moon
-              className="group-hover:hidden text-foreground/50 transition-all"
+              className="group-hover:opacity-0 text-foreground/30 transition-all duration-500"
               weight="light"
               size={20}
             />
             <MoonStars
-              className="translate-x-[2px] translate-y-[-0.8px] hidden group-hover:block text-foreground/50 transition-all"
+              className="fixed translate-x-[0px] translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/50 transition-all duration-500"
               weight="light"
               size={22}
             />
@@ -30,21 +30,16 @@ function ThemeToggle({ setTheme, currentTheme }) {
           <>
             <Sun
               size={20}
-              className="text-foreground transition-all"
+              className="text-amber-500 transition-all"
               weight="fill"
             />
           </>
         ) : (
           <div className="group">
-            <SunDim
-              size={20}
-              className="group-hover:hidden text-foreground/50 transition-all"
-              weight="light"
-            />
+            <SunDim size={20} className="hover:invisible text-foreground/50" />
             <Sun
               size={20}
-              className="hidden group-hover:block text-foreground/50 transition-all"
-              weight="light"
+              className="fixed translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/80 transition-all duration-500"
             />
           </div>
         )}
