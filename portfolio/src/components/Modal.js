@@ -51,6 +51,7 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
             <>
               <Cube
                 size={32}
+                weight="duotone"
                 className=" text-foreground/50 z-30 animate-spin fixed left-2/4 top-2/4 justify-center"
               />
               <div className=" z-50 max-w-[1200px] max-h-[900px] w-[80vw] h-[60vw] rounded overflow-hidden drop-shadow-2xl peer cursor-default ">
