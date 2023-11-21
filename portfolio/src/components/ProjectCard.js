@@ -77,7 +77,7 @@ function ProjectCard({ project, clickProject }) {
               className={`px-[1px] font-bold flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all`}
             >
               {project.cta}
-              {project.type === "video" ? (
+              {project.type === "case" ? (
                 <ArrowRight weight="bold" className="mt-[1.5px]" />
               ) : (
                 <></>

@@ -18,7 +18,7 @@ function ThemeToggle({ setTheme, currentTheme }) {
               size={18}
             />
             <MoonStars
-              className="fixed translate-x-[0px] translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/60 transition-all "
+              className="fixed translate-x-[0px] translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/40 transition-all "
               weight="light"
               size={18}
             />

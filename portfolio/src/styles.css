@@ -877,6 +877,10 @@ video {
   align-items: center;
 }
 
+.items-baseline {
+  align-items: baseline;
+}
+
 .items-stretch {
   align-items: stretch;
 }
@@ -1264,6 +1268,10 @@ video {
 
 .opacity-50 {
   opacity: 0.5;
+}
+
+.opacity-80 {
+  opacity: 0.8;
 }
 
 .shadow-2xl {
