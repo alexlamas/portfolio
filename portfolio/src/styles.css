@@ -647,6 +647,22 @@ video {
   margin-top: 1.5px;
 }
 
+.mb-\[\] {
+  margin-bottom: ;
+}
+
+.mb-\[0\.5px\] {
+  margin-bottom: 0.5px;
+}
+
+.mb-\[0\.8px\] {
+  margin-bottom: 0.8px;
+}
+
+.mb-\[1px\] {
+  margin-bottom: 1px;
+}
+
 .inline {
   display: inline;
 }
@@ -695,6 +711,10 @@ video {
   height: 2.75rem;
 }
 
+.h-4 {
+  height: 1rem;
+}
+
 .max-h-\[900px\] {
   max-height: 900px;
 }
@@ -729,6 +749,10 @@ video {
 
 .w-7 {
   width: 1.75rem;
+}
+
+.w-4 {
+  width: 1rem;
 }
 
 .max-w-\[1200px\] {
@@ -804,6 +828,16 @@ video {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin 3s linear infinite;
 }
 
 .cursor-default {
@@ -956,6 +990,24 @@ video {
   background-color: transparent;
 }
 
+.bg-black {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
+.bg-yellow-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(250 204 21 / var(--tw-bg-opacity));
+}
+
+.bg-foreground\/1 {
+  background-color: hsl(var(--twc-foreground) / 0.01);
+}
+
+.bg-foreground\/3 {
+  background-color: hsl(var(--twc-foreground) / 0.03);
+}
+
 .p-1 {
   padding: 0.25rem;
 }
@@ -970,6 +1022,10 @@ video {
 
 .p-8 {
   padding: 2rem;
+}
+
+.p-0 {
+  padding: 0px;
 }
 
 .px-4 {
@@ -997,6 +1053,11 @@ video {
   padding-bottom: 1rem;
 }
 
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+
 .pb-0 {
   padding-bottom: 0px;
 }
@@ -1019,6 +1080,14 @@ video {
 
 .pt-6 {
   padding-top: 1.5rem;
+}
+
+.pt-48 {
+  padding-top: 12rem;
+}
+
+.pt-24 {
+  padding-top: 6rem;
 }
 
 .text-left {
@@ -1161,6 +1230,10 @@ video {
   color: rgb(192 132 252 / var(--tw-text-opacity));
 }
 
+.text-foreground\/60 {
+  color: hsl(var(--twc-foreground) / 0.6);
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -1187,6 +1260,10 @@ video {
 
 .opacity-40 {
   opacity: 0.4;
+}
+
+.opacity-50 {
+  opacity: 0.5;
 }
 
 .shadow-2xl {
@@ -1315,6 +1392,16 @@ input.key {
   visibility: hidden;
 }
 
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hover\:animate-spin:hover {
+  animation: spin 1s linear infinite;
+}
+
 .hover\:gap-2:hover {
   gap: 0.5rem;
 }
@@ -1360,6 +1447,10 @@ input.key {
   --tw-ring-color: rgb(59 130 246 / var(--tw-ring-opacity));
 }
 
+.group:hover .group-hover\:visible {
+  visibility: visible;
+}
+
 .group:hover .group-hover\:invisible {
   visibility: hidden;
 }
@@ -1386,6 +1477,24 @@ input.key {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.group:hover .group-hover\:scale-50 {
+  --tw-scale-x: .5;
+  --tw-scale-y: .5;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:scale-90 {
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.group:hover .group-hover\:scale-75 {
+  --tw-scale-x: .75;
+  --tw-scale-y: .75;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1407,6 +1516,19 @@ input.key {
 
 .group:hover .group-hover\:pt-3 {
   padding-top: 0.75rem;
+}
+
+.group:hover .group-hover\:text-foreground {
+  --tw-text-opacity: 1;
+  color: hsl(var(--twc-foreground) / var(--twc-foreground-opacity, var(--tw-text-opacity)));
+}
+
+.group:hover .group-hover\:text-foreground\/80 {
+  color: hsl(var(--twc-foreground) / 0.8);
+}
+
+.group:hover .group-hover\:text-foreground\/70 {
+  color: hsl(var(--twc-foreground) / 0.7);
 }
 
 .group:hover .group-hover\:opacity-100 {

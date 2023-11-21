@@ -2,7 +2,7 @@ import Border from "./Border";
 function Row({ children, sibling }) {
   return sibling ? (
     <>
-      <div className="hover:bg-foreground/[0.02]">
+      <div className="">
         <div className="w-9/12 xl:w-[1024px] mx-auto ">
           <div className="flex items-stretch">
             <div className=" basis-full md:border-r border-border">
@@ -14,7 +14,7 @@ function Row({ children, sibling }) {
       </div>
       <div className="md:hidden">
         <Border />
-        <div className="hover:bg-foreground/[0.02]">
+        <div className="">
           <div className="w-9/12 xl:w-[1024px] mx-auto ">
             <div className="flex">{sibling}</div>
           </div>
@@ -24,7 +24,7 @@ function Row({ children, sibling }) {
     </>
   ) : (
     <>
-      <div className="hover:bg-foreground/[0.02]">
+      <div className="">
         <div className="w-9/12 xl:w-[1024px] mx-auto ">{children}</div>
       </div>
       <Border />

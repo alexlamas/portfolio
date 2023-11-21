@@ -22,7 +22,7 @@ function Projects() {
       year: "This year",
       company: "Airtable",
       image: "/assets/timeline.png",
-      cta: "Read",
+      cta: "Work in progress",
       type: "case",
       id: 0,
       color: "#8175EC",
@@ -34,7 +34,7 @@ function Projects() {
       year: "1 year ago",
       company: "Airtable",
       image: "/assets/relationships.png",
-      cta: "Read",
+      cta: "Work in progress",
       type: "case",
       id: 1,
       luminosity: true,
@@ -60,7 +60,7 @@ function Projects() {
       image: "/assets/simudyne.png",
       type: "case",
       luminosity: true,
-      cta: "Read",
+      cta: "Work in progress",
       id: 2,
       color: "#48A2CF",
       figma:
@@ -68,7 +68,7 @@ function Projects() {
     },
   ];
   return (
-    <div className="pb-48">
+    <>
       <Modal
         isModalOpen={isModalOpen}
         setModalState={setModalState}
@@ -90,7 +90,7 @@ function Projects() {
           <ProjectCard project={projects[3]} clickProject={clickProject} />
         }
       ></Row>
-    </div>
+    </>
   );
 }
 

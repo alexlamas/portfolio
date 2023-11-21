@@ -5,7 +5,8 @@ import Nav from "./components/Nav";
 import Row from "./components/Row";
 import Projects from "./components/Projects";
 import VanillaTilt from "vanilla-tilt";
-import { Cube } from "@phosphor-icons/react/dist/ssr";
+import { Cube, ArrowDown } from "@phosphor-icons/react/dist/ssr";
+import { LinkedinLogo, ReadCvLogo } from "@phosphor-icons/react";
 
 function App() {
   useEffect(() => {
@@ -69,6 +70,9 @@ function App() {
           </Row> */}
         </div>
         <Projects />
+        <Row>
+          <div className="flex pt-24"></div>
+        </Row>
       </div>
     </div>
   );

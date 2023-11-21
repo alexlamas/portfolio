@@ -8,19 +8,19 @@ function ThemeToggle({ setTheme, currentTheme }) {
           <MoonStars
             className="text-purple-400 transition-all"
             weight="fill"
-            size={20}
+            size={18}
           />
         ) : (
           <div className="group ">
             <Moon
-              className="group-hover:opacity-0 text-foreground/30 transition-all duration-500"
+              className="group-hover:opacity-0 text-foreground/30 transition-all "
               weight="light"
-              size={20}
+              size={18}
             />
             <MoonStars
-              className="fixed translate-x-[0px] translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/50 transition-all duration-500"
+              className="fixed translate-x-[0px] translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/60 transition-all "
               weight="light"
-              size={22}
+              size={18}
             />
           </div>
         )}
@@ -28,18 +28,14 @@ function ThemeToggle({ setTheme, currentTheme }) {
       <button onClick={() => setTheme("light")} className="p-2 group">
         {currentTheme === "light" ? (
           <>
-            <Sun
-              size={20}
-              className="text-amber-500 transition-all"
-              weight="fill"
-            />
+            <Sun size={18} className="text-amber-500 transition-all" weight="fill" />
           </>
         ) : (
           <div className="group">
-            <SunDim size={20} className="hover:invisible text-foreground/50" />
+            <SunDim size={18} className="hover:invisible text-foreground/50" />
             <Sun
-              size={20}
-              className="fixed translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/80 transition-all duration-500"
+              size={18}
+              className="fixed translate-y-[-100%] opacity-0 group-hover:opacity-100 text-foreground/80 transition-all "
             />
           </div>
         )}
