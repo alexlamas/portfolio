@@ -27,9 +27,8 @@ function App() {
   return (
     <div className={currentTheme}>
       <div className="text-foreground bg-background transition">
-        <div className="fixed left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-border "></div>
-        <div className="fixed right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-border "></div>
-
+        <div className="fixed left-[calc(4.16vw-1px)] sm:left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-border "></div>
+        <div className="fixed right-[calc(4.16vw-1px)] sm:right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-border "></div>
         <Nav setTheme={setTheme} currentTheme={currentTheme} />
         <div className=" flex flex-col sm:justify-center">
           <Row>

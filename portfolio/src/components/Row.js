@@ -3,7 +3,7 @@ function Row({ children, sibling }) {
   return sibling ? (
     <>
       <div className="">
-        <div className="w-9/12 xl:w-[1024px] mx-auto ">
+        <div className="w-11/12 sm:w-9/12 xl:w-[1024px] mx-auto ">
           <div className="flex items-stretch">
             <div className=" basis-full md:border-r border-border">
               {children}
@@ -15,7 +15,7 @@ function Row({ children, sibling }) {
       <div className="md:hidden">
         <Border />
         <div className="">
-          <div className="w-9/12 xl:w-[1024px] mx-auto ">
+          <div className="w-11/12 sm:w-9/12 xl:w-[1024px] mx-auto ">
             <div className="flex">{sibling}</div>
           </div>
         </div>
@@ -25,7 +25,7 @@ function Row({ children, sibling }) {
   ) : (
     <>
       <div className="">
-        <div className="w-9/12 xl:w-[1024px] mx-auto ">{children}</div>
+        <div className="w-11/12 sm:w-9/12 xl:w-[1024px] mx-auto ">{children}</div>
       </div>
       <Border />
     </>
