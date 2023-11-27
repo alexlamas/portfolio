@@ -60,7 +60,7 @@ function App() {
             </p>
           </Row>
           <Row>
-            <p className="font-mono px-6 my-4 text-md leading-normal overflow-scroll w-full whitespace-nowrap">
+            <p className="font-mono px-6 py-4 text-md leading-normal overflow-scroll w-full whitespace-nowrap">
               Design systems · Research · Product strategy · Data visualization · Algorithms · Coding ·
               Agent-based modelling · Spanish · Permaculture · Fourier transforms · French · Italian · Arabic
             </p>
