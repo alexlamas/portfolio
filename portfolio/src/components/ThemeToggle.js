@@ -6,7 +6,7 @@ function ThemeToggle({ setTheme, currentTheme }) {
       <button onClick={() => setTheme("dark")} className="p-2 group">
         {currentTheme === "dark" ? (
           <MoonStars
-            className="text-purple-400 transition-all"
+            className="text-highlight transition-all"
             weight="fill"
             size={18}
           />
@@ -28,7 +28,7 @@ function ThemeToggle({ setTheme, currentTheme }) {
       <button onClick={() => setTheme("light")} className="p-2 group">
         {currentTheme === "light" ? (
           <>
-            <Sun size={18} className="text-amber-500 transition-all" weight="fill" />
+            <Sun size={18} className="text-highlight transition-all" weight="fill" />
           </>
         ) : (
           <div className="group">

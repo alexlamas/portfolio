@@ -17,7 +17,7 @@ const Form = ({ setAuthentication, isAuthenticated }) => {
             Enter the magic word to continue:
           </h1>
           <form
-            className="flex shadow-sm key border-0 ring-inset ring-foreground/10 ring-1 focus-within:shadow focus-within:outline-none mb-2 bg-background hover:bg-foreground/3 focus-within-hover:bg-background focus-within:bg-background rounded-md transition"
+            className="flex shadow-sm key border-0 ring-inset ring-foreground/10 ring-1 focus-within:shadow focus-within:outline-none mb-2 bg-background hover:bg-foreground/3 focus-within:hover:bg-background focus-within:bg-background rounded-md transition"
             autoComplete="off"
           >
             <input
@@ -29,7 +29,7 @@ const Form = ({ setAuthentication, isAuthenticated }) => {
             />
             <div className="m-2">
               <button
-                className="flex items-center justify-center w-7 h-7 align-self-end focus:outline-none focus:ring-blue-500 focus:ring-2 rounded-full bg-foreground hover:animate-bounce p-1 font-bold text-white w-full"
+                className="transition-all flex items-center justify-center w-7 h-7 align-self-end focus:outline-none focus:ring-blue-500 focus:ring-2 rounded-full bg-foreground hover:animate-bounce p-1 font-bold text-white"
                 onClick={checkPassword}
               >
                 <ArrowRight className="text-background" weight="bold" />

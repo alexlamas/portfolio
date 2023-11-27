@@ -35,29 +35,27 @@ function App() {
             <div className="hidden sm:block pt-2 mx-6 text-[7vw] xl:text-[100px] leading-normal font-serif">
               Alex Lama-Noujaim
             </div>
-            <div className="sm:hidden pt-1 mx-6 text-[16vw] xl:text-[100px] leading-normal font-serif">
-              Alex
+            <div className="sm:hidden pt-1 mx-6 text-[13vw] xl:text-[100px] leading-normal font-serif">
+              Alex Lama
             </div>
           </Row>
 
           <Row>
-            <p className="mx-6 my-4 text-xl md:text-2xl leading-normal">
-              Product designer at{" "}
-              <span className="decoration-[3px] group underline underline-offset-[6px] decoration-foreground/10 hover:decoration-foreground">
+            <p className="mx-6 my-4 text-xl md:text-2xl leading-normal md:leading-normal text-foreground/90">
+              Staff product designer at{" "}
+              <span className=" decoration-[3px] group underline underline-offset-[6px] decoration-highlight/30 text-highlight hover:decoration-highlight">
                 <a
                   href="https://www.airtable.com"
                   className="whitespace-nowrap"
                 >
                   <Cube
                     weight="duotone"
-                    className="group-hover:animate-spin inline mb-1 mr-[1px]"
+                    className="group-hover:animate-spin inline mb-1 mr-[1px] "
                   ></Cube>
                   Airtable
                 </a>
               </span>
-              . Former <em>mechanical engineer</em> specializing in simulation,
-              and subsequent <i>designer and tinkerer</i> of modelling tools,
-              Fourier transform music plugins, and low code creation platforms.
+              . Formerly an engineer specialised in simulation and algorithms, I now design tools that simplify and democratize software.
             </p>
           </Row>
           {/* <Row>

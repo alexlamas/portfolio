@@ -667,8 +667,8 @@ video {
   height: 1.75rem;
 }
 
-.h-\[60vw\] {
-  height: 60vw;
+.h-\[56\.9vw\] {
+  height: 56.9vw;
 }
 
 .h-full {
@@ -683,8 +683,8 @@ video {
   height: 100vh;
 }
 
-.max-h-\[900px\] {
-  max-height: 900px;
+.max-h-\[1072px\] {
+  max-height: 1072px;
 }
 
 .w-11\/12 {
@@ -715,8 +715,8 @@ video {
   width: 100vw;
 }
 
-.max-w-\[1200px\] {
-  max-width: 1200px;
+.max-w-\[1440px\] {
+  max-width: 1440px;
 }
 
 .basis-full {
@@ -870,12 +870,12 @@ video {
   background-color: hsl(var(--twc-background) / var(--twc-background-opacity, var(--tw-bg-opacity)));
 }
 
-.bg-background\/50 {
-  background-color: hsl(var(--twc-background) / 0.5);
-}
-
 .bg-background\/90 {
   background-color: hsl(var(--twc-background) / 0.9);
+}
+
+.bg-black\/80 {
+  background-color: rgb(0 0 0 / 0.8);
 }
 
 .bg-border {
@@ -969,8 +969,8 @@ video {
   font-family: pp_writerbold;
 }
 
-.text-\[16vw\] {
-  font-size: 16vw;
+.text-\[13vw\] {
+  font-size: 13vw;
 }
 
 .text-\[7vw\] {
@@ -1005,11 +1005,6 @@ video {
   line-height: 1.5;
 }
 
-.text-amber-500 {
-  --tw-text-opacity: 1;
-  color: rgb(245 158 11 / var(--tw-text-opacity));
-}
-
 .text-background {
   --tw-text-opacity: 1;
   color: hsl(var(--twc-background) / var(--twc-background-opacity, var(--tw-text-opacity)));
@@ -1036,14 +1031,18 @@ video {
   color: hsl(var(--twc-foreground) / 0.8);
 }
 
+.text-foreground\/90 {
+  color: hsl(var(--twc-foreground) / 0.9);
+}
+
+.text-highlight {
+  --tw-text-opacity: 1;
+  color: hsl(var(--twc-highlight) / var(--twc-highlight-opacity, var(--tw-text-opacity)));
+}
+
 .text-neutral-500 {
   --tw-text-opacity: 1;
   color: rgb(115 115 115 / var(--tw-text-opacity));
-}
-
-.text-purple-400 {
-  --tw-text-opacity: 1;
-  color: rgb(192 132 252 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -1051,12 +1050,20 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.text-white\/50 {
+  color: rgb(255 255 255 / 0.5);
+}
+
+.text-white\/80 {
+  color: rgb(255 255 255 / 0.8);
+}
+
 .underline {
   text-decoration-line: underline;
 }
 
-.decoration-foreground\/10 {
-  text-decoration-color: hsl(var(--twc-foreground) / 0.1);
+.decoration-highlight\/30 {
+  text-decoration-color: hsl(var(--twc-highlight) / 0.3);
 }
 
 .decoration-\[3px\] {
@@ -1085,6 +1092,10 @@ video {
 
 .opacity-80 {
   opacity: 0.8;
+}
+
+.mix-blend-difference {
+  mix-blend-mode: difference;
 }
 
 .shadow-2xl {
@@ -1158,7 +1169,7 @@ video {
   --twc-background: 240 4.8% 95.9%;
   --twc-border: 255 10.5% 7.5%;
   --twc-border-opacity: 0.08;
-  --twc-highlight: 295.20000000000005 100% 44.1%;
+  --twc-highlight: 16.19999999999999 100% 50%;
 }
 
 .dark,[data-theme="dark"] {
@@ -1166,7 +1177,7 @@ video {
   --twc-background: 240 5.9% 10%;
   --twc-border: 0 0% 100%;
   --twc-border-opacity: 0.10;
-  --twc-highlight: 240 100% 50%;
+  --twc-highlight: 300 47.3% 74.7%;
 }
 
 body {
@@ -1221,13 +1232,23 @@ input.key {
   background-color: hsl(var(--twc-foreground) / 0.05);
 }
 
+.hover\:text-highlight:hover {
+  --tw-text-opacity: 1;
+  color: hsl(var(--twc-highlight) / var(--twc-highlight-opacity, var(--tw-text-opacity)));
+}
+
 .hover\:text-neutral-600:hover {
   --tw-text-opacity: 1;
   color: rgb(82 82 82 / var(--tw-text-opacity));
 }
 
-.hover\:decoration-foreground:hover {
-  text-decoration-color: hsl(var(--twc-foreground) / var(--twc-foreground-opacity, 1));
+.hover\:decoration-highlight:hover {
+  text-decoration-color: hsl(var(--twc-highlight) / var(--twc-highlight-opacity, 1));
+}
+
+.focus-within\:hover\:bg-background:hover:focus-within {
+  --tw-bg-opacity: 1;
+  background-color: hsl(var(--twc-background) / var(--twc-background-opacity, var(--tw-bg-opacity)));
 }
 
 .focus\:outline-none:focus {
@@ -1290,10 +1311,6 @@ input.key {
 
 .group:hover .group-hover\:pt-3 {
   padding-top: 0.75rem;
-}
-
-.group:hover .group-hover\:text-foreground\/80 {
-  color: hsl(var(--twc-foreground) / 0.8);
 }
 
 .group:hover .group-hover\:opacity-0 {
@@ -1379,6 +1396,10 @@ input.key {
   .md\:text-2xl {
     font-size: 1.5rem;
     line-height: 2rem;
+  }
+
+  .md\:leading-normal {
+    line-height: 1.5;
   }
 }
 

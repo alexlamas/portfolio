@@ -16,8 +16,8 @@ module.exports = {
     },
     extend: {
       opacity: {
-        '1': '0.01',
-        '3': '0.03',
+        1: "0.01",
+        3: "0.03",
       },
     },
   },
@@ -27,13 +27,13 @@ module.exports = {
         foreground: "#121115",
         background: "#F4F4F5",
         border: "#12111515",
-        highlight: "#CF00E1",
+        highlight: "orangered",
       },
       dark: {
         foreground: "#F4F4F5",
         background: "#18181B",
         border: "#FFFFFF1A",
-        highlight: "blue",
+        highlight: "plum",
       },
     }),
   ],

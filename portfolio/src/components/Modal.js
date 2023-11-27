@@ -23,12 +23,14 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
     event.stopPropagation();
   };
 
+  const newLocal =
+    " text-white/80 z-30 animate-spin fixed left-2/4 top-2/4 justify-center";
   return (
     <>
       {isModalOpen && (
         <div
           onClick={() => setModalState(false)}
-          className="transition-all items-center fixed justify-center z-50 inset-0 backdrop-blur-lg h-screen opacity-100 flex group cursor-pointer bg-background/50 "
+          className="transition-all items-center fixed justify-center z-50 inset-0 backdrop-blur-lg h-screen opacity-100 flex group cursor-pointer bg-black/80 "
         >
           {!isAuthenticated && (
             <div
@@ -49,12 +51,8 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
 
           {isAuthenticated && (
             <>
-              <Cube
-                size={32}
-                weight="duotone"
-                className=" text-foreground/50 z-30 animate-spin fixed left-2/4 top-2/4 justify-center"
-              />
-              <div className=" z-50 max-w-[1200px] max-h-[900px] w-[80vw] h-[60vw] rounded overflow-hidden drop-shadow-2xl peer cursor-default ">
+              <Cube size={32} weight="duotone" className={newLocal} />
+              <div className=" z-50 max-w-[1440px] max-h-[1072px] w-[80vw] h-[56.9vw] rounded overflow-hidden drop-shadow-2xl peer cursor-default ">
                 <iframe
                   allowFullScreen
                   title="bomba"
@@ -67,7 +65,7 @@ const Modal = ({ isModalOpen, setModalState, project }) => {
           )}
           <button onClick={() => setModalState(false)}>
             <X
-              className="group-hover:opacity-100 opacity-40 fixed right-12 top-12 peer-hover:opacity-40 transition"
+              className="text-white/50 group-hover:opacity-100 opacity-40 fixed right-12 top-12 peer-hover:opacity-40 transition"
               size={24}
             />
           </button>
