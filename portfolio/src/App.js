@@ -43,7 +43,7 @@ function App() {
           <Row>
             <p className="mx-6 my-4 text-xl md:text-2xl leading-normal md:leading-normal text-foreground/90">
               Staff product designer at{" "}
-              <span className=" decoration-[3px] group underline underline-offset-[6px] decoration-highlight/30 text-highlight hover:decoration-highlight">
+              <span className=" decoration-[3px] group underline underline-offset-[6px] decoration-foreground/30 hover:decoration-highlight">
                 <a
                   href="https://www.airtable.com"
                   className="whitespace-nowrap"
@@ -55,15 +55,16 @@ function App() {
                   Airtable
                 </a>
               </span>
-              . Formerly an engineer specialised in simulation and algorithms, I now design tools that simplify and democratize software.
+              . Formerly an engineer specialised in simulation and algorithms, I
+              now design tools that simplify and democratize software.
             </p>
           </Row>
-          {/* <Row>
+          <Row>
             <p className="font-mono px-6 my-4 text-md leading-normal overflow-scroll w-full whitespace-nowrap">
-              Design systems · Research · Product strategy · Data · Coding ·
-              English · Spanish · French · Italian · Arabic
+              Design systems · Research · Product strategy · Data visualization · Algorithms · Coding ·
+              Agent-based modelling · Spanish · Permaculture · Fourier transforms · French · Italian · Arabic
             </p>
-          </Row> */}
+          </Row>
         </div>
         <Projects />
         <Row>

@@ -1066,6 +1066,10 @@ video {
   text-decoration-color: hsl(var(--twc-highlight) / 0.3);
 }
 
+.decoration-foreground\/30 {
+  text-decoration-color: hsl(var(--twc-foreground) / 0.3);
+}
+
 .decoration-\[3px\] {
   text-decoration-thickness: 3px;
 }
@@ -1244,6 +1248,10 @@ input.key {
 
 .hover\:decoration-highlight:hover {
   text-decoration-color: hsl(var(--twc-highlight) / var(--twc-highlight-opacity, 1));
+}
+
+.hover\:decoration-foreground:hover {
+  text-decoration-color: hsl(var(--twc-foreground) / var(--twc-foreground-opacity, 1));
 }
 
 .focus-within\:hover\:bg-background:hover:focus-within {
