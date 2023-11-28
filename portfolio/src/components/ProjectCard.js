@@ -43,15 +43,15 @@ function ProjectCard({ project, clickProject }) {
           </div>
           <div className="pt-6 pb-6 px-6 group-hover:pt-3 group-hover:pb-9 transition-all">
             <p className="px-[1px] text-xs lg:text-sm mb-2 group-hover:mb-1 text-neutral-500 dark:text-neutral-400 group-hover:dark:text-neutral-300 flex gap-2 transition-all">
-              <span className="">{project.company}</span>
-              <span className="">·</span>
+              <span >{project.company}</span>
+              <span>·</span>
               <span className="flex items-center gap-1 whitespace-nowrap">
                 <Clock weight="light" />
                 {project.year}
               </span>
               {project.type === "case" && (
                 <>
-                  <span className="">·</span>{" "}
+                  <span>·</span>{" "}
                   <span className="flex items-center gap-1 whitespace-nowrap">
                     <LockSimple weight="light" />
                     <span>Deep dive</span>
@@ -60,7 +60,7 @@ function ProjectCard({ project, clickProject }) {
               )}
               {project.type === "video" && (
                 <>
-                  <span className="">·</span>{" "}
+                  <span>·</span>{" "}
                   <span className="flex items-center gap-1 whitespace-nowrap">
                     <Play weight="light" />
                     <span>Video</span>
@@ -81,7 +81,7 @@ function ProjectCard({ project, clickProject }) {
               {project.type === "case" ? (
                 <ArrowRight weight="bold" className="mt-[1.5px]" />
               ) : (
-                <ArrowUpRight weight="bold" className="mt-[1.5px]"/>
+                <ArrowUpRight weight="bold" className="mt-[1.5px]" />
               )}
             </p>
           </div>

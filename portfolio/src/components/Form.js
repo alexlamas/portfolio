@@ -3,7 +3,7 @@ import { ArrowRight } from "@phosphor-icons/react";
 const Form = ({ setAuthentication, isAuthenticated }) => {
   const checkPassword = () => {
     var password = document.getElementById("password").value;
-    if (password === "bomba") {
+    if (password === "enterthevoid") {
       setAuthentication(true);
     } else {
       alert("Incorrect password");
