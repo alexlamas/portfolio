@@ -43,7 +43,7 @@ function App() {
           <Row>
             <p className="mx-6 my-4 text-xl md:text-2xl leading-normal md:leading-normal text-foreground/90">
               Staff product designer at{" "}
-              <span className=" decoration-[3px] group underline underline-offset-[6px] decoration-foreground/30 hover:decoration-highlight">
+              <span className=" decoration-[3px] group underline underline-offset-[6px] decoration-foreground/10 hover:decoration-highlight">
                 <a
                   href="https://www.airtable.com"
                   className="whitespace-nowrap"

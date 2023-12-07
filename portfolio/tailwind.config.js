@@ -25,7 +25,7 @@ module.exports = {
     createThemes({
       light: {
         foreground: "#121115",
-        background: "#F4F4F5",
+        background: "#F2F3F5",
         border: "#12111515",
         highlight: "orangered",
       },

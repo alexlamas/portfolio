@@ -892,10 +892,6 @@ video {
   background-color: transparent;
 }
 
-.fill-white {
-  fill: #fff;
-}
-
 .p-1 {
   padding: 0.25rem;
 }
@@ -1066,12 +1062,12 @@ video {
   text-decoration-line: underline;
 }
 
-.decoration-highlight\/30 {
-  text-decoration-color: hsl(var(--twc-highlight) / 0.3);
-}
-
 .decoration-foreground\/30 {
   text-decoration-color: hsl(var(--twc-foreground) / 0.3);
+}
+
+.decoration-foreground\/10 {
+  text-decoration-color: hsl(var(--twc-foreground) / 0.1);
 }
 
 .decoration-\[3px\] {
@@ -1100,10 +1096,6 @@ video {
 
 .opacity-80 {
   opacity: 0.8;
-}
-
-.opacity-10 {
-  opacity: 0.1;
 }
 
 .mix-blend-difference {
@@ -1178,7 +1170,7 @@ video {
 
 .light,[data-theme="light"] {
   --twc-foreground: 255 10.5% 7.5%;
-  --twc-background: 240 4.8% 95.9%;
+  --twc-background: 220 13% 95.5%;
   --twc-border: 255 10.5% 7.5%;
   --twc-border-opacity: 0.08;
   --twc-highlight: 16.19999999999999 100% 50%;
@@ -1256,10 +1248,6 @@ input.key {
 
 .hover\:decoration-highlight:hover {
   text-decoration-color: hsl(var(--twc-highlight) / var(--twc-highlight-opacity, 1));
-}
-
-.hover\:decoration-foreground:hover {
-  text-decoration-color: hsl(var(--twc-foreground) / var(--twc-foreground-opacity, 1));
 }
 
 .focus-within\:hover\:bg-background:hover:focus-within {
