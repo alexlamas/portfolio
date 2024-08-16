@@ -1,8 +1,8 @@
 import Border from "./Border";
-function Row({ children, sibling }) {
+function Row({ children, sibling, className }) {
   return sibling ? (
     <>
-      <div className="">
+      <div className={className}>
         <div className="w-11/12 sm:w-9/12 xl:w-[1024px] mx-auto ">
           <div className="flex items-stretch">
             <div className=" basis-full md:border-r border-border">
@@ -24,8 +24,10 @@ function Row({ children, sibling }) {
     </>
   ) : (
     <>
-      <div className="">
-        <div className="w-11/12 sm:w-9/12 xl:w-[1024px] mx-auto ">{children}</div>
+      <div className={className}>
+        <div className="w-11/12 sm:w-9/12 xl:w-[1024px] mx-auto ">
+          {children}
+        </div>
       </div>
       <Border />
     </>
