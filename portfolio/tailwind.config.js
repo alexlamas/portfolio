@@ -19,6 +19,9 @@ module.exports = {
         1: "0.01",
         3: "0.03",
       },
+      colors: {
+        claude: "#D97757",
+      },
     },
   },
   plugins: [
@@ -27,7 +30,7 @@ module.exports = {
         foreground: "#121115",
         background: "#F2F3F5",
         border: "#12111515",
-        highlight: "orangered",
+        highlight: "#D97757",
       },
       dark: {
         foreground: "#F4F4F5",

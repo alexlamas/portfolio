@@ -5,7 +5,6 @@ import Nav from "./components/Nav";
 import Row from "./components/Row";
 import Projects from "./components/Projects";
 import VanillaTilt from "vanilla-tilt";
-import { Cube } from "@phosphor-icons/react/dist/ssr";
 
 function App() {
   useEffect(() => {
@@ -42,28 +41,41 @@ function App() {
 
           <Row>
             <p className="mx-6 my-4 text-xl md:text-2xl leading-normal md:leading-normal text-foreground/90">
-              Staff product designer at{" "}
-              <span className=" decoration-[3px] group underline underline-offset-[6px] decoration-foreground/10 hover:decoration-highlight">
-                <a
-                  href="https://www.airtable.com"
-                  className="whitespace-nowrap"
-                >
-                  <Cube
-                    weight="duotone"
-                    className="group-hover:animate-spin inline mb-1 mr-[1px] "
-                  ></Cube>
-                  Airtable
-                </a>
-              </span>
-              . Formerly an engineer specialised in simulation and algorithms, I
-              now design tools that simplify and democratize software.
+              Designer at{" "}
+              <a
+                href="https://www.anthropic.com/claude"
+                className="whitespace-nowrap underline decoration-[3px] underline-offset-[8px] decoration-foreground/25 hover:!decoration-claude transition-all"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Anthropic
+              </a>{" "}
+              working on safe, powerful AI. Formerly an engineer specialised in
+              simulation and algorithms, I now design tools that simplify and
+              democratize software.
             </p>
           </Row>
           <Row>
-            <p className="font-mono px-6 py-4 text-md leading-normal overflow-scroll w-full whitespace-nowrap">
-              Design systems · Research · Product strategy · Data visualization · Algorithms · Coding ·
-              Agent-based modelling · Permaculture · Fourier transforms · Spanish · French · Italian · Arabic
-            </p>
+            <div className="font-mono px-0 py-4 text-md leading-normal w-full whitespace-nowrap text-foreground/75">
+              <div className="skills-ticker-container overflow-hidden relative">
+                <div className="skills-ticker-wrapper absolute whitespace-nowrap">
+                  <span className="skills-ticker inline-block">
+                    Design systems · Research · Product strategy · Data
+                    visualization · Algorithms · Coding · Agent-based modelling
+                    · Permaculture · Fourier transforms · Spanish · French ·
+                    Italian · Arabic ·&nbsp;
+                  </span>
+                  <span className="skills-ticker inline-block">
+                    Design systems · Research · Product strategy · Data
+                    visualization · Algorithms · Coding · Agent-based modelling
+                    · Permaculture · Fourier transforms · Spanish · French ·
+                    Italian · Arabic ·&nbsp;
+                  </span>
+                </div>
+                <div className="absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-background to-transparent transition-all"></div>
+                <div className="absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-background to-transparent transition-all"></div>{" "}
+              </div>
+            </div>
           </Row>
         </div>
         <Projects />
