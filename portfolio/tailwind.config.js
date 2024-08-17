@@ -15,6 +15,18 @@ module.exports = {
       spin: "spin 1s linear infinite",
     },
     extend: {
+      transitionProperty: {
+        "background-image": "background-image",
+      },
+      animation: {
+        ticker: "ticker 60s linear infinite",
+      },
+      keyframes: {
+        ticker: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" },
+        },
+      },
       opacity: {
         1: "0.01",
         3: "0.03",

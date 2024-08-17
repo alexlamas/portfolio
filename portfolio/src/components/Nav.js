@@ -12,7 +12,7 @@ function Nav({ setTheme, currentTheme }) {
   return (
     <div className="sticky z-40 top-0 border-b border-border">
       <nav
-        className={` backdrop-blur-sm transition bg-background/90 sm:w-9/12 w-11/12 xl:w-[1024px] mx-auto flex-wrap text-base flex flex-row justify-between ${
+        className={`backdrop-blur-sm bg-background/90 sm:w-9/12 w-11/12 xl:w-[1024px] mx-auto flex-wrap text-base flex flex-row justify-between transition-all ${
           isOpen ? "flex-col lg:flex-row items-start" : "items-center"
         }`}
       >
