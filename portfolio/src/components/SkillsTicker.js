@@ -5,7 +5,7 @@ const skills = [
   "Research (professional Googler)",
   "Product strategy (glorified guesswork)",
   "Making data look pretty",
-  "Algorithms (math, but spicier)",
+  "Algorithms (maths, but spicier)",
   "Coding (typing aggressively and hoping for the best)",
   "Agent-based modeling (The Sims, but boring)",
   "Permaculture (fancy way of saying I keep cacti alive)",
