@@ -4,6 +4,7 @@ import "./fonts/fonts.css";
 import Nav from "./components/Nav";
 import Row from "./components/Row";
 import Projects from "./components/Projects";
+import SkillsTicker from "./components/SkillsTicker.js";
 import VanillaTilt from "vanilla-tilt";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -39,7 +40,7 @@ function App() {
           <Nav setTheme={setTheme} currentTheme={currentTheme} />
           <div className=" flex flex-col sm:justify-center">
             <Row>
-              <div className="hidden sm:block pt-2 mx-6 text-[7vw] xl:text-[100px] leading-normal font-serif">
+              <div className="hidden sm:block pt-2 mx-6 text-[7vw] xl:text-[100px] leading-normal font-serif ">
                 Alex Lama-Noujaim
               </div>
               <div className="sm:hidden pt-1 mx-6 text-[13vw] xl:text-[100px] leading-normal font-serif">
@@ -47,43 +48,23 @@ function App() {
               </div>
             </Row>
 
-            <Row className="hover:bg-claude/[0.02] pointer-events-none transition">
-              <p className="mx-6 my-4 text-xl md:text-2xl leading-normal md:leading-normal text-foreground/90">
-                Designer at{" "}
+            <Row className="transition-background-image hover:bg-gradient-to-r hover:from-transparent hover:via-claude/10 hover:to-transparent pointer-events-none">
+              <p className="mx-6 my-4 text-xl md:text-xl leading-normal md:leading-normal text-foreground/75  font-normal">
+                Currently designing new things at{" "}
                 <a
                   href="https://www.anthropic.com/claude"
-                  className="pointer-events-auto whitespace-nowrap underline decoration-[3px] underline-offset-[8px] decoration-foreground/10 hover:!decoration-claude transition-all"
+                  className="pointer-events-auto whitespace-nowrap underline decoration-[2px] underline-offset-[7px] decoration-foreground/25 hover:!decoration-claude transition-all"
                   target="_blank"
                   rel="noreferrer"
                 >
                   Anthropic
-                </a>{" "}
-                working on safe, powerful AI. Formerly an engineer specialised
-                in simulation and algorithms, I now design tools that simplify
-                and democratize software.
+                </a>
+                . Previously an engineer working with simulation and algorithms,
+                I now design tools that simplify and democratize software.
               </p>
             </Row>
             <Row>
-              <div className="font-mono px-0 py-4 text-md leading-normal w-full whitespace-nowrap text-foreground/75">
-                <div className="skills-ticker-container overflow-hidden relative">
-                  <div className="skills-ticker-wrapper absolute whitespace-nowrap">
-                    <span className="skills-ticker inline-block">
-                      Design systems · Research · Product strategy · Data
-                      visualization · Algorithms · Coding · Agent-based
-                      modelling · Permaculture · Fourier transforms · Spanish ·
-                      French · Italian · Arabic ·&nbsp;
-                    </span>
-                    <span className="skills-ticker inline-block">
-                      Design systems · Research · Product strategy · Data
-                      visualization · Algorithms · Coding · Agent-based
-                      modelling · Permaculture · Fourier transforms · Spanish ·
-                      French · Italian · Arabic ·&nbsp;
-                    </span>
-                  </div>
-                  <div className="absolute inset-y-0 left-0 w-1/5 bg-gradient-to-r from-background to-transparent transition-all"></div>
-                  <div className="absolute inset-y-0 right-0 w-1/5 bg-gradient-to-l from-background to-transparent transition-all"></div>{" "}
-                </div>
-              </div>
+              <SkillsTicker />
             </Row>
           </div>
           <Projects />

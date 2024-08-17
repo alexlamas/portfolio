@@ -19,32 +19,4 @@ input.key {
   font-family: "password";
 }
 
-.skills-ticker-container {
-  width: 100%;
-  height: 1.6em;  /* Adjust based on your font size */
-  overflow: hidden;
-}
 
-.skills-ticker-wrapper {
-  display: inline-block;
-  white-space: nowrap;
-  animation: ticker 40s linear infinite;
-}
-
-.skills-ticker {
-  display: inline-block;
-}
-
-@keyframes ticker {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-/* Optional: pause animation on hover */
-.skills-ticker-wrapper:hover {
-  animation-play-state: paused;
-}
