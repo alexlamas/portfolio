@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
+import { HandWaving } from "@phosphor-icons/react";
+
 import Nav from "./components/Nav";
 import Row from "./components/Row";
 import Projects from "./components/Projects";
@@ -25,6 +27,17 @@ function App() {
     setCurrentTheme(theme);
   };
 
+  const Link = ({ href, children }) => (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="underline pointer-events-auto decoration-[2px] underline-offset-[6px] decoration-foreground/25 hover:!decoration-highlight transition duration-200"
+    >
+      {children}
+    </a>
+  );
+
   return (
     <div className={currentTheme}>
       <AnimatePresence mode="popLayout">
@@ -48,19 +61,14 @@ function App() {
               </div>
             </Row>
 
-            <Row className="transition-background-image hover:bg-gradient-to-r hover:from-transparent hover:via-claude/10 hover:to-transparent pointer-events-none">
-              <p className="mx-6 my-4 text-xl md:text-xl leading-normal md:leading-normal text-foreground/75  font-normal">
+            <Row className="transition-background-image duration-1000 hover:bg-gradient-to-r hover:from-transparent hover:via-highlight/10 duration-500 hover:to-transparent pointer-events-none">
+              <p className="mx-6 my-4 text-xl md:text-xl leading-normal md:leading-8 text-foreground/75  font-normal">
                 Currently designing new things at{" "}
-                <a
-                  href="https://www.anthropic.com/claude"
-                  className="pointer-events-auto whitespace-nowrap underline decoration-[2px] underline-offset-[7px] decoration-foreground/25 hover:!decoration-claude transition-all"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Anthropic
-                </a>
-                . Previously an engineer working with simulation and algorithms,
-                I now design tools that simplify and democratize software.
+                <Link href="https://www.anthropic.com/claude">Anthropic</Link>{" "}
+                and formerly working on no-code at{" "}
+                <Link href="https://www.airtable.com/">Airtable</Link>. In
+                previous lives I studied mechanical engineering and worked in
+                simulations and audio engineering.
               </p>
             </Row>
             <Row>
@@ -69,6 +77,10 @@ function App() {
           </div>
           <Projects />
           <Row>
+            <div className="p-6 text-foreground opacity-50 flex-row flex items-center gap-2">
+              <HandWaving></HandWaving>
+              Contact me to learn more about my projects.
+            </div>
             <div className="flex pt-24"></div>
           </Row>
         </motion.div>

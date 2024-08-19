@@ -31,9 +31,6 @@ module.exports = {
         1: "0.01",
         3: "0.03",
       },
-      colors: {
-        claude: "#D97757",
-      },
     },
   },
   plugins: [

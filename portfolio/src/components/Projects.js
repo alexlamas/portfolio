@@ -8,12 +8,13 @@ function Projects() {
   const [openProject, setOpenProject] = useState({});
 
   const clickProject = (project) => {
-    if (!project.link) {
-      setOpenProject(project);
-      setModalState(true);
-    } else {
-      window.location.href = project.link;
-    }
+    return;
+    // if (!project.link) {
+    //   setOpenProject(project);
+    //   setModalState(true);
+    // } else {
+    //   window.location.href = project.link;
+    // }
   };
 
   const projects = [
@@ -22,7 +23,7 @@ function Projects() {
       year: "This year",
       company: "Airtable",
       image: "/assets/timeline.png",
-      cta: "Read",
+      cta: "A view for planning complex projects",
       type: "case",
       id: 0,
       color: "#8175EC",
@@ -30,11 +31,11 @@ function Projects() {
         "https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Fproto%2F1YSUL5Qxkgdhxr4YLzVGaH%2FPortfolio%3Fpage-id%3D13476%253A62074%26type%3Ddesign%26node-id%3D13476-62075%26viewport%3D8098%252C597%252C0.52%26t%3DuT4pWEjskvcanAUH-1%26scaling%3Dscale-down-width%26hotspot-hints%3D0%26mode%3Ddesign%26hide-ui%3D1",
     },
     {
-      title: "Golden datasets",
+      title: "Relationships view",
       year: "1 year ago",
       company: "Airtable",
       image: "/assets/relationships.png",
-      cta: "Read",
+      cta: "A map of Airtable relationships",
       type: "case",
       id: 1,
       luminosity: true,
@@ -48,7 +49,7 @@ function Projects() {
       company: "SoundX",
       image: "/assets/shifter.png",
       id: 3,
-      cta: "Watch the video",
+      cta: "An AI music plugin for deaf people",
       color: "#31a685",
       link: "https://www.youtube.com/watch?v=-B-8Jd34lpU",
       type: "video",
@@ -60,7 +61,7 @@ function Projects() {
       image: "/assets/simudyne.png",
       type: "case",
       luminosity: true,
-      cta: "Read",
+      cta: "Massive scale simulation toolkit",
       id: 2,
       color: "#48A2CF",
       figma:
