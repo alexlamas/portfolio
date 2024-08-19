@@ -15,7 +15,7 @@ function ProjectCard({ project, clickProject }) {
       <div className="hover:bg-foreground/5 transition h-full">
         <button
           className={`cursor-default group relative flex flex-col border border-transparent h-full w-full `}
-          onClick={() => clickProject(project)}
+          // onClick={() => clickProject(project)}
         >
           <div className="p-5 pb-0 flex justify-items-center h-full w-full ">
             {!project.gif && (
