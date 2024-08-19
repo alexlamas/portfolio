@@ -39,7 +39,9 @@ function App() {
   );
 
   return (
-    <div className={`${currentTheme} text-foreground bg-background`}>
+    <div
+      className={`${currentTheme} text-foreground bg-background min-h-screen`}
+    >
       <AnimatePresence mode="popLayout">
         <motion.div
           key={currentTheme}
@@ -77,7 +79,7 @@ function App() {
             </Row>
           </div>
           <Projects />
-          <Row>
+          <Row borderBottom={false}>
             <div className="p-6 text-foreground opacity-50 flex-row flex items-center gap-2">
               <HandWaving></HandWaving>
               More details about my work available on request.

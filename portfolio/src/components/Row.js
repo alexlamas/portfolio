@@ -1,5 +1,5 @@
 import Border from "./Border";
-function Row({ children, sibling, className }) {
+function Row({ children, sibling, className, borderBottom = true }) {
   return sibling ? (
     <>
       <div className={className}>
@@ -29,7 +29,7 @@ function Row({ children, sibling, className }) {
           {children}
         </div>
       </div>
-      <Border />
+      {borderBottom && <Border />}
     </>
   );
 }
