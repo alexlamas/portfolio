@@ -52,7 +52,7 @@ function App() {
           <Nav setTheme={setTheme} currentTheme={currentTheme} />
           <div className=" flex flex-col sm:justify-center">
             <Row>
-              <div className="hidden sm:block pt-6 mx-6 text-[7vw] xl:text-[100px] leading-normal ">
+              <div className="hidden sm:block mx-6 text-[7vw] xl:text-[100px] leading-normal ">
                 Alex Lama-Noujaim
               </div>
               <div className="sm:hidden pt-1 mx-6 text-[13vw] xl:text-[100px] leading-normal ">
