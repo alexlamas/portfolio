@@ -1,9 +1,8 @@
-import { ArrowUpRight } from "@phosphor-icons/react";
 import {
-  ArrowRight,
+  // ArrowRight,
   Clock,
-  LockSimple,
-  Play,
+  // LockSimple,
+  // Play,
 } from "@phosphor-icons/react/dist/ssr";
 
 function ProjectCard({ project, clickProject }) {

@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import Row from "./Row";
-import Modal from "./Modal";
+// import Modal from "./Modal";
 
 function Projects() {
-  const [isModalOpen, setModalState] = useState(false);
-  const [openProject, setOpenProject] = useState({});
+  // const [isModalOpen, setModalState] = useState(false);
+  // const [openProject, setOpenProject] = useState({});
 
-  const clickProject = (project) => {
-    return;
-    // if (!project.link) {
-    //   setOpenProject(project);
-    //   setModalState(true);
-    // } else {
-    //   window.location.href = project.link;
-    // }
-  };
+  // const clickProject = (project) => {
+  //   return;
+  //   if (!project.link) {
+  //     setOpenProject(project);
+  //     setModalState(true);
+  //   } else {
+  //     window.location.href = project.link;
+  //   }
+  // };
 
   const projects = [
     {
@@ -70,26 +70,18 @@ function Projects() {
   ];
   return (
     <>
-      <Modal
+      {/* <Modal
         isModalOpen={isModalOpen}
         setModalState={setModalState}
         project={openProject}
-      />
+      /> */}
       <Row
-        children={
-          <ProjectCard project={projects[0]} clickProject={clickProject} />
-        }
-        sibling={
-          <ProjectCard project={projects[1]} clickProject={clickProject} />
-        }
+        children={<ProjectCard project={projects[0]} />}
+        sibling={<ProjectCard project={projects[1]} />}
       ></Row>
       <Row
-        children={
-          <ProjectCard project={projects[2]} clickProject={clickProject} />
-        }
-        sibling={
-          <ProjectCard project={projects[3]} clickProject={clickProject} />
-        }
+        children={<ProjectCard project={projects[2]} />}
+        sibling={<ProjectCard project={projects[3]} />}
       ></Row>
     </>
   );
