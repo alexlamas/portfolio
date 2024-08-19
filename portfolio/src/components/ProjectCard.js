@@ -1,9 +1,9 @@
-import {
-  // ArrowRight,
-  Clock,
-  // LockSimple,
-  // Play,
-} from "@phosphor-icons/react/dist/ssr";
+// import {
+// ArrowRight,
+// Clock,
+// LockSimple,
+// Play,
+// } from "@phosphor-icons/react/dist/ssr";
 
 function ProjectCard({ project, clickProject }) {
   const addNoise = () => {
@@ -12,7 +12,7 @@ function ProjectCard({ project, clickProject }) {
 
   return (
     <>
-      <div className="hover:bg-foreground/5 transition h-full">
+      <div className="h-full">
         <button
           className={`cursor-default group relative flex flex-col border border-transparent h-full w-full `}
           // onClick={() => clickProject(project)}
@@ -28,11 +28,12 @@ function ProjectCard({ project, clickProject }) {
                 className=" rounded-sm p-8 h-full w-full items-center justify-center flex group-hover:shadow-lg "
               >
                 <img
+                  draggable="false"
                   style={{
                     mixBlendMode: project.luminosity && "luminosity",
                     transform: "translateZ(20px)",
                   }}
-                  className={` select-none w-100 rounded drop-shadow-sm group-hover:drop-shadow-md group-hover:scale-[1.005] group-active:opacity-80 items-center justify-center transition `}
+                  className={` select-none w-100 rounded drop-shadow-sm group-hover:drop-shadow-md group-hover:scale-[1.005]  items-center justify-center transition `}
                   src={project.image}
                   alt={project.alt}
                 />
@@ -41,11 +42,11 @@ function ProjectCard({ project, clickProject }) {
             {project.gif && <></>}
           </div>
           <div className="pt-6 pb-6 px-6 group-hover:pt-3 group-hover:pb-9 transition-all">
-            <p className="px-[1px] text-xs lg:text-sm mb-2 group-hover:mb-1 text-neutral-500 dark:text-neutral-400 group-hover:dark:text-neutral-300 flex gap-2 transition-all">
+            <p className="px-[1px] text-xs lg:text-sm mb-2 group-hover:opacity-50 group-hover:mb-1 text-foreground/75 dark:text-neutral-400 group-hover:dark:text-neutral-300 flex gap-2 transition-all">
               <span>{project.company}</span>
               <span>·</span>
               <span className="flex items-center gap-1 whitespace-nowrap">
-                <Clock weight="light" />
+                {/* <Clock weight="light" /> */}
                 {project.year}
               </span>
               {project.type === "case" && (
@@ -68,13 +69,13 @@ function ProjectCard({ project, clickProject }) {
               )} */}
             </p>
             <div className="group-hover:mb-1 transition-all">
-              <p className="mix-blend-difference text-white font-bold text-left text-xl lg:text-2xl leading-normal ">
+              <p className=" text-foreground/95 font-bold text-left text-xl lg:text-2xl leading-normal">
                 {project.title}
               </p>
             </div>
             <p
               // style={{ color: project.color }}
-              className={`text-foreground/50 px-[1px] flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all`}
+              className={`text-foreground/75 px-[1px] flex items-center gap-[6px] opacity-0 group-hover:opacity-100 hover:gap-2 text-left text-sm absolute bottom-0 group-hover:bottom-4 transition-all`}
             >
               {project.cta}
               {/* {project.type === "case" ? (

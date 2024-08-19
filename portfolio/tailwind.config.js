@@ -36,16 +36,16 @@ module.exports = {
   plugins: [
     createThemes({
       light: {
-        foreground: "#121115",
-        background: "#F2F3F5",
+        foreground: "#00084a",
+        background: "#e9e7ff",
         border: "#12111515",
-        highlight: "#D97757",
+        highlight: "#00084a",
       },
       dark: {
-        foreground: "#F4F4F5",
-        background: "#18181B",
+        foreground: "#e9e7ff",
+        background: "#00084a",
         border: "#FFFFFF1A",
-        highlight: "plum",
+        highlight: "#e9e7ff",
       },
     }),
   ],

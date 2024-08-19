@@ -24,7 +24,7 @@ function NavLink({ text, hidden, href, iconName }) {
     <a
       className={`${
         hidden ? "hidden lg:flex" : "flex"
-      }  text-foreground/50 font-mono hover:text-highlight flex-nowrap px-6 py-4 group gap-2 items-center "`}
+      }  text-foreground/50 font-mono hover:text-highlight transition flex-nowrap px-6 py-4 group gap-2 items-center "`}
       href={href}
     >
       {iconName && fetchIcon()}

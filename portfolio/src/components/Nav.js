@@ -56,7 +56,7 @@ function Nav({ setTheme, currentTheme }) {
                     />
                     <NavLink
                       href="mailto:lamanoujaim@gmail.com"
-                      text="lamanoujaim@gmail.com"
+                      text="Email"
                       iconName="EnvelopeSimple"
                     />
                   </div>
@@ -77,7 +77,7 @@ function Nav({ setTheme, currentTheme }) {
             />
             <NavLink
               href="mailto:lamanoujaim@gmail.com"
-              text="lamanoujaim@gmail.com"
+              text="Email"
               iconName="EnvelopeSimple"
             />
           </div>
