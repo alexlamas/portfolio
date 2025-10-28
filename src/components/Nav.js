@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ThemeToggle from "./ThemeToggle";
 import NavLink from "./NavLink";
 import { List, X } from "@phosphor-icons/react";
 
-function Nav({ setTheme, currentTheme }) {
+function Nav() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleNav = () => {
     setIsOpen(!isOpen);
@@ -50,11 +49,6 @@ function Nav({ setTheme, currentTheme }) {
                       iconName="LinkedinLogo"
                     />
                     <NavLink
-                      href="https://read.cv/lamanoujaim"
-                      text="ReadCv"
-                      iconName="ReadCvLogo"
-                    />
-                    <NavLink
                       href="mailto:lamanoujaim@gmail.com"
                       text="Email"
                       iconName="EnvelopeSimple"
@@ -71,17 +65,11 @@ function Nav({ setTheme, currentTheme }) {
               iconName="LinkedinLogo"
             />
             <NavLink
-              href="https://read.cv/lamanoujaim"
-              text="ReadCv"
-              iconName="ReadCvLogo"
-            />
-            <NavLink
               href="mailto:lamanoujaim@gmail.com"
               text="Email"
               iconName="EnvelopeSimple"
             />
           </div>
-          <ThemeToggle setTheme={setTheme} currentTheme={currentTheme} />
         </div>
       </nav>
     </div>

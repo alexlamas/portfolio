@@ -1,14 +1,14 @@
 import React from "react";
 
 const skills = [
-  "Design systems (all the cool kids are doing it)",
-  "Research (making stuff up with confidence)",
-  "Product strategy (explaining why we're doing what we're doing)",
-  "Woodworking (quietly judging IKEA furniture)",
-  "Coding (typing aggressively and hoping for the best)",
-  "Agent-based modeling (Sims, but boring)",
-  "Permaculture (using plants to solve all our problems)",
-  "Fourier transforms (you know, for fun)",
+  "Design systems (because chaos never scales)",
+  "Research (turning hunches into evidence)",
+  "Product strategy (so we ship on purpose)",
+  "Woodworking (hand tools beat hex keys)",
+  "Coding (turning coffee into prototypes)",
+  "Agent-based modeling (Sims with equations)",
+  "Permaculture (gardens that pay rent)",
+  "Fourier transforms (party tricks for data)",
   "Languages (English, French, Arabic, Italian, Spanish)",
 ];
 
