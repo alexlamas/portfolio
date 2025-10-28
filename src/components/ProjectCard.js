@@ -1,6 +1,52 @@
-
+import { useEffect, useRef, useState } from "react";
 
 function ProjectCard({ project }) {
+  const [parallax, setParallax] = useState({ x: 0, y: 0 });
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      project.type === "placeholder" ||
+      !project.gif ||
+      !project.image
+    )
+      return;
+
+    let frame = null;
+
+    const updateParallax = () => {
+      frame = null;
+      if (!containerRef.current) return;
+
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const viewportWidth = window.innerWidth || 1;
+
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+
+      const offsetX = ((centerX - viewportWidth / 2) / viewportWidth) * -16;
+      const offsetY = ((centerY - viewportHeight / 2) / viewportHeight) * -24;
+
+      setParallax({ x: offsetX, y: offsetY });
+    };
+
+    const handleScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(updateParallax);
+    };
+
+    updateParallax();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, [project.gif, project.image, project.type]);
+
   if (project.type === "placeholder") {
     return (
       <div className="h-full">
@@ -21,17 +67,25 @@ function ProjectCard({ project }) {
         >
           <div className="p-5 pb-0 flex justify-items-center h-full w-full ">
             {project.gif && project.image ? (
-              <div className="relative h-full w-full flex items-center group/inner p-2">
+              <div
+                ref={containerRef}
+                className="relative h-full w-full flex items-center p-2"
+              >
                 <img
                   draggable="false"
-                  className="select-none w-4/5 rounded-lg drop-shadow-2xl group-hover:drop-shadow-3xl transition border border-black/5 overflow-hidden"
+                  className="select-none w-4/5 rounded-lg drop-shadow-3xl transition border border-black/5 overflow-hidden"
                   src={project.image}
                   alt={project.alt}
                 />
-                <div className="absolute right-0 h-48 max-w-88 rounded-lg overflow-hidden drop-shadow-xl group-hover/inner:drop-shadow-2xl group-hover:-translate-y-1 border bg-white/50 backdrop-blur-lg  border-black/5 transition-all">
+                <div
+                  className="absolute right-0 h-48 max-w-88 rounded-lg overflow-hidden border bg-white/60 backdrop-blur-md border-black/5 drop-shadow-2xl transition-transform duration-200 ease-out"
+                  style={{
+                    transform: `translate3d(${parallax.x}px, ${parallax.y}px, 0)`,
+                  }}
+                >
                   <img
                     draggable="false"
-                    className="select-none w-full h-full object-cover transition opacity-80 "
+                    className="select-none w-full h-full object-cover opacity-80"
                     src={project.gif}
                     alt={project.alt}
                   />
