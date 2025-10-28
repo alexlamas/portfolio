@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import { HandWaving } from "@phosphor-icons/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import Nav from "./components/Nav";
 import Row from "./components/Row";
@@ -88,6 +89,7 @@ function App() {
           </Row>
         </motion.div>
       </AnimatePresence>
+      <Analytics />
     </div>
   );
 }

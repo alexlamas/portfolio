@@ -768,6 +768,9 @@ video {
 .rounded-sm {
   border-radius: 0.125rem;
 }
+.rounded-lg {
+  border-radius: 0.5rem;
+}
 .border {
   border-width: 1px;
 }
@@ -958,6 +961,9 @@ video {
 .text-white\/80 {
   color: rgb(255 255 255 / 0.8);
 }
+.text-foreground\/60 {
+  color: hsl(var(--twc-foreground) / 0.6);
+}
 .underline {
   text-decoration-line: underline;
 }
@@ -1056,6 +1062,62 @@ video {
   --twc-border-opacity: 0.10;
   --twc-highlight: 245 100% 95.3%;
 }
+.ink,[data-theme="ink"] {
+  --twc-foreground: 0 0% 98%;
+  --twc-background: 0 0% 3.9%;
+  --twc-border: 0 0% 100%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 0 0% 98%;
+}
+.ivory,[data-theme="ivory"] {
+  --twc-foreground: 0 0% 3.9%;
+  --twc-background: 0 0% 98%;
+  --twc-border: 0 0% 3.9%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 0 0% 3.9%;
+}
+.midnight,[data-theme="midnight"] {
+  --twc-foreground: 41.19999999999999 69.9% 85.7%;
+  --twc-background: 240 27.8% 14.1%;
+  --twc-border: 41.19999999999999 69.9% 85.7%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 45.30000000000001 91.7% 47.3%;
+}
+.champagne,[data-theme="champagne"] {
+  --twc-foreground: 240 27.8% 14.1%;
+  --twc-background: 41.19999999999999 69.9% 85.7%;
+  --twc-border: 240 27.8% 14.1%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 43.69999999999999 100% 39%;
+}
+.forest,[data-theme="forest"] {
+  --twc-foreground: 26.30000000000001 100% 92%;
+  --twc-background: 163 63.9% 14.1%;
+  --twc-border: 26.30000000000001 100% 92%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 17.80000000000001 100% 67.6%;
+}
+.peach,[data-theme="peach"] {
+  --twc-foreground: 163 63.9% 14.1%;
+  --twc-background: 26.30000000000001 100% 92%;
+  --twc-border: 163 63.9% 14.1%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 14.399999999999977 100% 56.7%;
+}
+.graphite,[data-theme="graphite"] {
+  --twc-foreground: 0 0% 97.3%;
+  --twc-background: 0 0% 17.6%;
+  --twc-border: 0 0% 97.3%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 339.70000000000005 100% 71%;
+}
+.rose,[data-theme="rose"] {
+  --twc-foreground: 0 0% 17.6%;
+  --twc-background: 0 0% 97.3%;
+  --twc-border: 0 0% 17.6%;
+  --twc-border-opacity: 0.08;
+  --twc-highlight: 339.6 82.2% 51.6%;
+}
 
 body {
   margin: 0;
@@ -1101,6 +1163,10 @@ input.key {
 
 .hover\:bg-foreground\/3:hover {
   background-color: hsl(var(--twc-foreground) / 0.03);
+}
+
+.hover\:bg-foreground\/5:hover {
+  background-color: hsl(var(--twc-foreground) / 0.05);
 }
 
 .hover\:text-highlight:hover {
@@ -1172,6 +1238,10 @@ input.key {
 
 .group:hover .group-hover\:pt-3 {
   padding-top: 0.75rem;
+}
+
+.group:hover .group-hover\:text-foreground\/100 {
+  color: hsl(var(--twc-foreground) / 1);
 }
 
 .group:hover .group-hover\:opacity-0 {
