@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
@@ -7,8 +7,10 @@ import Nav from "./components/Nav";
 import Row from "./components/Row";
 import Projects from "./components/Projects";
 import SkillsTicker from "./components/SkillsTicker.js";
+import NameAnimationShowcase from "./components/NameAnimationShowcase";
 
 function App() {
+  const [showAnimationShowcase, setShowAnimationShowcase] = useState(false);
 
 
   const Link = ({ href, children }) => (
@@ -24,7 +26,18 @@ function App() {
 
   return (
     <div className="neutral text-foreground bg-background min-h-screen">
-      <div>
+      {/* Toggle Button */}
+      <button
+        onClick={() => setShowAnimationShowcase(!showAnimationShowcase)}
+        className="fixed top-6 right-6 z-50 px-6 py-3 rounded-full border border-border bg-background hover:border-foreground transition-all text-sm font-medium"
+      >
+        {showAnimationShowcase ? "← Back to Portfolio" : "🎨 Animation Showcase"}
+      </button>
+
+      {showAnimationShowcase ? (
+        <NameAnimationShowcase />
+      ) : (
+        <div>
           <div className="fixed left-[calc(4.16vw-1px)] sm:left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-border "></div>
           <div className="fixed right-[calc(4.16vw-1px)] sm:right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-border "></div>
           <Nav />
@@ -56,6 +69,7 @@ function App() {
           </div>
           <Projects />
         </div>
+      )}
       <Analytics />
     </div>
   );
