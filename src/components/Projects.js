@@ -62,7 +62,7 @@ function Projects() {
           <div className="flex items-center h-full min-h-[400px] p-8">
             <div className="relative w-full">
               <div
-                className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground"
+                className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold leading-tight text-foreground"
                 style={{
                   maskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
                   WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
