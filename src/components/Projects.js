@@ -46,6 +46,40 @@ function Projects() {
   ];
   return (
     <>
+      <Row
+        children={
+          <div className="flex items-center justify-center h-full min-h-[400px] p-8">
+            <div className="w-full h-full flex items-center justify-center bg-neutral-50 dark:bg-neutral-900/50 rounded-lg">
+              <img
+                src="/assets/placeholder-gif.gif"
+                alt="Animated thought"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+          </div>
+        }
+        sibling={
+          <div className="flex items-center h-full min-h-[400px] p-8">
+            <div className="relative w-full">
+              <div
+                className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-foreground"
+                style={{
+                  maskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black 0%, black 60%, transparent 100%)",
+                }}
+              >
+                Design is not just what it looks like and feels like.
+                <br />
+                <br />
+                Design is how it works.
+                <br />
+                <br />
+                And how it makes you feel.
+              </div>
+            </div>
+          </div>
+        }
+      />
       <Row>
         <ProjectCard project={projects[0]} />
       </Row>
