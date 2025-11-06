@@ -49,11 +49,15 @@ function Projects() {
       <Row
         children={
           <div className="flex items-center justify-center h-full min-h-[400px] p-8">
-            <div className="w-full h-full flex items-center justify-center bg-neutral-50 dark:bg-neutral-900/50 rounded-lg">
-              <img
-                src="/assets/placeholder-gif.gif"
-                alt="Animated thought"
-                className="max-w-full max-h-full object-contain"
+            <div className="w-full h-full flex items-center justify-center">
+              <iframe
+                src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7311417243899158528?compact=1"
+                height="399"
+                width="504"
+                frameBorder="0"
+                allowFullScreen=""
+                title="Embedded post"
+                className="rounded-lg shadow-lg"
               />
             </div>
           </div>
