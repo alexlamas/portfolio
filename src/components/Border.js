@@ -29,16 +29,14 @@ function Border() {
     <div className="relative w-screen h-px">
       {/* Main border line */}
       <motion.div
-        className="absolute w-full h-px bg-border"
-        style={{ originX: 0 }}
+        className="absolute w-full h-px bg-border origin-left"
         variants={borderVariants}
         initial="hidden"
         animate="visible"
       />
       {/* Glow effect during draw */}
       <motion.div
-        className="absolute w-full h-[3px] -top-[1px] bg-gradient-to-r from-transparent via-foreground/50 to-transparent"
-        style={{ originX: 0 }}
+        className="absolute w-full h-[3px] -top-[1px] bg-gradient-to-r from-transparent via-foreground/50 to-transparent origin-left"
         variants={borderVariants}
         initial="hidden"
         animate="visible"
