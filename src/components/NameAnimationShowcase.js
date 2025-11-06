@@ -31,7 +31,7 @@ const NameAnimationShowcase = () => {
     },
     {
       name: "Blur to Focus",
-      description: "Letters start blurry and sharpen sequentially"
+      description: "Letters blur sequentially from left to right on hover"
     },
     {
       name: "Explode & Reform",
@@ -238,8 +238,8 @@ const NameAnimationShowcase = () => {
             key={i}
             className="inline-block"
             animate={{
-              filter: isHovered ? "blur(0px)" : "blur(8px)",
-              opacity: isHovered ? 1 : 0.5
+              filter: isHovered ? "blur(8px)" : "blur(0px)",
+              opacity: isHovered ? 0.5 : 1
             }}
             transition={{
               duration: 0.4,
