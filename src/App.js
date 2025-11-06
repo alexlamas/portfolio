@@ -32,6 +32,14 @@ function App() {
     }
   };
 
+  const lineGlowVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: [0, 1, 0],
+      transition: { duration: 0.8, ease: "easeOut" }
+    }
+  };
+
   const sectionVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (custom) => ({
@@ -49,18 +57,37 @@ function App() {
     <div className="neutral text-foreground bg-background min-h-screen">
       <div>
           {/* Animated vertical lines */}
-          <motion.div
-            className="fixed left-[calc(4.16vw-1px)] sm:left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] top-0 w-px bg-border"
-            variants={lineVariants}
-            initial="hidden"
-            animate="visible"
-          />
-          <motion.div
-            className="fixed right-[calc(4.16vw-1px)] sm:right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] top-0 w-px bg-border"
-            variants={lineVariants}
-            initial="hidden"
-            animate="visible"
-          />
+          <div className="fixed left-[calc(4.16vw-1px)] sm:left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] top-0">
+            <motion.div
+              className="relative w-px bg-border"
+              variants={lineVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3px] h-32 bg-gradient-to-b from-foreground/80 to-transparent blur-sm"
+                variants={lineGlowVariants}
+                initial="hidden"
+                animate="visible"
+              />
+            </motion.div>
+          </div>
+
+          <div className="fixed right-[calc(4.16vw-1px)] sm:right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] top-0">
+            <motion.div
+              className="relative w-px bg-border"
+              variants={lineVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              <motion.div
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[3px] h-32 bg-gradient-to-b from-foreground/80 to-transparent blur-sm"
+                variants={lineGlowVariants}
+                initial="hidden"
+                animate="visible"
+              />
+            </motion.div>
+          </div>
 
           {/* Nav - fades in first */}
           <motion.div
