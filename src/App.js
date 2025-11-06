@@ -41,10 +41,9 @@ function App() {
   };
 
   const sectionVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0 },
     visible: (custom) => ({
       opacity: 1,
-      y: 0,
       transition: {
         duration: 0.6,
         delay: 1.2 + (custom * 0.15), // Start after lines finish (0.8s) + small buffer
