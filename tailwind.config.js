@@ -41,6 +41,27 @@ module.exports = {
         border: "#FFFFFF15",
         highlight: "#FAFAFA",
       },
+      // Design 1: Electric Brutalist - stark contrast with electric blue accent
+      "electric": {
+        foreground: "#FFFFFF",
+        background: "#000000",
+        border: "#00D4FF40",
+        highlight: "#00D4FF",
+      },
+      // Design 2: Sunset Warmth - rich burgundy with golden accents
+      "sunset": {
+        foreground: "#FFF5E6",
+        background: "#1A0A14",
+        border: "#FF6B3530",
+        highlight: "#FFB347",
+      },
+      // Design 3: Matrix Cyber - dark with neon green accents
+      "matrix": {
+        foreground: "#E0FFE0",
+        background: "#0D1208",
+        border: "#00FF4130",
+        highlight: "#00FF41",
+      },
     }),
   ],
 };
