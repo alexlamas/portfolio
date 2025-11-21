@@ -9,7 +9,11 @@ import Projects from "./components/Projects";
 import SkillsTicker from "./components/SkillsTicker.js";
 
 function App() {
-
+  // Get theme from URL: ?theme=electric, ?theme=sunset, ?theme=matrix
+  const params = new URLSearchParams(window.location.search);
+  const theme = params.get("theme") || "neutral";
+  const validThemes = ["neutral", "electric", "sunset", "matrix"];
+  const activeTheme = validThemes.includes(theme) ? theme : "neutral";
 
   const Link = ({ href, children }) => (
     <a
@@ -23,7 +27,7 @@ function App() {
   );
 
   return (
-    <div className="neutral text-foreground bg-background min-h-screen">
+    <div className={`${activeTheme} text-foreground bg-background min-h-screen`}>
       <div>
           <div className="fixed left-[calc(4.16vw-1px)] sm:left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-border "></div>
           <div className="fixed right-[calc(4.16vw-1px)] sm:right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-border "></div>
