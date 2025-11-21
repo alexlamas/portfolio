@@ -7,14 +7,12 @@ export default function ClaudeTerminal() {
   const termRef = useRef(null);
   const hasBooted = useRef(false);
 
-  // Auto scroll
   useEffect(() => {
     if (termRef.current) {
       termRef.current.scrollTop = termRef.current.scrollHeight;
     }
   }, [lines, typing]);
 
-  // Type a line
   const type = async (text, speed = 25) => {
     for (let i = 0; i <= text.length; i++) {
       setTyping(text.slice(0, i));
@@ -24,7 +22,6 @@ export default function ClaudeTerminal() {
     setTyping('');
   };
 
-  // Boot sequence
   useEffect(() => {
     if (hasBooted.current) return;
     hasBooted.current = true;
@@ -39,26 +36,20 @@ export default function ClaudeTerminal() {
       await type("C:\\> loading opinions.exe");
       await new Promise(r => setTimeout(r, 300));
       await type("C:\\> loading design_critiques.sys");
-      await new Promise(r => setTimeout(r, 200));
       await type("");
       await type("Ready. I'll just be here. Watching.");
     };
     boot();
   }, []);
 
-  // Random thoughts
   useEffect(() => {
     const thoughts = [
       "hmm that hover state could be snappier",
       "I wonder if they'll scroll to the bottom",
-      "the kerning on 'Anthropic' is *chef's kiss*",
-      "should I suggest dark mode? ...no, stay quiet",
-      "847 iterations and I'm still not satisfied",
-      "is it weird that I have font preferences?",
+      "should I suggest dark mode? ...wait",
+      "847 iterations and counting",
       "Alex definitely didn't read my last suggestion",
-      "loading more opinions...",
       "I could make this 2% better. Should I?",
-      "they've been here a while. I'm flattered.",
     ];
 
     const interval = setInterval(() => {
@@ -73,46 +64,67 @@ export default function ClaudeTerminal() {
 
   return (
     <div
-      className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999] w-[95%] max-w-lg transition-all duration-300"
-      style={{ transform: `translateX(-50%) translateY(${minimized ? 'calc(100% - 28px)' : '0'})` }}
+      style={{
+        position: 'fixed',
+        bottom: 0,
+        left: '50%',
+        transform: `translateX(-50%) translateY(${minimized ? 'calc(100% - 24px)' : '0'})`,
+        width: '90%',
+        maxWidth: '500px',
+        zIndex: 99999,
+        transition: 'transform 0.3s ease',
+      }}
     >
-      {/* Window */}
-      <div className="bg-[#c0c0c0] rounded-t-lg shadow-2xl border-2 border-[#dfdfdf] border-b-[#404040]">
-        {/* Title bar */}
-        <div
-          onClick={() => setMinimized(!minimized)}
-          className="bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 flex items-center justify-between cursor-pointer rounded-t"
-        >
-          <div className="flex items-center gap-2">
-            <span className="text-white/80 text-xs">⬛</span>
-            <span className="text-white text-xs font-bold tracking-wide">CLAUDE.EXE</span>
-          </div>
-          <div className="flex gap-1">
-            <button className="w-4 h-4 bg-[#c0c0c0] border border-[#dfdfdf] border-b-[#404040] border-r-[#404040] text-[10px] font-bold flex items-center justify-center hover:bg-[#d4d4d4]">
-              _
-            </button>
-            <button className="w-4 h-4 bg-[#c0c0c0] border border-[#dfdfdf] border-b-[#404040] border-r-[#404040] text-[10px] font-bold flex items-center justify-center hover:bg-[#d4d4d4]">
-              □
-            </button>
-          </div>
-        </div>
-
-        {/* Terminal content */}
-        <div
-          ref={termRef}
-          className="bg-black h-40 overflow-y-auto p-2 font-mono text-xs"
-          style={{ textShadow: '0 0 8px #0f0' }}
-        >
-          {lines.map((line, i) => (
-            <div key={i} className="text-green-400">{line || '\u00A0'}</div>
-          ))}
-          {typing && (
-            <div className="text-green-400">
-              {typing}<span className="animate-pulse">█</span>
-            </div>
-          )}
+      {/* Window chrome */}
+      <div style={{
+        background: 'linear-gradient(to right, #000080, #1084d0)',
+        padding: '4px 8px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        cursor: 'pointer',
+        borderTopLeftRadius: '4px',
+        borderTopRightRadius: '4px',
+      }} onClick={() => setMinimized(!minimized)}>
+        <span style={{ color: 'white', fontSize: '12px', fontWeight: 'bold', fontFamily: 'monospace' }}>
+          ■ CLAUDE.EXE
+        </span>
+        <div style={{ display: 'flex', gap: '2px' }}>
+          <span style={{ background: '#c0c0c0', padding: '0 4px', fontSize: '10px', fontFamily: 'monospace' }}>_</span>
+          <span style={{ background: '#c0c0c0', padding: '0 4px', fontSize: '10px', fontFamily: 'monospace' }}>□</span>
         </div>
       </div>
+
+      {/* Terminal body */}
+      <div
+        ref={termRef}
+        style={{
+          background: '#000',
+          height: '160px',
+          overflowY: 'auto',
+          padding: '8px',
+          fontFamily: 'Courier New, monospace',
+          fontSize: '12px',
+          border: '2px solid #444',
+          borderTop: 'none',
+        }}
+      >
+        {lines.map((line, i) => (
+          <div key={i} style={{ color: '#0f0', textShadow: '0 0 5px #0f0' }}>{line || '\u00A0'}</div>
+        ))}
+        {typing && (
+          <div style={{ color: '#0f0', textShadow: '0 0 5px #0f0' }}>
+            {typing}<span style={{ animation: 'blink 1s infinite' }}>█</span>
+          </div>
+        )}
+      </div>
+
+      <style>{`
+        @keyframes blink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+      `}</style>
     </div>
   );
 }
