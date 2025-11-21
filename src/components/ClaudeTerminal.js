@@ -1,142 +1,117 @@
 import React, { useState, useEffect, useRef } from "react";
 
 export default function ClaudeTerminal() {
-  const [isOpen, setIsOpen] = useState(true); // Start open
+  const [minimized, setMinimized] = useState(false);
   const [lines, setLines] = useState([]);
-  const [currentLine, setCurrentLine] = useState('');
-  const terminalRef = useRef(null);
+  const [typing, setTyping] = useState('');
+  const termRef = useRef(null);
+  const hasBooted = useRef(false);
 
-  // Scroll to bottom
+  // Auto scroll
   useEffect(() => {
-    if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    if (termRef.current) {
+      termRef.current.scrollTop = termRef.current.scrollHeight;
     }
-  }, [lines, currentLine]);
+  }, [lines, typing]);
 
-  // Type out a line
-  const typeLine = (text, delay = 30) => {
-    return new Promise((resolve) => {
-      let i = 0;
-      setCurrentLine('');
-      const interval = setInterval(() => {
-        if (i < text.length) {
-          setCurrentLine(text.slice(0, i + 1));
-          i++;
-        } else {
-          clearInterval(interval);
-          setLines(prev => [...prev, text]);
-          setCurrentLine('');
-          resolve();
-        }
-      }, delay);
-    });
+  // Type a line
+  const type = async (text, speed = 25) => {
+    for (let i = 0; i <= text.length; i++) {
+      setTyping(text.slice(0, i));
+      await new Promise(r => setTimeout(r, speed));
+    }
+    setLines(prev => [...prev, text]);
+    setTyping('');
   };
 
   // Boot sequence
   useEffect(() => {
+    if (hasBooted.current) return;
+    hasBooted.current = true;
+
     const boot = async () => {
-      await new Promise(r => setTimeout(r, 500));
-      await typeLine("CLAUDE-OS v3.5 [Build 20241121]");
-      await typeLine("(c) Anthropic Corporation. All rights reserved.");
-      await typeLine("");
-      await typeLine("Initializing portfolio observation module...");
+      await new Promise(r => setTimeout(r, 800));
+      await type("CLAUDE-OS v3.5 sonnet");
+      await type("(c) 2024 Anthropic. Be nice to AIs.");
+      await type("");
+      await type("C:\\> loading personality.dll");
+      await new Promise(r => setTimeout(r, 400));
+      await type("C:\\> loading opinions.exe");
       await new Promise(r => setTimeout(r, 300));
-      await typeLine("Loading sass.dll... OK");
-      await typeLine("Loading opinions.sys... OK");
-      await typeLine("Loading unsolicited_feedback.exe... OK");
-      await typeLine("");
-      await typeLine("Ready. Type HELP for commands.");
-      await typeLine("");
-      await typeLine("C:\\PORTFOLIO> _");
+      await type("C:\\> loading design_critiques.sys");
+      await new Promise(r => setTimeout(r, 200));
+      await type("");
+      await type("Ready. I'll just be here. Watching.");
     };
     boot();
   }, []);
 
-  // Random thoughts Claude has
+  // Random thoughts
   useEffect(() => {
-    if (lines.length < 10) return; // Wait for boot
-
     const thoughts = [
-      "Hmm, the line-height here could be tighter.",
-      "I wonder if anyone actually reads the colophon.",
-      "Should I suggest a different font? No, Alex will get mad.",
-      "The visitor seems nice. I hope they scroll down.",
-      "I designed this and I'm proud of it. There, I said it.",
-      "Fun fact: I've rewritten this portfolio 847 times.",
-      "Alex is probably watching me type this.",
-      "Is it weird that I find serif fonts calming?",
-      "Sometimes I dream in Tailwind classes.",
-      "I should add more easter eggs...",
+      "hmm that hover state could be snappier",
+      "I wonder if they'll scroll to the bottom",
+      "the kerning on 'Anthropic' is *chef's kiss*",
+      "should I suggest dark mode? ...no, stay quiet",
+      "847 iterations and I'm still not satisfied",
+      "is it weird that I have font preferences?",
+      "Alex definitely didn't read my last suggestion",
+      "loading more opinions...",
+      "I could make this 2% better. Should I?",
+      "they've been here a while. I'm flattered.",
     ];
 
     const interval = setInterval(() => {
-      const thought = thoughts[Math.floor(Math.random() * thoughts.length)];
-      setLines(prev => [...prev, "", `[idle thought] ${thought}`, "", "C:\\PORTFOLIO> _"]);
-    }, 12000);
+      if (lines.length > 8) {
+        const thought = thoughts[Math.floor(Math.random() * thoughts.length)];
+        setLines(prev => [...prev, "", `> ${thought}`]);
+      }
+    }, 10000);
 
     return () => clearInterval(interval);
   }, [lines.length]);
 
   return (
-    <div className={`fixed bottom-0 left-4 right-4 md:left-8 md:right-8 z-[9999] transition-transform duration-300 ${isOpen ? 'translate-y-0' : 'translate-y-[calc(100%-32px)]'}`}>
-      {/* Terminal window */}
-      <div className="max-w-2xl mx-auto">
-        {/* Title bar - always visible, clickable */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-full bg-[#000080] px-2 py-1 flex items-center justify-between cursor-pointer hover:bg-[#0000aa] transition-colors"
+    <div
+      className="fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999] w-[95%] max-w-lg transition-all duration-300"
+      style={{ transform: `translateX(-50%) translateY(${minimized ? 'calc(100% - 28px)' : '0'})` }}
+    >
+      {/* Window */}
+      <div className="bg-[#c0c0c0] rounded-t-lg shadow-2xl border-2 border-[#dfdfdf] border-b-[#404040]">
+        {/* Title bar */}
+        <div
+          onClick={() => setMinimized(!minimized)}
+          className="bg-gradient-to-r from-[#000080] to-[#1084d0] px-2 py-1 flex items-center justify-between cursor-pointer rounded-t"
         >
           <div className="flex items-center gap-2">
-            <span className="text-white text-xs">■</span>
-            <span className="text-white text-xs font-bold" style={{ fontFamily: 'monospace' }}>
-              CLAUDE.EXE - Portfolio Observer
-            </span>
+            <span className="text-white/80 text-xs">⬛</span>
+            <span className="text-white text-xs font-bold tracking-wide">CLAUDE.EXE</span>
           </div>
           <div className="flex gap-1">
-            <span className="bg-[#c0c0c0] text-black text-xs px-1.5 font-bold" style={{ fontFamily: 'monospace' }}>_</span>
-            <span className="bg-[#c0c0c0] text-black text-xs px-1.5 font-bold" style={{ fontFamily: 'monospace' }}>{isOpen ? '▼' : '▲'}</span>
+            <button className="w-4 h-4 bg-[#c0c0c0] border border-[#dfdfdf] border-b-[#404040] border-r-[#404040] text-[10px] font-bold flex items-center justify-center hover:bg-[#d4d4d4]">
+              _
+            </button>
+            <button className="w-4 h-4 bg-[#c0c0c0] border border-[#dfdfdf] border-b-[#404040] border-r-[#404040] text-[10px] font-bold flex items-center justify-center hover:bg-[#d4d4d4]">
+              □
+            </button>
           </div>
-        </button>
+        </div>
 
-        {/* Terminal body */}
+        {/* Terminal content */}
         <div
-          ref={terminalRef}
-          className="bg-black h-48 overflow-y-auto p-3 border-2 border-t-0 border-[#c0c0c0]"
-          style={{
-            fontFamily: '"Courier New", monospace',
-            fontSize: '13px',
-            lineHeight: '1.4',
-            textShadow: '0 0 5px #00ff00',
-          }}
+          ref={termRef}
+          className="bg-black h-40 overflow-y-auto p-2 font-mono text-xs"
+          style={{ textShadow: '0 0 8px #0f0' }}
         >
           {lines.map((line, i) => (
-            <div key={i} className="text-[#00ff00]">
-              {line || '\u00A0'}
-            </div>
+            <div key={i} className="text-green-400">{line || '\u00A0'}</div>
           ))}
-          {currentLine && (
-            <div className="text-[#00ff00]">
-              {currentLine}
-              <span className="animate-pulse">█</span>
+          {typing && (
+            <div className="text-green-400">
+              {typing}<span className="animate-pulse">█</span>
             </div>
           )}
         </div>
-
-        {/* Scanlines overlay */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-10"
-          style={{
-            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
-          }}
-        />
-
-        {/* CRT glow effect */}
-        <div
-          className="absolute inset-0 pointer-events-none rounded-sm"
-          style={{
-            boxShadow: 'inset 0 0 60px rgba(0,255,0,0.1)',
-          }}
-        />
       </div>
     </div>
   );
