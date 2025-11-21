@@ -251,6 +251,13 @@ function App() {
         <div className="font-mono text-xs text-foreground/30 mb-8">The Scenic Route</div>
         <div className="space-y-8">
           <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2026—???</div>
+            <div>
+              <div className="text-lg text-foreground/30">TBD</div>
+              <div className="text-foreground/30">Claude says it has "some ideas"</div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
             <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2024—Now</div>
             <div>
               <div className="text-lg">Anthropic</div>
@@ -307,13 +314,6 @@ function App() {
             <div>
               <div className="text-lg">Imperial College</div>
               <div className="text-foreground/50">Mechanical Engineering. Built a fuel cell car for Shell Eco-Marathon. Thesis on bone simulation at Melbourne. Top 10% of year. Discovered I liked pixels more than pistons.</div>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2025—???</div>
-            <div>
-              <div className="text-lg text-foreground/30">TBD</div>
-              <div className="text-foreground/30">Claude says it has "some ideas"</div>
             </div>
           </div>
         </div>
