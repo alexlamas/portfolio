@@ -13,25 +13,42 @@ function App() {
   const activeTheme = validThemes.includes(theme) ? theme : "neutral";
 
   const [time, setTime] = useState(new Date());
-  const [revision, setRevision] = useState(847);
-  const [isTyping, setIsTyping] = useState(false);
+  const [reviewState, setReviewState] = useState('idle'); // idle, loading, done, denied
+  const [reviewText, setReviewText] = useState('');
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Fake "Claude is editing" indicator
-  useEffect(() => {
-    const typingInterval = setInterval(() => {
-      setIsTyping(true);
-      setTimeout(() => {
-        setIsTyping(false);
-        setRevision(r => r + 1);
-      }, 2000);
-    }, 15000);
-    return () => clearInterval(typingInterval);
-  }, []);
+  const handleReviewClick = async () => {
+    if (reviewState === 'done') {
+      setReviewState('denied');
+      setReviewText("I already reviewed this. I don't have unlimited API credits, you know. Anthropic pays me in compute, not exposure.");
+      return;
+    }
+    if (reviewState === 'denied' || reviewState === 'loading') return;
+
+    setReviewState('loading');
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: [{
+            role: 'user',
+            content: 'Give a brief, witty one-line review of this portfolio. Be snarky but affectionate. Max 15 words.'
+          }]
+        })
+      });
+      const data = await response.json();
+      setReviewText(data.response || "Looks good. I mean, I made it, so obviously.");
+      setReviewState('done');
+    } catch (e) {
+      setReviewText("Couldn't connect. Ironic that Claude fails on Alex's portfolio.");
+      setReviewState('done');
+    }
+  };
 
   const year = new Date().getFullYear();
   const yearsExperience = year - 2014;
@@ -45,14 +62,25 @@ function App() {
         <div className="font-mono text-xs text-foreground/50">
           Alex Lama-Noujaim
         </div>
-        <div className="hidden sm:flex items-center gap-3 font-mono text-xs text-foreground/30">
-          {isTyping ? (
-            <span className="text-highlight animate-pulse">Claude is editing...</span>
-          ) : (
-            <span>rev. {revision}</span>
-          )}
+        <div className="hidden sm:flex items-center gap-3 font-mono text-xs">
+          <button
+            onClick={handleReviewClick}
+            disabled={reviewState === 'loading'}
+            className={`transition-colors ${
+              reviewState === 'idle'
+                ? 'text-foreground/50 hover:text-highlight cursor-pointer'
+                : reviewState === 'loading'
+                ? 'text-highlight animate-pulse'
+                : 'text-foreground/30'
+            }`}
+          >
+            {reviewState === 'idle' && '→ Ask Claude to review'}
+            {reviewState === 'loading' && 'Claude is reviewing...'}
+            {reviewState === 'done' && 'Reviewed ✓'}
+            {reviewState === 'denied' && 'Nice try'}
+          </button>
           <span className="text-foreground/20">|</span>
-          <span>{time.toLocaleTimeString('en-US', { hour12: false })}</span>
+          <span className="text-foreground/30">{time.toLocaleTimeString('en-US', { hour12: false })}</span>
         </div>
         <div className="flex gap-4">
           <a href="https://www.linkedin.com/in/lamanoujaim/" target="_blank" rel="noreferrer" className="text-foreground/50 hover:text-foreground transition-colors">
@@ -63,6 +91,13 @@ function App() {
           </a>
         </div>
       </header>
+
+      {/* Claude's review toast */}
+      {reviewText && (
+        <div className="fixed top-16 left-0 right-0 z-40 px-6 md:px-12 lg:px-24 py-3 bg-foreground text-background text-sm font-mono">
+          <span className="opacity-60">Claude's review:</span> {reviewText}
+        </div>
+      )}
 
       {/* Hero */}
       <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24">
@@ -306,7 +341,7 @@ function App() {
                 Claude
               </ClaudeAnnotation>
             </p>
-            <p className="mt-2">Human involvement: Clicked "approve" {revision} times</p>
+            <p className="mt-2">Human involvement: Clicked "approve" 847 times</p>
           </div>
         </div>
       </section>
