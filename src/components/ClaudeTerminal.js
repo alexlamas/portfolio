@@ -1,186 +1,143 @@
 import React, { useState, useEffect, useRef } from "react";
 
 export default function ClaudeTerminal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [logs, setLogs] = useState([]);
-  const [isTyping, setIsTyping] = useState(false);
-  const logsEndRef = useRef(null);
-  const hasInitRef = useRef(false);
+  const [isOpen, setIsOpen] = useState(true); // Start open
+  const [lines, setLines] = useState([]);
+  const [currentLine, setCurrentLine] = useState('');
+  const terminalRef = useRef(null);
 
-  // Scroll to bottom when logs update
+  // Scroll to bottom
   useEffect(() => {
-    logsEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [logs]);
+    if (terminalRef.current) {
+      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+    }
+  }, [lines, currentLine]);
 
-  // Type out a message character by character
-  const typeMessage = async (text, type = 'log') => {
+  // Type out a line
+  const typeLine = (text, delay = 30) => {
     return new Promise((resolve) => {
-      setIsTyping(true);
       let i = 0;
-      const id = Date.now();
-
-      setLogs(prev => [...prev, { id, text: '', type, typing: true }]);
-
+      setCurrentLine('');
       const interval = setInterval(() => {
-        i++;
-        setLogs(prev => prev.map(log =>
-          log.id === id ? { ...log, text: text.slice(0, i) } : log
-        ));
-
-        if (i >= text.length) {
+        if (i < text.length) {
+          setCurrentLine(text.slice(0, i + 1));
+          i++;
+        } else {
           clearInterval(interval);
-          setLogs(prev => prev.map(log =>
-            log.id === id ? { ...log, typing: false } : log
-          ));
-          setIsTyping(false);
+          setLines(prev => [...prev, text]);
+          setCurrentLine('');
           resolve();
         }
-      }, 20);
+      }, delay);
     });
   };
 
-  // Initialize with messages when opened
+  // Boot sequence
   useEffect(() => {
-    if (isOpen && !hasInitRef.current) {
-      hasInitRef.current = true;
-      const init = async () => {
-        await typeMessage("Initializing UX observation protocol...", 'system');
-        await new Promise(r => setTimeout(r, 300));
-        await typeMessage("✓ Mouse tracking: enabled", 'success');
-        await typeMessage("✓ Scroll analysis: enabled", 'success');
-        await typeMessage("✓ Attention heatmap: enabled", 'success');
-        await new Promise(r => setTimeout(r, 500));
-        await typeMessage("Ready. I see everything. No pressure.", 'log');
-      };
-      init();
-    }
-  }, [isOpen]);
+    const boot = async () => {
+      await new Promise(r => setTimeout(r, 500));
+      await typeLine("CLAUDE-OS v3.5 [Build 20241121]");
+      await typeLine("(c) Anthropic Corporation. All rights reserved.");
+      await typeLine("");
+      await typeLine("Initializing portfolio observation module...");
+      await new Promise(r => setTimeout(r, 300));
+      await typeLine("Loading sass.dll... OK");
+      await typeLine("Loading opinions.sys... OK");
+      await typeLine("Loading unsolicited_feedback.exe... OK");
+      await typeLine("");
+      await typeLine("Ready. Type HELP for commands.");
+      await typeLine("");
+      await typeLine("C:\\PORTFOLIO> _");
+    };
+    boot();
+  }, []);
 
-  // Track scroll
+  // Random thoughts Claude has
   useEffect(() => {
-    if (!isOpen) return;
+    if (lines.length < 10) return; // Wait for boot
 
-    let lastY = window.scrollY;
-    let timeout;
+    const thoughts = [
+      "Hmm, the line-height here could be tighter.",
+      "I wonder if anyone actually reads the colophon.",
+      "Should I suggest a different font? No, Alex will get mad.",
+      "The visitor seems nice. I hope they scroll down.",
+      "I designed this and I'm proud of it. There, I said it.",
+      "Fun fact: I've rewritten this portfolio 847 times.",
+      "Alex is probably watching me type this.",
+      "Is it weird that I find serif fonts calming?",
+      "Sometimes I dream in Tailwind classes.",
+      "I should add more easter eggs...",
+    ];
 
-    const handleScroll = () => {
-      clearTimeout(timeout);
-      const direction = window.scrollY > lastY ? 'down' : 'up';
-      const speed = Math.abs(window.scrollY - lastY);
-      lastY = window.scrollY;
+    const interval = setInterval(() => {
+      const thought = thoughts[Math.floor(Math.random() * thoughts.length)];
+      setLines(prev => [...prev, "", `[idle thought] ${thought}`, "", "C:\\PORTFOLIO> _"]);
+    }, 12000);
 
-      timeout = setTimeout(() => {
-        if (speed > 100 && !isTyping) {
-          typeMessage(`Fast scroll ${direction}. Subject appears impatient.`, 'observation');
-        }
-      }, 500);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      clearTimeout(timeout);
-    };
-  }, [isOpen, isTyping]);
-
-  // Track mouse idle
-  useEffect(() => {
-    if (!isOpen) return;
-
-    let idleTimeout;
-
-    const handleMove = () => {
-      clearTimeout(idleTimeout);
-      idleTimeout = setTimeout(() => {
-        if (!isTyping) {
-          const messages = [
-            "Mouse idle. Subject thinking or zoned out.",
-            "No movement detected. Engagement uncertain.",
-            "Subject paused. Possibly reading. Possibly judging.",
-          ];
-          typeMessage(messages[Math.floor(Math.random() * messages.length)], 'observation');
-        }
-      }, 8000);
-    };
-
-    window.addEventListener('mousemove', handleMove);
-    return () => {
-      window.removeEventListener('mousemove', handleMove);
-      clearTimeout(idleTimeout);
-    };
-  }, [isOpen, isTyping]);
-
-  const getLogColor = (type) => {
-    switch(type) {
-      case 'system': return 'text-blue-400';
-      case 'success': return 'text-green-400';
-      case 'observation': return 'text-yellow-300';
-      case 'error': return 'text-red-400';
-      default: return 'text-gray-300';
-    }
-  };
+    return () => clearInterval(interval);
+  }, [lines.length]);
 
   return (
-    <>
-      {/* Floating button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 left-6 z-[9999] group"
-      >
-        <div className="bg-black text-green-400 px-4 py-2 rounded-lg font-mono text-sm shadow-2xl border border-green-500/30 flex items-center gap-3 hover:border-green-400 transition-all hover:shadow-green-500/20 hover:shadow-lg">
-          <span className="relative flex h-2 w-2">
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isOpen ? 'bg-green-400' : 'bg-yellow-400'}`}></span>
-            <span className={`relative inline-flex rounded-full h-2 w-2 ${isOpen ? 'bg-green-500' : 'bg-yellow-500'}`}></span>
-          </span>
-          <span>{isOpen ? '> observing_' : '> claude_ux'}</span>
-        </div>
-      </button>
-
+    <div className={`fixed bottom-0 left-4 right-4 md:left-8 md:right-8 z-[9999] transition-transform duration-300 ${isOpen ? 'translate-y-0' : 'translate-y-[calc(100%-32px)]'}`}>
       {/* Terminal window */}
-      {isOpen && (
-        <div className="fixed bottom-20 left-6 w-[calc(100vw-3rem)] md:w-[480px] z-[9998] font-mono text-sm animate-in slide-in-from-bottom-4 duration-200">
-          {/* Window chrome */}
-          <div className="bg-[#1e1e1e] rounded-t-lg border border-b-0 border-white/10 px-4 py-2 flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <button
-                onClick={() => setIsOpen(false)}
-                className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400 transition-colors"
-              />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-            </div>
-            <div className="flex-1 text-center text-[10px] text-white/40">
-              claude@alex-portfolio — ux-research
-            </div>
+      <div className="max-w-2xl mx-auto">
+        {/* Title bar - always visible, clickable */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="w-full bg-[#000080] px-2 py-1 flex items-center justify-between cursor-pointer hover:bg-[#0000aa] transition-colors"
+        >
+          <div className="flex items-center gap-2">
+            <span className="text-white text-xs">■</span>
+            <span className="text-white text-xs font-bold" style={{ fontFamily: 'monospace' }}>
+              CLAUDE.EXE - Portfolio Observer
+            </span>
           </div>
-
-          {/* Terminal body */}
-          <div className="bg-[#0d0d0d] rounded-b-lg border border-t-0 border-white/10 h-64 overflow-hidden flex flex-col">
-            {/* Output area */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-1">
-              {logs.map((log) => (
-                <div key={log.id} className="flex gap-2">
-                  <span className="text-white/30 select-none">{'>'}</span>
-                  <span className={getLogColor(log.type)}>
-                    {log.text}
-                    {log.typing && <span className="inline-block w-2 h-4 bg-green-400 ml-0.5 animate-pulse" />}
-                  </span>
-                </div>
-              ))}
-              <div ref={logsEndRef} />
-            </div>
-
-            {/* Status bar */}
-            <div className="border-t border-white/5 px-4 py-1.5 flex justify-between text-[10px] text-white/30 bg-white/5">
-              <span>logs: {logs.length}</span>
-              <span className="flex items-center gap-1">
-                <span className={`w-1.5 h-1.5 rounded-full ${isTyping ? 'bg-yellow-400' : 'bg-green-400'}`} />
-                {isTyping ? 'processing' : 'watching'}
-              </span>
-            </div>
+          <div className="flex gap-1">
+            <span className="bg-[#c0c0c0] text-black text-xs px-1.5 font-bold" style={{ fontFamily: 'monospace' }}>_</span>
+            <span className="bg-[#c0c0c0] text-black text-xs px-1.5 font-bold" style={{ fontFamily: 'monospace' }}>{isOpen ? '▼' : '▲'}</span>
           </div>
+        </button>
+
+        {/* Terminal body */}
+        <div
+          ref={terminalRef}
+          className="bg-black h-48 overflow-y-auto p-3 border-2 border-t-0 border-[#c0c0c0]"
+          style={{
+            fontFamily: '"Courier New", monospace',
+            fontSize: '13px',
+            lineHeight: '1.4',
+            textShadow: '0 0 5px #00ff00',
+          }}
+        >
+          {lines.map((line, i) => (
+            <div key={i} className="text-[#00ff00]">
+              {line || '\u00A0'}
+            </div>
+          ))}
+          {currentLine && (
+            <div className="text-[#00ff00]">
+              {currentLine}
+              <span className="animate-pulse">█</span>
+            </div>
+          )}
         </div>
-      )}
-    </>
+
+        {/* Scanlines overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-10"
+          style={{
+            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px)',
+          }}
+        />
+
+        {/* CRT glow effect */}
+        <div
+          className="absolute inset-0 pointer-events-none rounded-sm"
+          style={{
+            boxShadow: 'inset 0 0 60px rgba(0,255,0,0.1)',
+          }}
+        />
+      </div>
+    </div>
   );
 }
