@@ -4,7 +4,6 @@ import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
 import { LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react";
 
-import Projects from "./components/Projects";
 import ClaudeAnnotation from "./components/ClaudeAnnotation";
 
 function App() {
@@ -103,7 +102,7 @@ function App() {
         <div className="absolute bottom-8 left-6 md:left-12 lg:left-24">
           <div className="font-mono text-[10px] text-foreground/30 flex items-center gap-2">
             <span className="inline-block w-8 h-px bg-foreground/30"></span>
-            Scroll for work <span className="text-foreground/20">(that I actually designed myself)</span>
+            Scroll for the rest
           </div>
         </div>
       </section>
@@ -136,11 +135,31 @@ function App() {
         </div>
       </section>
 
-      {/* Work section */}
+      {/* Work section - WIP */}
       <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-2">Selected Work</div>
-        <div className="font-mono text-xs text-foreground/20 mb-8">(The stuff I designed before Claude took over)</div>
-        <Projects />
+        <div className="font-mono text-xs text-foreground/30 mb-8">Selected Work</div>
+        <div className="max-w-2xl">
+          <p className="text-2xl text-foreground/70 mb-6">
+            This section is{" "}
+            <ClaudeAnnotation note="I offered to generate some fake case studies but Alex said that was 'ethically questionable' and 'not how portfolios work.' Agree to disagree.">
+              under construction.
+            </ClaudeAnnotation>
+          </p>
+          <p className="text-lg text-foreground/50 mb-8">
+            Most of my recent work is either under NDA, too entangled with a product to pull out cleanly, or I simply haven't had time to write it up because I've been too busy doing more work.
+          </p>
+          <p className="text-lg text-foreground/50 mb-8">
+            The cobbler's children have no shoes. The designer's portfolio has no case studies. You get it.
+          </p>
+          <div className="bg-foreground/5 rounded-lg p-6 font-mono text-sm border border-border">
+            <div className="text-foreground/40 mb-2">In the meantime:</div>
+            <ul className="space-y-2 text-foreground/70">
+              <li>→ Ask me about my work at <span className="text-foreground">Anthropic</span>, <span className="text-foreground">Airtable</span>, or <span className="text-foreground">Tray.io</span></li>
+              <li>→ Check my <a href="https://linkedin.com/in/lamanoujaim" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">LinkedIn</a> for the professional version</li>
+              <li>→ Or just <a href="mailto:lamanoujaim@gmail.com" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">email me</a> — I'm better at talking about work than writing about it</li>
+            </ul>
+          </div>
+        </div>
       </section>
 
       {/* What I Actually Do */}
