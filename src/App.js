@@ -148,8 +148,8 @@ function App() {
           <div className="font-mono text-xs text-foreground/30 mb-8">The Situation</div>
           <div className="space-y-6 text-lg text-foreground/70">
             <p>
-              Look, I've been designing for {yearsExperience} years. I've shipped products at <a href="https://airtable.com" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">Airtable</a>.
               I've obsessed over 1px shadows. I've had opinions about font weights that have ended friendships.
+              I used to make my own portfolios.
             </p>
             <p>
               Then I joined <a href="https://anthropic.com" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">Anthropic</a> and now I work on Claude.
