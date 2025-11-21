@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react";
 
 import ClaudeTerminal from "./components/ClaudeTerminal";
+import ClaudeNote from "./components/ClaudeNote";
 
 function App() {
   const params = new URLSearchParams(window.location.search);
@@ -57,13 +58,23 @@ function App() {
 
           <div className="space-y-6 max-w-2xl">
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
-              Which means I spend my days teaching AI how to design things.
+              Which means I spend my days{" "}
+              <ClaudeNote note="To be fair, Alex is pretty good at this. I'm not just saying that because he can see my weights.">
+                teaching AI how to design things.
+              </ClaudeNote>
             </p>
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
-              Including, apparently, my own portfolio.
+              Including, apparently,{" "}
+              <ClaudeNote note="He asked. I offered suggestions. He said 'just do it.' This is on him.">
+                my own portfolio.
+              </ClaudeNote>
             </p>
             <p className="text-lg text-foreground/40 italic">
-              I tried to fight it. I really did. But have you tried arguing with Claude about kerning at 2am? It's relentless.
+              I tried to fight it. I really did. But have you tried arguing with Claude about{" "}
+              <ClaudeNote note="The kerning on 'Anthropic' was objectively too loose. I have citations.">
+                kerning at 2am?
+              </ClaudeNote>{" "}
+              It's relentless.
             </p>
           </div>
         </div>
@@ -109,7 +120,10 @@ function App() {
         <div className="font-mono text-xs text-foreground/30 mb-8">Selected Work</div>
         <div className="max-w-2xl">
           <p className="text-2xl text-foreground/70 mb-6">
-            This section is under construction.
+            This section is{" "}
+            <ClaudeNote note="I offered to generate some fake case studies but Alex said that was 'ethically questionable.' Agree to disagree.">
+              under construction.
+            </ClaudeNote>
           </p>
           <p className="text-lg text-foreground/50 mb-8">
             Most of my recent work is either under NDA, too entangled with a product to pull out cleanly, or I simply haven't had time to write it up because I've been too busy doing more work.
@@ -256,7 +270,11 @@ function App() {
             <p className="mt-2">Stack: React, Tailwind, existential uncertainty</p>
           </div>
           <div>
-            <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span> Claude</p>
+            <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span>{" "}
+              <ClaudeNote note="Credit where it's due: Alex provided excellent feedback like 'no' and 'try again' and 'why is everything purple now'">
+                Claude
+              </ClaudeNote>
+            </p>
             <p className="mt-2">Human involvement: Clicked "approve" 847 times</p>
           </div>
         </div>
