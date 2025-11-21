@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
@@ -8,12 +8,34 @@ import Row from "./components/Row";
 import Projects from "./components/Projects";
 import SkillsTicker from "./components/SkillsTicker.js";
 
+const taglines = [
+  "Teaching AI to be helpful. It's going well, I think.",
+  "10 years in, still surprised pixels pay rent.",
+  "Previously mass-produced at Airtable.",
+  "Making Claude less weird, more helpful.",
+  "Mass Dropout",
+];
+
 function App() {
   // Get theme from URL: ?theme=electric, ?theme=sunset, ?theme=matrix
   const params = new URLSearchParams(window.location.search);
   const theme = params.get("theme") || "neutral";
   const validThemes = ["neutral", "electric", "sunset", "matrix"];
   const activeTheme = validThemes.includes(theme) ? theme : "neutral";
+
+  const [taglineIndex, setTaglineIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setTaglineIndex((prev) => (prev + 1) % taglines.length);
+        setIsVisible(true);
+      }, 300);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const Link = ({ href, children }) => (
     <a
@@ -36,8 +58,9 @@ function App() {
           <Nav />
           <div className=" flex flex-col sm:justify-center">
             <Row>
-              <div className="hidden sm:block mx-6 text-[7vw] xl:text-[100px] leading-normal ">
-                Alex Lama-Noujaim
+              <div className="hidden sm:block mx-6 text-[7vw] xl:text-[100px] leading-normal group cursor-default">
+                <span className="inline-block transition-all duration-300 hover:tracking-tight hover:text-highlight">Alex</span>{" "}
+                <span className="inline-block transition-all duration-300 hover:tracking-tight hover:text-highlight">Lama-Noujaim</span>
               </div>
               <div className="sm:hidden pt-1 mx-6 text-[13vw] xl:text-[100px] leading-normal ">
                 Alex Lama
@@ -45,15 +68,23 @@ function App() {
             </Row>
 
             <Row>
-              <p className="mx-6 my-4 text-xl md:text-xl leading-normal md:leading-8 text-foreground/75  font-normal">
-                Currently designing new things at{" "}
+              <div
+                className={`mx-6 mb-2 font-mono text-sm text-foreground/50 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+              >
+                {taglines[taglineIndex]}
+              </div>
+            </Row>
+
+            <Row>
+              <p className="mx-6 my-4 text-xl md:text-xl leading-normal md:leading-8 text-foreground/75 font-normal">
+                Product designer at{" "}
                 <Link href="https://www.anthropic.com/claude">
                   <div>Anthropic</div>
-                </Link>{" "}
-                formerly at{" "}
-                <Link href="https://www.airtable.com/">Airtable</Link>. In
-                previous lives I studied mechanical engineering and worked in
-                simulations and audio engineering.
+                </Link>
+                , where I help Claude be the kind of AI you'd actually want to talk to.
+                Before that, I helped{" "}
+                <Link href="https://www.airtable.com/">Airtable</Link>{" "}
+                ship things people use to ship things. Mechanical engineer turned designer—I still think in systems, I just make them prettier now.
               </p>
             </Row>
             <Row>

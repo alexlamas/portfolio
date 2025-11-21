@@ -963,6 +963,9 @@ video {
 .underline-offset-\[6px\] {
   text-underline-offset: 6px;
 }
+.opacity-0 {
+  opacity: 0;
+}
 .opacity-100 {
   opacity: 1;
 }
@@ -1039,6 +1042,11 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
 .transition-transform {
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1049,6 +1057,9 @@ video {
 }
 .duration-200 {
   transition-duration: 200ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
 }
 .ease-out {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
@@ -1118,6 +1129,10 @@ input.key {
 
 .hover\:bg-foreground\/3:hover {
   background-color: hsl(var(--twc-foreground) / 0.03);
+}
+
+.hover\:tracking-tight:hover {
+  letter-spacing: -0.025em;
 }
 
 .hover\:text-highlight:hover {
