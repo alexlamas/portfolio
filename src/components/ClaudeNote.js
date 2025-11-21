@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-let noteCounter = 0;
-
 export default function ClaudeNote({ children, note }) {
   const [show, setShow] = useState(false);
   const [pos, setPos] = useState({ top: 0 });
-  const [num] = useState(() => ++noteCounter);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -22,20 +19,15 @@ export default function ClaudeNote({ children, note }) {
         ref={ref}
         onMouseEnter={() => setShow(true)}
         onMouseLeave={() => setShow(false)}
-        style={{ position: 'relative', cursor: 'help' }}
+        style={{
+          borderBottom: '2px dotted rgba(167, 139, 250, 0.6)',
+          cursor: 'help',
+          transition: 'all 0.2s',
+          background: show ? 'rgba(167, 139, 250, 0.15)' : 'transparent',
+          borderColor: show ? '#a78bfa' : 'rgba(167, 139, 250, 0.6)',
+        }}
       >
         {children}
-        <sup
-          style={{
-            color: '#a78bfa',
-            fontSize: '10px',
-            fontWeight: 600,
-            marginLeft: '1px',
-            fontFamily: 'Georgia, serif',
-          }}
-        >
-          {num}
-        </sup>
       </span>
 
       {show && ReactDOM.createPortal(
@@ -44,7 +36,7 @@ export default function ClaudeNote({ children, note }) {
             position: 'fixed',
             right: '24px',
             top: pos.top,
-            width: '280px',
+            width: '260px',
             zIndex: 99999,
             pointerEvents: 'none',
           }}
@@ -55,47 +47,34 @@ export default function ClaudeNote({ children, note }) {
               backdropFilter: 'blur(8px)',
               border: '1px solid rgba(167, 139, 250, 0.3)',
               borderLeft: '3px solid #a78bfa',
-              padding: '16px',
+              padding: '14px 16px',
               fontSize: '13px',
               lineHeight: 1.6,
-              color: 'rgba(255,255,255,0.8)',
+              color: 'rgba(255,255,255,0.85)',
               fontFamily: 'Georgia, Times, serif',
             }}
           >
             <div style={{
-              fontSize: '10px',
+              fontSize: '9px',
               textTransform: 'uppercase',
-              letterSpacing: '1px',
+              letterSpacing: '1.5px',
               color: '#a78bfa',
               marginBottom: '8px',
               fontFamily: 'monospace',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '6px',
             }}>
-              <span style={{
-                width: '16px',
-                height: '16px',
-                border: '1px solid #a78bfa',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '9px',
-              }}>{num}</span>
               Editor's Note
             </div>
             <div style={{ fontStyle: 'italic' }}>
-              "{note}"
+              {note}
             </div>
             <div style={{
               marginTop: '10px',
               fontSize: '10px',
-              color: 'rgba(255,255,255,0.4)',
+              color: 'rgba(255,255,255,0.3)',
               textAlign: 'right',
               fontFamily: 'monospace',
             }}>
-              — Claude, 2024
+              — Claude
             </div>
           </div>
         </div>,
