@@ -8,7 +8,7 @@ function App() {
   const year = new Date().getFullYear();
 
   return (
-    <div className="mondrian text-mondrian-black bg-mondrian-cream min-h-screen">
+    <div className="text-mondrian-black bg-mondrian-cream min-h-screen">
 
       {/* Mondrian Grid Hero */}
       <section className="min-h-screen grid grid-cols-12 grid-rows-6 border-b-4 border-mondrian-black">

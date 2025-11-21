@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
-const { createThemes } = require("tw-colors");
 
 module.exports = {
-  darkMode: "class",
   content: ["./src/**/*.{html,js}"],
-  safelist: ["mondrian"],
   theme: {
     fontFamily: {
       sans: ["pp_moriregular"],
@@ -13,22 +10,15 @@ module.exports = {
     },
     extend: {
       colors: {
-        'mondrian-red': '#D40920',
-        'mondrian-blue': '#1356A2',
-        'mondrian-yellow': '#F7D842',
-        'mondrian-black': '#0A0A0A',
-        'mondrian-cream': '#FAF8F5',
+        'mondrian': {
+          red: '#D40920',
+          blue: '#1356A2',
+          yellow: '#F7D842',
+          black: '#0A0A0A',
+          cream: '#FAF8F5',
+        },
       },
     },
   },
-  plugins: [
-    createThemes({
-      "mondrian": {
-        foreground: "#0A0A0A",
-        background: "#FAF8F5",
-        border: "#0A0A0A",
-        highlight: "#D40920",
-      },
-    }),
-  ],
+  plugins: [],
 };
