@@ -12,20 +12,24 @@ export function MarginProvider({ children }) {
   const [timeOnPage, setTimeOnPage] = useState(0);
   const [hasScrolled, setHasScrolled] = useState(false);
 
-  // Typewriter effect
+  // Typewriter effect with reset on note change
+  const prevNoteRef = React.useRef(null);
+
   useEffect(() => {
+    // Reset if note changed
+    if (activeNote !== prevNoteRef.current) {
+      setDisplayedText('');
+      prevNoteRef.current = activeNote;
+    }
+
+    // Type out the text
     if (activeNote && displayedText.length < activeNote.length) {
       const timeout = setTimeout(() => {
-        setDisplayedText(activeNote.slice(0, displayedText.length + 1));
-      }, 15);
+        setDisplayedText(prev => activeNote.slice(0, prev.length + 1));
+      }, 20);
       return () => clearTimeout(timeout);
     }
   }, [activeNote, displayedText]);
-
-  // Reset when note changes
-  useEffect(() => {
-    setDisplayedText('');
-  }, [activeNote]);
 
   // Track time on page
   useEffect(() => {
@@ -77,18 +81,18 @@ export function MarginProvider({ children }) {
       {/* Floating margin note */}
       {activeNote && (
         <div
-          className="fixed right-6 md:right-12 lg:right-24 w-64 z-30 hidden lg:block transition-all duration-300"
-          style={{ top: notePosition }}
+          className="fixed right-6 w-64 z-50 transition-all duration-150"
+          style={{ top: Math.max(80, Math.min(notePosition, window.innerHeight - 200)) }}
         >
-          <div className="bg-foreground/5 border border-border rounded-lg p-4 backdrop-blur-sm">
+          <div className="bg-foreground text-background rounded-lg p-4 shadow-2xl">
             <div className="text-[10px] font-mono text-highlight mb-2 flex items-center gap-2">
               <span className="inline-block w-2 h-2 bg-highlight rounded-full animate-pulse" />
               Claude's note
             </div>
-            <div className="text-sm text-foreground/70 font-mono">
+            <div className="text-sm font-mono">
               {displayedText}
               {displayedText.length < activeNote.length && (
-                <span className="inline-block w-1 h-4 bg-highlight ml-0.5 animate-pulse" />
+                <span className="inline-block w-0.5 h-4 bg-highlight ml-0.5 animate-pulse" />
               )}
             </div>
           </div>
