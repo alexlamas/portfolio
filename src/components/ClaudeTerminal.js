@@ -194,15 +194,15 @@ export default function ClaudeTerminal({ onStyleChange }) {
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-4 left-4 z-50 bg-foreground text-background px-3 py-2 rounded-lg font-mono text-xs hover:bg-highlight transition-colors shadow-lg flex items-center gap-2"
+        className="fixed bottom-6 left-6 z-[9999] bg-white text-black px-4 py-3 rounded-lg font-mono text-sm hover:bg-yellow-300 transition-colors shadow-2xl flex items-center gap-2 border-2 border-black"
       >
-        <span className={`w-2 h-2 rounded-full ${isOpen ? 'bg-green-400' : 'bg-yellow-400'} animate-pulse`} />
+        <span className={`w-2 h-2 rounded-full ${isOpen ? 'bg-green-500' : 'bg-yellow-500'} animate-pulse`} />
         {isOpen ? 'Claude observing...' : '⌘ Claude UX Lab'}
       </button>
 
       {/* Terminal panel */}
       {isOpen && (
-        <div className="fixed bottom-14 left-4 right-4 md:right-auto md:w-[500px] h-72 z-50 bg-[#0a0a0a] rounded-lg shadow-2xl border border-white/10 flex flex-col overflow-hidden font-mono">
+        <div className="fixed bottom-20 left-6 right-6 md:right-auto md:w-[500px] h-72 z-[9998] bg-[#0a0a0a] rounded-lg shadow-2xl border border-white/20 flex flex-col overflow-hidden font-mono">
           {/* Header */}
           <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border-b border-white/10">
             <span className="w-3 h-3 rounded-full bg-red-500/80" />
