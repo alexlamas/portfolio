@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 export default function ClaudeTerminal() {
-  const [minimized, setMinimized] = useState(false);
+  const [minimized, setMinimized] = useState(true);
   const [lines, setLines] = useState([]);
   const [typing, setTyping] = useState('');
   const termRef = useRef(null);
