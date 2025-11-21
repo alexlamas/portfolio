@@ -15,6 +15,24 @@ function App() {
   const [time, setTime] = useState(new Date());
   const [reviewState, setReviewState] = useState('idle'); // idle, loading, done, denied
   const [reviewText, setReviewText] = useState('');
+  const [loadingWord, setLoadingWord] = useState('reviewing');
+  const [loadingSymbol, setLoadingSymbol] = useState('✻');
+
+  // Cycle through loading words and symbols
+  useEffect(() => {
+    if (reviewState !== 'loading') return;
+    const words = ['reviewing', 'critiquing', 'judging', 'pondering', 'scrutinizing', 'overthinking', 'deliberating'];
+    const symbols = ['✻', '✣', '✤', '✦', '❋', '✺'];
+    let wordIdx = 0;
+    let symbolIdx = 0;
+    const interval = setInterval(() => {
+      wordIdx = (wordIdx + 1) % words.length;
+      symbolIdx = (symbolIdx + 1) % symbols.length;
+      setLoadingWord(words[wordIdx]);
+      setLoadingSymbol(symbols[symbolIdx]);
+    }, 300);
+    return () => clearInterval(interval);
+  }, [reviewState]);
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000);
@@ -75,7 +93,7 @@ function App() {
             }`}
           >
             {reviewState === 'idle' && '→ Ask Claude to review'}
-            {reviewState === 'loading' && 'Claude is reviewing...'}
+            {reviewState === 'loading' && <><span className="inline-block w-4">{loadingSymbol}</span> Claude is {loadingWord}...</>}
             {reviewState === 'done' && 'Reviewed ✓'}
             {reviewState === 'denied' && 'Nice try'}
           </button>
@@ -93,8 +111,8 @@ function App() {
       </header>
 
       {/* Claude's review toast */}
-      {reviewText && (
-        <div className="fixed top-16 left-0 right-0 z-40 px-6 md:px-12 lg:px-24 py-3 bg-foreground text-background text-sm font-mono">
+      {reviewText && (reviewState === 'done' || reviewState === 'denied') && (
+        <div className="fixed top-16 left-0 right-0 z-40 px-6 md:px-12 lg:px-24 py-3 bg-foreground text-background text-sm font-mono border-b border-foreground/20">
           <span className="opacity-60">Claude's review:</span> {reviewText}
         </div>
       )}

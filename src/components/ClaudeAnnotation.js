@@ -16,17 +16,17 @@ function ClaudeAnnotation({ children, note }) {
       {/* Tooltip - appears below the text */}
       <span
         className={`
-          absolute z-40 w-80 p-4 rounded-lg
+          absolute z-50 w-96 p-4 rounded-lg
           bg-foreground text-background text-sm font-sans
           shadow-xl
           transition-all duration-200
-          left-0 top-full mt-2
+          left-1/2 -translate-x-1/2 top-full mt-3
           ${isHovered ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1 pointer-events-none"}
           hidden md:block
         `}
       >
         {/* Arrow pointing up */}
-        <span className="absolute -top-1 left-4 w-2 h-2 bg-foreground rotate-45" />
+        <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
         <div className="text-[10px] font-mono opacity-60 mb-1">Claude's note:</div>
         {note}
       </span>
