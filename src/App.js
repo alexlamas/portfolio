@@ -28,6 +28,8 @@ function App() {
 
   return (
     <div className={`${activeTheme} text-foreground bg-background min-h-screen`}>
+      {/* Hidden element to ensure theme classes are included in build */}
+      <div className="hidden neutral electric sunset matrix" />
       <div>
           <div className="fixed left-[calc(4.16vw-1px)] sm:left-[calc(12.5vw-1px)] xl:left-[calc(50vw-513px)] h-screen w-px bg-border "></div>
           <div className="fixed right-[calc(4.16vw-1px)] sm:right-[calc(12.5vw-1px)] xl:left-[calc(50vw+512px)] h-screen w-px bg-border "></div>
