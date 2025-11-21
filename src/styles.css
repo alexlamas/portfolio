@@ -595,8 +595,14 @@ video {
 .mt-12 {
   margin-top: 3rem;
 }
+.mt-2 {
+  margin-top: 0.5rem;
+}
 .mt-4 {
   margin-top: 1rem;
+}
+.mt-8 {
+  margin-top: 2rem;
 }
 .inline-block {
   display: inline-block;
@@ -606,6 +612,9 @@ video {
 }
 .flex {
   display: flex;
+}
+.grid {
+  display: grid;
 }
 .hidden {
   display: none;
@@ -652,6 +661,9 @@ video {
 .w-11\/12 {
   width: 91.666667%;
 }
+.w-24 {
+  width: 6rem;
+}
 .w-4\/5 {
   width: 80%;
 }
@@ -678,6 +690,9 @@ video {
 }
 .max-w-\[1440px\] {
   max-width: 1440px;
+}
+.shrink-0 {
+  flex-shrink: 0;
 }
 .basis-full {
   flex-basis: 100%;
@@ -774,6 +789,11 @@ video {
 .gap-8 {
   gap: 2rem;
 }
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
 .overflow-hidden {
   overflow: hidden;
 }
@@ -823,6 +843,9 @@ video {
 .bg-background {
   --tw-bg-opacity: 1;
   background-color: hsl(var(--twc-background) / var(--twc-background-opacity, var(--tw-bg-opacity)));
+}
+.bg-background\/80 {
+  background-color: hsl(var(--twc-background) / 0.8);
 }
 .bg-background\/90 {
   background-color: hsl(var(--twc-background) / 0.9);
@@ -891,6 +914,10 @@ video {
 .py-12 {
   padding-top: 3rem;
   padding-bottom: 3rem;
+}
+.py-24 {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
 }
 .py-3 {
   padding-top: 0.75rem;
@@ -972,6 +999,9 @@ video {
 .text-foreground {
   --tw-text-opacity: 1;
   color: hsl(var(--twc-foreground) / var(--twc-foreground-opacity, var(--tw-text-opacity)));
+}
+.text-foreground\/20 {
+  color: hsl(var(--twc-foreground) / 0.2);
 }
 .text-foreground\/30 {
   color: hsl(var(--twc-foreground) / 0.3);
@@ -1293,8 +1323,20 @@ input.key {
     display: none;
   }
 
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .md\:flex-row {
     flex-direction: row;
+  }
+
+  .md\:gap-12 {
+    gap: 3rem;
   }
 
   .md\:border-r {
