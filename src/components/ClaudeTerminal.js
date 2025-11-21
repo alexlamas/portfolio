@@ -157,10 +157,10 @@ export default function ClaudeTerminal() {
       style={{
         position: 'fixed',
         bottom: 0,
-        left: '50%',
-        transform: `translateX(-50%) translateY(${minimized ? 'calc(100% - 40px)' : '0'})`,
-        width: '94%',
-        maxWidth: '650px',
+        right: '16px',
+        transform: `translateY(${minimized ? 'calc(100% - 40px)' : '0'})`,
+        width: '400px',
+        maxWidth: 'calc(100vw - 32px)',
         zIndex: 99999,
         transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       }}
