@@ -16,7 +16,7 @@ function ClaudeAnnotation({ children, note }) {
       {/* Tooltip - appears below the text */}
       <span
         className={`
-          absolute z-40 w-72 p-3 rounded-lg
+          absolute z-40 w-80 p-4 rounded-lg
           bg-foreground text-background text-sm font-sans
           shadow-xl
           transition-all duration-200
