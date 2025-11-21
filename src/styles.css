@@ -1060,6 +1060,27 @@ video {
   --twc-border-opacity: 0.08;
   --twc-highlight: 0 0% 98%;
 }
+.electric,[data-theme="electric"] {
+  --twc-foreground: 0 0% 100%;
+  --twc-background: 0 0% 0%;
+  --twc-border: 190.10000000000002 100% 50%;
+  --twc-border-opacity: 0.25;
+  --twc-highlight: 190.10000000000002 100% 50%;
+}
+.sunset,[data-theme="sunset"] {
+  --twc-foreground: 36 100% 95.1%;
+  --twc-background: 322.5 44.4% 7.1%;
+  --twc-border: 16 100% 60.4%;
+  --twc-border-opacity: 0.19;
+  --twc-highlight: 35.19999999999999 100% 63.9%;
+}
+.matrix,[data-theme="matrix"] {
+  --twc-foreground: 120 100% 93.9%;
+  --twc-background: 90 38.5% 5.1%;
+  --twc-border: 135.3 100% 50%;
+  --twc-border-opacity: 0.19;
+  --twc-highlight: 135.3 100% 50%;
+}
 
 body {
   margin: 0;
