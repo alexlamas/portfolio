@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react";
 
 import Projects from "./components/Projects";
+import ClaudeChat from "./components/ClaudeChat";
 
 function App() {
   const params = new URLSearchParams(window.location.search);
@@ -231,6 +232,7 @@ function App() {
         </div>
       </footer>
 
+      <ClaudeChat />
       <Analytics />
     </div>
   );
