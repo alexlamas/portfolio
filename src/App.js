@@ -112,8 +112,17 @@ function App() {
 
       {/* Claude's review toast */}
       {reviewText && (reviewState === 'done' || reviewState === 'denied') && (
-        <div className="fixed top-16 left-0 right-0 z-40 px-6 md:px-12 lg:px-24 py-3 bg-foreground text-background text-sm font-mono border-b border-foreground/20">
-          <span className="opacity-60">Claude's review:</span> {reviewText}
+        <div className="fixed top-20 left-6 md:left-12 lg:left-24 right-6 md:right-12 lg:right-24 z-40 p-4 bg-highlight text-background text-sm font-mono rounded-lg shadow-2xl border border-highlight/50">
+          <div className="flex justify-between items-start gap-4">
+            <div>
+              <span className="text-xs opacity-70 block mb-1">Claude's verdict:</span>
+              <span className="text-base">{reviewText}</span>
+            </div>
+            <button
+              onClick={() => setReviewText('')}
+              className="opacity-50 hover:opacity-100 text-lg"
+            >×</button>
+          </div>
         </div>
       )}
 
