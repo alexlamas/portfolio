@@ -4,6 +4,7 @@ const { createThemes } = require("tw-colors");
 module.exports = {
   darkMode: "class",
   content: ["./src/**/*.{html,js}"],
+  safelist: ["neutral", "electric", "sunset", "matrix"],
   theme: {
     fontFamily: {
       sans: ["pp_moriregular"],
