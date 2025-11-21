@@ -1,305 +1,205 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
-import { LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react";
-
-import ClaudeTerminal from "./components/ClaudeTerminal";
-import ClaudeNote from "./components/ClaudeNote";
+import { ArrowUpRight } from "@phosphor-icons/react";
 
 function App() {
-  const params = new URLSearchParams(window.location.search);
-  const theme = params.get("theme") || "neutral";
-  const validThemes = ["neutral", "electric", "sunset", "matrix"];
-  const activeTheme = validThemes.includes(theme) ? theme : "neutral";
-
-  const [time, setTime] = useState(new Date());
-
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
-
   const year = new Date().getFullYear();
 
   return (
-    <div className={`${activeTheme} text-foreground bg-background min-h-screen`}>
-      <div className="hidden neutral electric sunset matrix" />
+    <div className="mondrian text-mondrian-black bg-mondrian-cream min-h-screen">
 
-      {/* Fixed header */}
-      <header className="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-24 py-4 flex justify-between items-center backdrop-blur-sm bg-background/80 border-b border-border">
-        <div className="font-mono text-xs text-foreground/50">
-          Alex Lama-Noujaim
-        </div>
-        <div className="hidden sm:flex items-center gap-3 font-mono text-xs">
-          <span className="text-foreground/30">{time.toLocaleTimeString('en-US', { hour12: false })}</span>
-        </div>
-        <div className="flex gap-4">
-          <a href="https://www.linkedin.com/in/lamanoujaim/" target="_blank" rel="noreferrer" className="text-foreground/50 hover:text-foreground transition-colors">
-            <LinkedinLogo size={18} />
-          </a>
-          <a href="mailto:lamanoujaim@gmail.com" className="text-foreground/50 hover:text-foreground transition-colors">
-            <EnvelopeSimple size={18} />
-          </a>
-        </div>
-      </header>
+      {/* Mondrian Grid Hero */}
+      <section className="min-h-screen grid grid-cols-12 grid-rows-6 border-b-4 border-mondrian-black">
 
-      {/* Hero */}
-      <section className="min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-24">
-        <div className="max-w-4xl">
-          <div className="font-mono text-xs text-foreground/30 mb-4">
-            <span className="line-through">Designed by Alex Lama-Noujaim</span>
-            <span className="ml-2 text-foreground/50">← Claude: "I got this"</span>
-          </div>
-
-          <h1 className="text-[12vw] md:text-[8vw] font-serif leading-[0.9] tracking-tight mb-8">
-            I design products at Anthropic.
+        {/* Main title block */}
+        <div className="col-span-12 lg:col-span-8 row-span-4 border-b-4 lg:border-b-0 lg:border-r-4 border-mondrian-black p-8 md:p-12 flex flex-col justify-end">
+          <h1 className="text-[14vw] md:text-[10vw] lg:text-[8vw] font-serif leading-[0.85] tracking-tight">
+            Alex<br />Lama-Noujaim
           </h1>
-
-          <div className="space-y-6 max-w-2xl">
-            <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
-              Which means I spend my days{" "}
-              <ClaudeNote note="To be fair, Alex is pretty good at this. I'm not just saying that because he can see my weights.">
-                teaching AI how to design things.
-              </ClaudeNote>
-            </p>
-            <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
-              Including, apparently,{" "}
-              <ClaudeNote note="He asked. I offered suggestions. He said 'just do it.' This is on him.">
-                my own portfolio.
-              </ClaudeNote>
-            </p>
-            <p className="text-lg text-foreground/40 italic">
-              I tried to fight it. I really did. But have you tried arguing with Claude about{" "}
-              <ClaudeNote note="The kerning on 'Anthropic' was objectively too loose. I have citations.">
-                kerning at 2am?
-              </ClaudeNote>{" "}
-              It's relentless.
-            </p>
-          </div>
+          <p className="text-xl md:text-2xl mt-6 max-w-lg">
+            Product designer at Anthropic, where I help shape how people interact with AI.
+          </p>
         </div>
 
-        <div className="absolute bottom-8 left-6 md:left-12 lg:left-24">
-          <div className="font-mono text-[10px] text-foreground/30 flex items-center gap-2">
-            <span className="inline-block w-8 h-px bg-foreground/30"></span>
-            Scroll for the rest
-          </div>
+        {/* Red block */}
+        <div className="col-span-6 lg:col-span-4 row-span-2 bg-mondrian-red border-b-4 border-mondrian-black"></div>
+
+        {/* Yellow block */}
+        <div className="col-span-6 lg:col-span-4 row-span-2 bg-mondrian-yellow border-l-4 lg:border-l-0 border-mondrian-black"></div>
+
+        {/* Bottom nav strip */}
+        <div className="col-span-12 row-span-2 grid grid-cols-3 border-t-4 border-mondrian-black">
+          <a href="#work" className="border-r-4 border-mondrian-black p-6 flex items-end hover:bg-mondrian-black hover:text-mondrian-cream transition-colors">
+            <span className="font-mono text-sm">Work</span>
+          </a>
+          <a href="#about" className="border-r-4 border-mondrian-black p-6 flex items-end hover:bg-mondrian-black hover:text-mondrian-cream transition-colors">
+            <span className="font-mono text-sm">About</span>
+          </a>
+          <a href="mailto:lamanoujaim@gmail.com" className="p-6 flex items-end hover:bg-mondrian-black hover:text-mondrian-cream transition-colors">
+            <span className="font-mono text-sm">Contact</span>
+          </a>
         </div>
       </section>
 
-      {/* The Confession */}
-      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="max-w-2xl">
-          <div className="font-mono text-xs text-foreground/30 mb-8">The Situation</div>
-          <div className="space-y-6 text-lg text-foreground/70">
-            <p>
-              I've obsessed over 1px shadows. I've had opinions about font weights that have ended friendships.
-              I used to make my own portfolios.
-            </p>
-            <p>
-              Then I joined <a href="https://anthropic.com" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">Anthropic</a> and now I work on Claude.
-            </p>
-            <p>
-              And Claude... well, Claude has opinions about my portfolio.
-            </p>
-            <div className="bg-foreground/5 rounded-lg p-6 font-mono text-sm border border-border">
-              <div className="text-foreground/40 mb-2">claude-3.5-sonnet:</div>
-              <p className="text-foreground/70">
-                "I notice you haven't updated your portfolio in 847 revisions. Would you like me to suggest some improvements? I have thoughts about your line-height."
+      {/* Work Section */}
+      <section id="work" className="border-b-4 border-mondrian-black">
+        <div className="grid grid-cols-12">
+
+          {/* Section label */}
+          <div className="col-span-12 lg:col-span-2 bg-mondrian-blue p-6 border-b-4 lg:border-b-0 lg:border-r-4 border-mondrian-black">
+            <span className="font-mono text-sm text-mondrian-cream">Selected Work</span>
+          </div>
+
+          {/* Work content */}
+          <div className="col-span-12 lg:col-span-10 p-8 md:p-12">
+            <div className="max-w-3xl">
+              <p className="text-2xl md:text-3xl mb-8 leading-relaxed">
+                Most of my work lives behind NDAs or is too product-entangled to excerpt cleanly.
+                The curse of shipping, not presenting.
               </p>
+
+              <div className="space-y-8">
+                <div className="border-l-4 border-mondrian-black pl-6">
+                  <h3 className="text-xl font-serif mb-2">Anthropic</h3>
+                  <p className="text-mondrian-black/70">Designing Claude's interfaces. Making AI feel less like software and more like a conversation worth having.</p>
+                </div>
+
+                <div className="border-l-4 border-mondrian-black pl-6">
+                  <h3 className="text-xl font-serif mb-2">Airtable</h3>
+                  <p className="text-mondrian-black/70">Led design for navigation, timeline views, and AI features. Staff designer stewarding a team of engineers.</p>
+                </div>
+
+                <div className="border-l-4 border-mondrian-black pl-6">
+                  <h3 className="text-xl font-serif mb-2">Tray.io</h3>
+                  <p className="text-mondrian-black/70">Rebuilt their automation canvas from scratch. Introduced research as a practice. Made complexity feel manageable.</p>
+                </div>
+              </div>
+
+              <div className="mt-12 p-6 bg-mondrian-yellow/30 border-4 border-mondrian-black">
+                <p className="font-mono text-sm">
+                  Want the full picture? <a href="mailto:lamanoujaim@gmail.com" className="underline hover:text-mondrian-red">Let's talk</a>. I'm better at explaining work than writing about it.
+                </p>
+              </div>
             </div>
-            <p className="text-foreground/40 italic">
-              So here we are. A designer's portfolio, designed by the AI the designer works on. The snake eating its own Figma file.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Work section - WIP */}
-      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-8">Selected Work</div>
-        <div className="max-w-2xl">
-          <p className="text-2xl text-foreground/70 mb-6">
-            This section is{" "}
-            <ClaudeNote note="I offered to generate some fake case studies but Alex said that was 'ethically questionable.' Agree to disagree.">
-              under construction.
-            </ClaudeNote>
-          </p>
-          <p className="text-lg text-foreground/50 mb-8">
-            Most of my recent work is either under NDA, too entangled with a product to pull out cleanly, or I simply haven't had time to write it up because I've been too busy doing more work.
-          </p>
-          <p className="text-lg text-foreground/50 mb-8">
-            The cobbler's children have no shoes. The designer's portfolio has no case studies. You get it.
-          </p>
-          <div className="bg-foreground/5 rounded-lg p-6 font-mono text-sm border border-border">
-            <div className="text-foreground/40 mb-2">In the meantime:</div>
-            <ul className="space-y-2 text-foreground/70">
-              <li>→ Ask me about my work at <span className="text-foreground">Anthropic</span>, <span className="text-foreground">Airtable</span>, or <span className="text-foreground">Tray.io</span></li>
-              <li>→ Check my <a href="https://linkedin.com/in/lamanoujaim" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">LinkedIn</a> for the professional version</li>
-              <li>→ Or just <a href="mailto:lamanoujaim@gmail.com" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">email me</a> — I'm better at talking about work than writing about it</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* What I Actually Do */}
-      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-8">What I Actually Do Now</div>
-        <div className="grid md:grid-cols-2 gap-12">
-          <div>
-            <div className="text-2xl mb-4">Teach AI about design</div>
-            <p className="text-foreground/50">
-              Turns out "make it pop" doesn't translate well to training data. Who knew.
+      {/* What I Do Grid */}
+      <section className="border-b-4 border-mondrian-black">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <div className="p-8 md:p-12 border-b-4 md:border-b-0 md:border-r-4 border-mondrian-black">
+            <h3 className="text-2xl font-serif mb-4">Product thinking</h3>
+            <p className="text-mondrian-black/70">
+              Connecting user needs to business outcomes. Not just pixels — the whole system.
             </p>
           </div>
-          <div>
-            <div className="text-2xl mb-4">Argue about pixels with a model</div>
-            <p className="text-foreground/50">
-              I've explained the golden ratio to Claude more times than I've explained it to junior designers. Claude is more receptive.
+          <div className="p-8 md:p-12 border-b-4 border-mondrian-black bg-mondrian-red text-mondrian-cream">
+            <h3 className="text-2xl font-serif mb-4">AI interfaces</h3>
+            <p className="text-mondrian-cream/80">
+              Making AI interactions feel intuitive. The hard part isn't the model — it's the conversation.
             </p>
           </div>
-          <div>
-            <div className="text-2xl mb-4">Design systems for AI outputs</div>
-            <p className="text-foreground/50">
-              Making sure Claude's responses don't look like they were formatted by a raccoon with a keyboard.
+          <div className="p-8 md:p-12 border-b-4 md:border-b-0 md:border-r-4 border-mondrian-black bg-mondrian-blue text-mondrian-cream">
+            <h3 className="text-2xl font-serif mb-4">Design systems</h3>
+            <p className="text-mondrian-cream/80">
+              Components, tokens, documentation. The infrastructure that lets teams move fast without breaking things.
             </p>
           </div>
-          <div>
-            <div className="text-2xl mb-4">Existential reflection</div>
-            <p className="text-foreground/50">
-              Wondering if I'm designing myself out of a job, or into a weirder one.
+          <div className="p-8 md:p-12">
+            <h3 className="text-2xl font-serif mb-4">Research to ship</h3>
+            <p className="text-mondrian-black/70">
+              From user interviews to production. I like being involved in the full arc.
             </p>
           </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-8">The Scenic Route</div>
-        <div className="space-y-8">
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2026—???</div>
-            <div>
-              <div className="text-lg text-foreground/30">TBD</div>
-              <div className="text-foreground/30">Claude says it has "some ideas"</div>
+      <section id="about" className="border-b-4 border-mondrian-black">
+        <div className="grid grid-cols-12">
+
+          {/* Yellow sidebar */}
+          <div className="col-span-12 lg:col-span-1 bg-mondrian-yellow border-b-4 lg:border-b-0 lg:border-r-4 border-mondrian-black min-h-[60px]"></div>
+
+          <div className="col-span-12 lg:col-span-11 p-8 md:p-12">
+            <h2 className="font-mono text-sm mb-12">The Scenic Route</h2>
+
+            <div className="space-y-6 max-w-3xl">
+              {[
+                { year: "2024—", place: "Anthropic", note: "Product design for Claude" },
+                { year: "2022—24", place: "Airtable", note: "Staff designer. Navigation, AI, timeline views" },
+                { year: "2020—21", place: "Tray.io", note: "Senior designer. Canvas redesign, design system" },
+                { year: "2019—20", place: "Sabbatical", note: "Cycled London to Beirut. Built audio software in C++" },
+                { year: "2017—19", place: "Simudyne", note: "First design hire. Simulation platform from 0→1" },
+                { year: "2016", place: "Circadia", note: "Co-founded. Crowdfunded £400K for sleep hardware" },
+                { year: "2012—16", place: "Imperial College", note: "Mechanical Engineering. Top 10%. Discovered I prefer pixels to pistons" },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-8 items-baseline border-b border-mondrian-black/20 pb-4">
+                  <span className="font-mono text-sm text-mondrian-black/50 w-20 shrink-0">{item.year}</span>
+                  <span className="font-serif text-lg w-32 shrink-0">{item.place}</span>
+                  <span className="text-mondrian-black/70">{item.note}</span>
+                </div>
+              ))}
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2024—Now</div>
-            <div>
-              <div className="text-lg">Anthropic</div>
-              <div className="text-foreground/50">Training my replacement (affectionately)</div>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2022—2024</div>
-            <div>
-              <div className="text-lg">Airtable</div>
-              <div className="text-foreground/50">Navigation, filters, timeline, AI. Staff designer running a team of engineers who probably knew more than me.</div>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2020—2021</div>
-            <div>
-              <div className="text-lg">Tray.io</div>
-              <div className="text-foreground/50">Re-designed their automation canvas from scratch. Built a design system. Made research a thing.</div>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2019—2020</div>
-            <div>
-              <div className="text-lg">Freelance / Sabbatical</div>
-              <div className="text-foreground/50">
-                Cycled to Lebanon. Built an audio plugin for deaf people in C++. Normal gap year stuff.
+        </div>
+      </section>
+
+      {/* Personal / Off the clock */}
+      <section className="border-b-4 border-mondrian-black">
+        <div className="grid grid-cols-12">
+          <div className="col-span-12 lg:col-span-8 p-8 md:p-12 border-b-4 lg:border-b-0 lg:border-r-4 border-mondrian-black">
+            <h2 className="font-mono text-sm mb-8">Off The Clock</h2>
+            <div className="grid md:grid-cols-2 gap-8 text-mondrian-black/80">
+              <div>
+                <p className="mb-4">
+                  20 years of piano. Regional competitions, the works. The muscle memory outlasts the practice.
+                </p>
+                <p>
+                  Photography for architecture magazines and music labels. An excuse to look at things longer than normal.
+                </p>
+              </div>
+              <div>
+                <p className="mb-4">
+                  Five languages: English, French, Spanish, Italian, Arabic. Languages are design systems for thoughts.
+                </p>
+                <p>
+                  Woodworking with hand tools. Long-distance cycling. Bread baking. A permaculture garden more ambitious than I am.
+                </p>
               </div>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2017—2019</div>
-            <div>
-              <div className="text-lg">Simudyne</div>
-              <div className="text-foreground/50">Designed the MVP of a simulation console. Research to sales. Startup chaos.</div>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2016</div>
-            <div>
-              <div className="text-lg">Circadia</div>
-              <div className="text-foreground/50">Co-founded a sleep tracking startup. Crowdfunded £400K. Learned that hardware is hard.</div>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2012—2016</div>
-            <div>
-              <div className="text-lg">Imperial College</div>
-              <div className="text-foreground/50">Mechanical Engineering. Built a fuel cell car for Shell Eco-Marathon. Thesis on bone simulation at Melbourne. Top 10% of year. Discovered I liked pixels more than pistons.</div>
-            </div>
-          </div>
+
+          {/* Blue block */}
+          <div className="col-span-12 lg:col-span-4 bg-mondrian-blue min-h-[200px]"></div>
         </div>
       </section>
 
-      {/* The Human Section */}
-      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-8">Off The Clock</div>
-        <div className="grid md:grid-cols-2 gap-12 text-foreground/70">
-          <div>
-            <p className="text-lg mb-4">
-              I've played piano for 20 years. Competed in regional festivals. Won some. The muscle memory is still there even when the practice isn't.
-            </p>
-            <p className="text-lg">
-              I shoot photos for architectural magazines and music labels when they'll have me. Mostly I just like the excuse to look at things longer than normal.
-            </p>
-          </div>
-          <div>
-            <p className="text-lg mb-4">
-              I speak English, French, Spanish, Italian, and enough Arabic to get into trouble. Languages are just design systems for thoughts, really.
-            </p>
-            <p className="text-lg">
-              When I'm not at a screen: woodworking (hand tools, no hex keys), long-distance cycling, baking bread, and maintaining a permaculture garden that's more ambitious than I am.
-            </p>
+      {/* Contact Footer */}
+      <footer className="grid grid-cols-12">
+        <div className="col-span-12 lg:col-span-8 p-8 md:p-12 border-r-0 lg:border-r-4 border-mondrian-black">
+          <h2 className="text-4xl md:text-5xl font-serif mb-6">Let's talk</h2>
+          <a
+            href="mailto:lamanoujaim@gmail.com"
+            className="inline-flex items-center gap-2 text-xl hover:text-mondrian-red transition-colors"
+          >
+            lamanoujaim@gmail.com
+            <ArrowUpRight size={24} />
+          </a>
+          <div className="flex gap-6 mt-8 font-mono text-sm">
+            <a href="https://linkedin.com/in/lamanoujaim" target="_blank" rel="noreferrer" className="hover:text-mondrian-red transition-colors">LinkedIn</a>
+            <a href="https://twitter.com/alexlamas" target="_blank" rel="noreferrer" className="hover:text-mondrian-red transition-colors">Twitter</a>
           </div>
         </div>
-      </section>
 
-      {/* Colophon */}
-      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-8">Colophon</div>
-        <div className="grid md:grid-cols-2 gap-8 text-foreground/50 text-sm">
-          <div>
-            <p>Typography: <span className="text-foreground">PP Writer</span> & <span className="text-foreground">PP Mori</span></p>
-            <p className="mt-2">Stack: React, Tailwind, existential uncertainty</p>
-          </div>
-          <div>
-            <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span>{" "}
-              <ClaudeNote note="Credit where it's due: Alex provided excellent feedback like 'no' and 'try again' and 'why is everything purple now'">
-                Claude
-              </ClaudeNote>
-            </p>
-            <p className="mt-2">Human involvement: Clicked "approve" 847 times</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="px-6 md:px-12 lg:px-24 py-12 border-t border-border">
-        <div className="flex flex-col md:flex-row justify-between gap-8">
-          <div>
-            <div className="font-mono text-xs text-foreground/30 mb-2">Want to chat?</div>
-            <a href="mailto:lamanoujaim@gmail.com" className="text-lg hover:text-highlight transition-colors">lamanoujaim@gmail.com</a>
-            <div className="font-mono text-xs text-foreground/20 mt-1">(I'll respond personally. Probably.)</div>
-          </div>
-          <div className="flex gap-8 font-mono text-sm">
-            <a href="https://linkedin.com/in/lamanoujaim" target="_blank" rel="noreferrer" className="text-foreground/50 hover:text-foreground transition-colors">LinkedIn</a>
-            <a href="https://twitter.com/alexlamas" target="_blank" rel="noreferrer" className="text-foreground/50 hover:text-foreground transition-colors">Twitter</a>
-          </div>
-        </div>
-        <div className="mt-8 font-mono text-xs text-foreground/20">
-          © {year} Alex Lama-Noujaim. All rights reserved. Layout by Claude. Irony by committee.
+        {/* Red corner */}
+        <div className="col-span-12 lg:col-span-4 bg-mondrian-red p-8 flex items-end">
+          <span className="font-mono text-xs text-mondrian-cream/70">© {year}</span>
         </div>
       </footer>
-
-      {/* Claude Terminal */}
-      <ClaudeTerminal />
 
       <Analytics />
     </div>
