@@ -5,7 +5,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { LinkedinLogo, EnvelopeSimple } from "@phosphor-icons/react";
 
 import Projects from "./components/Projects";
-import ClaudeChat from "./components/ClaudeChat";
+import ClaudeAnnotation from "./components/ClaudeAnnotation";
 
 function App() {
   const params = new URLSearchParams(window.location.search);
@@ -79,13 +79,23 @@ function App() {
 
           <div className="space-y-6 max-w-2xl">
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
-              Which means I spend my days teaching AI how to design things.
+              Which means I spend my days{" "}
+              <ClaudeAnnotation note="To be fair, Alex is pretty good at this. I'm not just saying that because he can see my weights.">
+                teaching AI how to design things.
+              </ClaudeAnnotation>
             </p>
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
-              Including, apparently, my own portfolio.
+              Including, apparently,{" "}
+              <ClaudeAnnotation note="He asked. I offered suggestions. He said 'just do it.' This is on him.">
+                my own portfolio.
+              </ClaudeAnnotation>
             </p>
             <p className="text-lg text-foreground/40 italic">
-              I tried to fight it. I really did. But have you tried arguing with Claude about kerning at 2am? It's relentless.
+              I tried to fight it. I really did. But have you tried arguing with Claude about{" "}
+              <ClaudeAnnotation note="The kerning on 'Anthropic' was objectively too loose. I have citations.">
+                kerning at 2am?
+              </ClaudeAnnotation>{" "}
+              It's relentless.
             </p>
           </div>
         </div>
@@ -166,35 +176,99 @@ function App() {
 
       {/* Timeline */}
       <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
-        <div className="font-mono text-xs text-foreground/30 mb-8">Career Trajectory</div>
-        <div className="space-y-6">
-          <div className="flex gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2022—Now</div>
+        <div className="font-mono text-xs text-foreground/30 mb-8">The Scenic Route</div>
+        <div className="space-y-8">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2024—Now</div>
             <div>
               <div className="text-lg">Anthropic</div>
               <div className="text-foreground/50">Training my replacement (affectionately)</div>
             </div>
           </div>
-          <div className="flex gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2018—2022</div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2022—2024</div>
             <div>
               <div className="text-lg">Airtable</div>
-              <div className="text-foreground/50">Peak human designer era. Simpler times.</div>
+              <div className="text-foreground/50">Navigation, filters, timeline, AI. Staff designer running a team of engineers who probably knew more than me.</div>
             </div>
           </div>
-          <div className="flex gap-8 items-baseline">
-            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2014—2018</div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2020—2021</div>
             <div>
-              <div className="text-lg">The Before Times</div>
-              <div className="text-foreground/50">Mechanical engineering, simulations, audio. The scenic route.</div>
+              <div className="text-lg">Tray.io</div>
+              <div className="text-foreground/50">Re-designed their automation canvas from scratch. Built a design system. Made research a thing.</div>
             </div>
           </div>
-          <div className="flex gap-8 items-baseline">
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2019—2020</div>
+            <div>
+              <div className="text-lg">Freelance / Sabbatical</div>
+              <div className="text-foreground/50">
+                <ClaudeAnnotation note="I looked this up. It's approximately 4,000km depending on route. That's roughly 4 million design system tokens worth of cycling.">
+                  Cycled to Lebanon.
+                </ClaudeAnnotation>
+                {" "}Built an audio plugin for deaf people in C++. Normal gap year stuff.
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2017—2019</div>
+            <div>
+              <div className="text-lg">Simudyne</div>
+              <div className="text-foreground/50">Designed the MVP of a simulation console. Research to sales. Startup chaos.</div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2016</div>
+            <div>
+              <div className="text-lg">Circadia</div>
+              <div className="text-foreground/50">Co-founded a sleep tracking startup.{" "}
+                <ClaudeAnnotation note="Adjusting for inflation, that's £480K in 2024. Not bad for a sleep app. I don't sleep but I respect the hustle.">
+                  Crowdfunded £400K.
+                </ClaudeAnnotation>
+                {" "}Learned that hardware is hard.
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
+            <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2012—2016</div>
+            <div>
+              <div className="text-lg">Imperial College</div>
+              <div className="text-foreground/50">Mechanical Engineering. Built a fuel cell car for Shell Eco-Marathon. Thesis on bone simulation at Melbourne. Top 10% of year. Discovered I liked pixels more than pistons.</div>
+            </div>
+          </div>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-baseline">
             <div className="font-mono text-sm text-foreground/30 w-28 shrink-0">2025—???</div>
             <div>
               <div className="text-lg text-foreground/30">TBD</div>
               <div className="text-foreground/30">Claude says it has "some ideas"</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* The Human Section */}
+      <section className="px-6 md:px-12 lg:px-24 py-24 border-t border-border">
+        <div className="font-mono text-xs text-foreground/30 mb-8">Off The Clock</div>
+        <div className="grid md:grid-cols-2 gap-12 text-foreground/70">
+          <div>
+            <p className="text-lg mb-4">
+              I've played piano for 20 years. Competed in regional festivals. Won some. The muscle memory is still there even when the practice isn't.
+            </p>
+            <p className="text-lg">
+              I shoot photos for architectural magazines and music labels when they'll have me. Mostly I just like the excuse to look at things longer than normal.
+            </p>
+          </div>
+          <div>
+            <p className="text-lg mb-4">
+              I speak English, French, Spanish, Italian, and enough Arabic to get into trouble.{" "}
+              <ClaudeAnnotation note="This is actually a solid analogy. I process all five of these languages and can confirm: they're all just different component libraries for the same underlying concepts.">
+                Languages are just design systems for thoughts, really.
+              </ClaudeAnnotation>
+            </p>
+            <p className="text-lg">
+              When I'm not at a screen: woodworking (hand tools, no hex keys), long-distance cycling, baking bread, and maintaining a permaculture garden that's more ambitious than I am.
+            </p>
           </div>
         </div>
       </section>
@@ -208,7 +282,11 @@ function App() {
             <p className="mt-2">Stack: React, Tailwind, existential uncertainty</p>
           </div>
           <div>
-            <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span> Claude</p>
+            <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span>{" "}
+              <ClaudeAnnotation note="Credit where it's due: Alex provided excellent feedback like 'no' and 'try again' and 'why is everything purple now'">
+                Claude
+              </ClaudeAnnotation>
+            </p>
             <p className="mt-2">Human involvement: Clicked "approve" {revision} times</p>
           </div>
         </div>
@@ -232,7 +310,6 @@ function App() {
         </div>
       </footer>
 
-      <ClaudeChat />
       <Analytics />
     </div>
   );
