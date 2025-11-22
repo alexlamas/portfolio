@@ -1328,8 +1328,38 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0A0A0A;
+  background: #FAF8F5;
 }
+
+/* Mondrian Colors */
+.bg-mondrian-red { background-color: #D40920; }
+.bg-mondrian-blue { background-color: #1356A2; }
+.bg-mondrian-yellow { background-color: #F7D842; }
+.bg-mondrian-black { background-color: #0A0A0A; }
+.bg-mondrian-cream { background-color: #FAF8F5; }
+.bg-mondrian-yellow\/30 { background-color: rgba(247, 216, 66, 0.3); }
+
+.text-mondrian-red { color: #D40920; }
+.text-mondrian-blue { color: #1356A2; }
+.text-mondrian-yellow { color: #F7D842; }
+.text-mondrian-black { color: #0A0A0A; }
+.text-mondrian-cream { color: #FAF8F5; }
+.text-mondrian-black\/50 { color: rgba(10, 10, 10, 0.5); }
+.text-mondrian-black\/70 { color: rgba(10, 10, 10, 0.7); }
+.text-mondrian-black\/80 { color: rgba(10, 10, 10, 0.8); }
+.text-mondrian-cream\/70 { color: rgba(250, 248, 245, 0.7); }
+.text-mondrian-cream\/80 { color: rgba(250, 248, 245, 0.8); }
+
+.border-mondrian-red { border-color: #D40920; }
+.border-mondrian-blue { border-color: #1356A2; }
+.border-mondrian-yellow { border-color: #F7D842; }
+.border-mondrian-black { border-color: #0A0A0A; }
+.border-mondrian-cream { border-color: #FAF8F5; }
+.border-mondrian-black\/20 { border-color: rgba(10, 10, 10, 0.2); }
+
+.hover\:text-mondrian-red:hover { color: #D40920; }
+.hover\:text-mondrian-cream:hover { color: #FAF8F5; }
+.hover\:bg-mondrian-black:hover { background-color: #0A0A0A; }
 
 @font-face {
   font-family: "password";
