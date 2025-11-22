@@ -56,7 +56,7 @@ function App() {
             I design products at Anthropic.
           </h1>
 
-          <div className="space-y-6 max-w-2xl">
+          <div className="space-y-6 max-w-3xl">
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
               Which means I spend my days{" "}
               <ClaudeNote note="To be fair, Alex is pretty good at this. I'm not just saying that because he can see my weights.">
