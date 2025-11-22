@@ -9,7 +9,7 @@ export default function ClaudeNote({ children, note }) {
   useEffect(() => {
     if (show && ref.current) {
       const rect = ref.current.getBoundingClientRect();
-      setPos({ top: rect.top + window.scrollY - 10 });
+      setPos({ top: rect.top });
     }
   }, [show]);
 
@@ -34,7 +34,7 @@ export default function ClaudeNote({ children, note }) {
         <div
           style={{
             position: 'fixed',
-            right: '24px',
+            left: '24px',
             top: pos.top,
             width: '260px',
             zIndex: 99999,
