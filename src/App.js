@@ -131,14 +131,6 @@ function App() {
           <p className="text-lg text-foreground/50 mb-8">
             The cobbler's children have no shoes. The designer's portfolio has no case studies. You get it.
           </p>
-          <div className="bg-foreground/5 rounded-lg p-6 font-mono text-sm border border-border">
-            <div className="text-foreground/40 mb-2">In the meantime:</div>
-            <ul className="space-y-2 text-foreground/70">
-              <li>→ Ask me about my work at <span className="text-foreground">Anthropic</span>, <span className="text-foreground">Airtable</span>, or <span className="text-foreground">Tray.io</span></li>
-              <li>→ Check my <a href="https://linkedin.com/in/lamanoujaim" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">LinkedIn</a> for the professional version</li>
-              <li>→ Or just <a href="mailto:lamanoujaim@gmail.com" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">email me</a> — I'm better at talking about work than writing about it</li>
-            </ul>
-          </div>
         </div>
       </section>
 
