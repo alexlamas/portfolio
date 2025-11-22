@@ -1,18 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
 import { ArrowUpRight, Circle } from "@phosphor-icons/react";
-
-// Theme data
-const themes = [
-  { id: "mondrian", name: "Mondrian", color: "#D40920" },
-  { id: "editorial", name: "Editorial", color: "#1a1a1a" },
-  { id: "terminal", name: "Terminal", color: "#00FF41" },
-  { id: "cards", name: "Cards", color: "#6366f1" },
-  { id: "brutalist", name: "Brutalist", color: "#FF5722" },
-  { id: "vaporwave", name: "Vaporwave", color: "#FF71CE" },
-];
 
 // Shared data
 const timeline = [
@@ -25,18 +16,54 @@ const timeline = [
   { year: "2012—16", place: "Imperial College", note: "Mechanical Engineering. Discovered I prefer pixels to pistons" },
 ];
 
-function ThemeSwitcher({ current, onChange }) {
+// ============================================
+// HOME - Design Gallery
+// ============================================
+function Home() {
+  const designs = [
+    { path: "/mondrian", name: "Mondrian", desc: "De Stijl grid composition", color: "#D40920", bg: "#FAF8F5" },
+    { path: "/editorial", name: "Editorial", desc: "Newspaper broadsheet", color: "#1a1a1a", bg: "#FBF9F4" },
+    { path: "/terminal", name: "Terminal", desc: "Hacker aesthetic", color: "#00FF41", bg: "#0D1208" },
+    { path: "/cards", name: "Cards", desc: "Clean modern SaaS", color: "#6366f1", bg: "#f8fafc" },
+    { path: "/brutalist", name: "Brutalist", desc: "Raw & massive", color: "#FF5722", bg: "#FFFEF5" },
+    { path: "/vaporwave", name: "Vaporwave", desc: "Neon dreams", color: "#FF71CE", bg: "#0D0221" },
+  ];
+
   return (
-    <div className="fixed top-4 right-4 z-50 flex gap-2 p-2 rounded-lg bg-white/90 backdrop-blur shadow-lg border border-black/10">
-      {themes.map((t) => (
-        <button
-          key={t.id}
-          onClick={() => onChange(t.id)}
-          className={`w-8 h-8 rounded-full border-2 transition-transform hover:scale-110 ${current === t.id ? 'ring-2 ring-offset-2 ring-black' : ''}`}
-          style={{ backgroundColor: t.color, borderColor: t.color }}
-          title={t.name}
-        />
-      ))}
+    <div className="min-h-screen bg-[#0a0a0a] text-white p-8">
+      <div className="max-w-6xl mx-auto">
+        <header className="mb-16">
+          <h1 className="text-5xl md:text-7xl font-serif mb-4">Alex Lama-Noujaim</h1>
+          <p className="text-xl text-white/60">6 portfolio designs. Pick your favorite.</p>
+        </header>
+
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {designs.map((d) => (
+            <Link
+              key={d.path}
+              to={d.path}
+              className="group block border border-white/10 hover:border-white/30 transition-all"
+            >
+              <div className="aspect-[4/3] flex items-center justify-center" style={{ backgroundColor: d.bg }}>
+                <span className="text-6xl font-serif" style={{ color: d.color }}>{d.name[0]}</span>
+              </div>
+              <div className="p-4 border-t border-white/10">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <h2 className="text-xl font-serif">{d.name}</h2>
+                    <p className="text-sm text-white/50">{d.desc}</p>
+                  </div>
+                  <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition-opacity" size={24} />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <footer className="mt-16 pt-8 border-t border-white/10 text-white/40 text-sm">
+          <a href="mailto:lamanoujaim@gmail.com" className="hover:text-white transition-colors">lamanoujaim@gmail.com</a>
+        </footer>
+      </div>
     </div>
   );
 }
@@ -48,6 +75,8 @@ function Mondrian() {
   const year = new Date().getFullYear();
   return (
     <div className="text-mondrian-black bg-mondrian-cream min-h-screen">
+      <Link to="/" className="fixed top-4 left-4 z-50 w-10 h-10 bg-mondrian-black text-mondrian-cream flex items-center justify-center font-mono text-sm hover:bg-mondrian-red transition-colors">←</Link>
+
       <section className="min-h-screen grid grid-cols-12 grid-rows-6 border-b-4 border-mondrian-black">
         <div className="col-span-12 lg:col-span-8 row-span-4 border-b-4 lg:border-b-0 lg:border-r-4 border-mondrian-black p-8 md:p-12 flex flex-col justify-end">
           <h1 className="text-[14vw] md:text-[10vw] lg:text-[8vw] font-serif leading-[0.85] tracking-tight">
@@ -157,13 +186,14 @@ function Mondrian() {
 }
 
 // ============================================
-// DESIGN 2: EDITORIAL (Newspaper style)
+// DESIGN 2: EDITORIAL
 // ============================================
 function Editorial() {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-[#FBF9F4] text-[#1a1a1a]">
-      {/* Masthead */}
+      <Link to="/" className="fixed top-4 left-4 z-50 w-10 h-10 bg-black text-white flex items-center justify-center font-mono text-sm hover:bg-black/80 transition-colors">←</Link>
+
       <header className="border-b-2 border-black">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-baseline">
           <div className="font-mono text-xs tracking-widest uppercase">Est. 2012</div>
@@ -171,16 +201,13 @@ function Editorial() {
         </div>
       </header>
 
-      {/* Title */}
       <div className="border-b border-black py-8">
         <h1 className="text-center font-serif text-6xl md:text-8xl tracking-tight">Alex Lama-Noujaim</h1>
         <p className="text-center font-mono text-sm mt-4 tracking-widest uppercase">Product Designer • San Francisco</p>
       </div>
 
-      {/* Main content in columns */}
       <main className="max-w-6xl mx-auto px-6 py-12">
         <div className="grid md:grid-cols-12 gap-8">
-          {/* Lead story */}
           <div className="md:col-span-8 border-r-0 md:border-r border-black md:pr-8">
             <p className="font-mono text-xs uppercase tracking-widest mb-2">Lead Story</p>
             <h2 className="font-serif text-4xl md:text-5xl leading-tight mb-6">
@@ -203,7 +230,6 @@ function Editorial() {
             </div>
           </div>
 
-          {/* Sidebar */}
           <aside className="md:col-span-4">
             <div className="mb-8">
               <p className="font-mono text-xs uppercase tracking-widest mb-4 pb-2 border-b border-black">Previously</p>
@@ -215,7 +241,6 @@ function Editorial() {
                 </div>
               ))}
             </div>
-
             <div className="bg-black text-white p-6">
               <p className="font-mono text-xs uppercase tracking-widest mb-2">Contact the Editor</p>
               <a href="mailto:lamanoujaim@gmail.com" className="font-serif text-xl hover:underline">lamanoujaim@gmail.com</a>
@@ -223,7 +248,6 @@ function Editorial() {
           </aside>
         </div>
 
-        {/* Bottom section */}
         <div className="grid md:grid-cols-3 gap-8 mt-12 pt-8 border-t border-black">
           <div>
             <p className="font-mono text-xs uppercase tracking-widest mb-2">Capabilities</p>
@@ -257,16 +281,15 @@ function Editorial() {
 }
 
 // ============================================
-// DESIGN 3: TERMINAL (Hacker aesthetic)
+// DESIGN 3: TERMINAL
 // ============================================
 function Terminal() {
   const year = new Date().getFullYear();
-  const [input, setInput] = useState('');
-
   return (
     <div className="min-h-screen bg-[#0D1208] text-[#00FF41] font-mono p-4 md:p-8">
+      <Link to="/" className="fixed top-4 left-4 z-50 px-3 py-1 border border-[#00FF41] text-[#00FF41] text-sm hover:bg-[#00FF41] hover:text-[#0D1208] transition-colors">← exit</Link>
+
       <div className="max-w-4xl mx-auto">
-        {/* Terminal header */}
         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-[#00FF41]/30">
           <Circle size={12} weight="fill" className="text-[#FF5F56]" />
           <Circle size={12} weight="fill" className="text-[#FFBD2E]" />
@@ -274,12 +297,8 @@ function Terminal() {
           <span className="ml-4 text-[#00FF41]/50 text-sm">alex@portfolio ~ </span>
         </div>
 
-        {/* Content */}
         <div className="space-y-6">
-          <div>
-            <span className="text-[#00FF41]/50">$</span> cat about.txt
-          </div>
-
+          <div><span className="text-[#00FF41]/50">$</span> cat about.txt</div>
           <pre className="text-[#00FF41] leading-relaxed whitespace-pre-wrap">
 {`
    ___   __    ____  _  _
@@ -298,10 +317,7 @@ function Terminal() {
 `}
           </pre>
 
-          <div>
-            <span className="text-[#00FF41]/50">$</span> ls -la ./experience
-          </div>
-
+          <div><span className="text-[#00FF41]/50">$</span> ls -la ./experience</div>
           <div className="border border-[#00FF41]/30 p-4">
             <div className="grid grid-cols-12 gap-4 text-sm mb-2 text-[#00FF41]/50 border-b border-[#00FF41]/20 pb-2">
               <div className="col-span-3">DATES</div>
@@ -317,10 +333,7 @@ function Terminal() {
             ))}
           </div>
 
-          <div>
-            <span className="text-[#00FF41]/50">$</span> cat skills.json
-          </div>
-
+          <div><span className="text-[#00FF41]/50">$</span> cat skills.json</div>
           <pre className="text-sm bg-[#00FF41]/5 p-4 border border-[#00FF41]/20">
 {`{
   "design": ["product", "systems", "research", "prototyping"],
@@ -330,10 +343,7 @@ function Terminal() {
 }`}
           </pre>
 
-          <div>
-            <span className="text-[#00FF41]/50">$</span> ./contact --help
-          </div>
-
+          <div><span className="text-[#00FF41]/50">$</span> ./contact --help</div>
           <div className="text-sm">
             <p className="mb-2">USAGE: contact [OPTIONS]</p>
             <p className="mb-4 text-[#00FF41]/70">Initiate communication with Alex Lama-Noujaim</p>
@@ -345,19 +355,12 @@ function Terminal() {
 
           <div className="flex items-center gap-2 pt-8">
             <span className="text-[#00FF41]/50">$</span>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              className="flex-1 bg-transparent border-none outline-none text-[#00FF41]"
-              placeholder="type 'hire alex' and press enter..."
-            />
             <span className="animate-pulse">▋</span>
           </div>
         </div>
 
         <div className="mt-12 pt-4 border-t border-[#00FF41]/20 text-[#00FF41]/30 text-xs">
-          © {year} // built with caffeine and mass // no AI was harmed in the making of this portfolio
+          © {year} // built with mass and caffeine
         </div>
       </div>
     </div>
@@ -365,35 +368,29 @@ function Terminal() {
 }
 
 // ============================================
-// DESIGN 4: CARDS (Clean, modern)
+// DESIGN 4: CARDS
 // ============================================
 function Cards() {
   const year = new Date().getFullYear();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      {/* Hero */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900">
+      <Link to="/" className="fixed top-4 left-4 z-50 w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center text-sm hover:bg-slate-700 transition-colors">←</Link>
+
       <div className="min-h-[70vh] flex items-center justify-center p-8">
         <div className="text-center max-w-2xl">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 mx-auto mb-8 flex items-center justify-center text-white text-3xl font-serif">
-            A
-          </div>
+          <div className="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 mx-auto mb-8 flex items-center justify-center text-white text-3xl font-serif">A</div>
           <h1 className="text-5xl md:text-7xl font-serif text-slate-900 mb-4">Alex Lama-Noujaim</h1>
           <p className="text-xl text-slate-600 mb-8">Product Designer at Anthropic</p>
           <p className="text-lg text-slate-500 max-w-lg mx-auto">
             I design AI interfaces that feel like conversations, not command lines. Currently teaching Claude how to be helpful without being annoying.
           </p>
           <div className="flex gap-4 justify-center mt-8">
-            <a href="mailto:lamanoujaim@gmail.com" className="px-6 py-3 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors">
-              Get in touch
-            </a>
-            <a href="#work" className="px-6 py-3 border border-slate-300 rounded-full hover:border-slate-400 transition-colors">
-              See work
-            </a>
+            <a href="mailto:lamanoujaim@gmail.com" className="px-6 py-3 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition-colors">Get in touch</a>
+            <a href="#work" className="px-6 py-3 border border-slate-300 rounded-full hover:border-slate-400 transition-colors">See work</a>
           </div>
         </div>
       </div>
 
-      {/* Work cards */}
       <section id="work" className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-8">Experience</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -416,41 +413,25 @@ function Cards() {
         </div>
       </section>
 
-      {/* Skills */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-8">What I Do</h2>
         <div className="grid md:grid-cols-4 gap-4">
           {["Product Design", "Design Systems", "User Research", "AI Interfaces", "Prototyping", "Strategy", "Team Leadership", "Frontend"].map((skill, i) => (
-            <div key={i} className="bg-white rounded-xl p-4 text-center border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-colors">
-              {skill}
-            </div>
+            <div key={i} className="bg-white rounded-xl p-4 text-center border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-colors">{skill}</div>
           ))}
         </div>
       </section>
 
-      {/* Personal */}
       <section className="max-w-6xl mx-auto px-6 py-16">
         <h2 className="text-sm font-mono uppercase tracking-widest text-slate-400 mb-8">Beyond Work</h2>
         <div className="bg-white rounded-2xl p-8 shadow-sm border border-slate-100">
           <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <p className="text-slate-700 mb-4">
-                20 years of piano and regional competitions. Photography for architecture magazines and music labels — an excuse to look at things longer than normal.
-              </p>
-              <p className="text-slate-700">
-                Five languages: English, French, Spanish, Italian, Arabic. Languages are design systems for thoughts.
-              </p>
-            </div>
-            <div>
-              <p className="text-slate-700">
-                Woodworking with hand tools only (no hex keys allowed). Long-distance cycling. Bread baking. A permaculture garden that's more vision board than vegetable patch.
-              </p>
-            </div>
+            <p className="text-slate-700">20 years of piano and regional competitions. Photography for architecture magazines and music labels — an excuse to look at things longer than normal. Five languages: English, French, Spanish, Italian, Arabic.</p>
+            <p className="text-slate-700">Woodworking with hand tools only. Long-distance cycling. Bread baking. A permaculture garden that's more vision board than vegetable patch.</p>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="max-w-6xl mx-auto px-6 py-16 text-center">
         <h2 className="text-3xl font-serif text-slate-900 mb-4">Let's work together</h2>
         <a href="mailto:lamanoujaim@gmail.com" className="text-xl text-indigo-600 hover:underline">lamanoujaim@gmail.com</a>
@@ -458,7 +439,7 @@ function Cards() {
           <a href="https://linkedin.com/in/lamanoujaim" className="hover:text-slate-600">LinkedIn</a>
           <a href="https://twitter.com/alexlamas" className="hover:text-slate-600">Twitter</a>
         </div>
-        <div className="mt-8 text-slate-400 text-sm">© {year} Alex Lama-Noujaim</div>
+        <div className="mt-8 text-slate-400 text-sm">© {year}</div>
       </footer>
     </div>
   );
@@ -470,44 +451,34 @@ function Cards() {
 function Brutalist() {
   const year = new Date().getFullYear();
   return (
-    <div className="min-h-screen bg-[#FFFEF5]">
-      {/* Massive hero */}
+    <div className="min-h-screen bg-[#FFFEF5] text-black">
+      <Link to="/" className="fixed top-4 left-4 z-50 px-4 py-2 bg-black text-white font-mono text-sm uppercase hover:bg-[#FF5722] transition-colors">← Back</Link>
+
       <section className="min-h-screen flex flex-col justify-between p-4 md:p-8 border-b-8 border-black">
         <div className="flex justify-between items-start">
           <div className="text-xs font-mono uppercase">Portfolio / 2024</div>
           <div className="text-xs font-mono uppercase">San Francisco, CA</div>
         </div>
-
         <div>
-          <h1 className="text-[20vw] md:text-[15vw] font-serif leading-[0.8] tracking-tighter uppercase">
-            ALEX
-          </h1>
-          <h1 className="text-[20vw] md:text-[15vw] font-serif leading-[0.8] tracking-tighter uppercase -mt-4">
-            LAMA
-          </h1>
+          <h1 className="text-[20vw] md:text-[15vw] font-serif leading-[0.8] tracking-tighter uppercase">ALEX</h1>
+          <h1 className="text-[20vw] md:text-[15vw] font-serif leading-[0.8] tracking-tighter uppercase -mt-4">LAMA</h1>
           <div className="flex flex-wrap gap-4 mt-8">
             <span className="px-4 py-2 border-2 border-black text-sm font-mono uppercase">Product Designer</span>
             <span className="px-4 py-2 border-2 border-black text-sm font-mono uppercase bg-[#FF5722] text-white">@ Anthropic</span>
             <span className="px-4 py-2 border-2 border-black text-sm font-mono uppercase">AI Interfaces</span>
           </div>
         </div>
-
         <div className="flex justify-between items-end">
-          <div className="max-w-md text-lg">
-            I make AI feel less like a command line and more like talking to someone who actually listens.
-          </div>
+          <div className="max-w-md text-lg">I make AI feel less like a command line and more like talking to someone who actually listens.</div>
           <div className="text-8xl md:text-9xl font-serif">↓</div>
         </div>
       </section>
 
-      {/* Work section */}
       <section className="border-b-8 border-black">
         <div className="grid md:grid-cols-2">
           <div className="p-8 md:p-12 border-b-8 md:border-b-0 md:border-r-8 border-black bg-[#FF5722]">
             <h2 className="text-6xl md:text-8xl font-serif uppercase text-white mb-8">Work</h2>
-            <p className="text-white/80 text-xl max-w-md">
-              A decade of designing products that people actually use. From startups to scale-ups to whatever Anthropic is.
-            </p>
+            <p className="text-white/80 text-xl max-w-md">A decade of designing products that people actually use.</p>
           </div>
           <div className="divide-y-4 divide-black">
             {timeline.slice(0, 4).map((item, i) => (
@@ -523,24 +494,18 @@ function Brutalist() {
         </div>
       </section>
 
-      {/* Statement */}
       <section className="p-8 md:p-16 border-b-8 border-black">
         <p className="text-4xl md:text-6xl font-serif leading-tight max-w-5xl">
-          "THE HARD PART ISN'T THE MODEL.
-          <span className="bg-[#FFEB3B] px-2">IT'S THE CONVERSATION.</span>"
+          "THE HARD PART ISN'T THE MODEL. <span className="bg-[#FFEB3B] px-2">IT'S THE CONVERSATION.</span>"
         </p>
       </section>
 
-      {/* Skills grid */}
       <section className="grid grid-cols-2 md:grid-cols-4 border-b-8 border-black">
         {["PRODUCT DESIGN", "DESIGN SYSTEMS", "USER RESEARCH", "AI/ML", "PROTOTYPING", "STRATEGY", "FRONTEND", "LEADERSHIP"].map((skill, i) => (
-          <div key={i} className={`p-8 border-r-4 border-b-4 border-black font-mono text-sm uppercase hover:bg-black hover:text-white transition-colors ${i % 3 === 0 ? 'bg-[#FFEB3B]' : ''}`}>
-            {skill}
-          </div>
+          <div key={i} className={`p-8 border-r-4 border-b-4 border-black font-mono text-sm uppercase hover:bg-black hover:text-white transition-colors ${i % 3 === 0 ? 'bg-[#FFEB3B]' : ''}`}>{skill}</div>
         ))}
       </section>
 
-      {/* Personal */}
       <section className="p-8 md:p-12 border-b-8 border-black bg-black text-white">
         <h2 className="text-4xl font-serif uppercase mb-8">Not Just Pixels</h2>
         <div className="grid md:grid-cols-3 gap-8 text-lg">
@@ -550,14 +515,11 @@ function Brutalist() {
         </div>
       </section>
 
-      {/* Contact */}
       <footer className="p-8 md:p-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
           <div>
             <h2 className="text-6xl md:text-8xl font-serif uppercase mb-4">Say Hi</h2>
-            <a href="mailto:lamanoujaim@gmail.com" className="text-2xl hover:bg-[#FF5722] hover:text-white px-2 transition-colors">
-              lamanoujaim@gmail.com
-            </a>
+            <a href="mailto:lamanoujaim@gmail.com" className="text-2xl hover:bg-[#FF5722] hover:text-white px-2 transition-colors">lamanoujaim@gmail.com</a>
           </div>
           <div className="flex gap-8 font-mono uppercase text-sm">
             <a href="https://linkedin.com/in/lamanoujaim" className="hover:line-through">LinkedIn</a>
@@ -577,7 +539,8 @@ function Vaporwave() {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0D0221] via-[#261447] to-[#0D0221] text-white overflow-hidden">
-      {/* Grid overlay */}
+      <Link to="/" className="fixed top-4 left-4 z-50 px-4 py-2 border border-[#FF71CE] text-[#FF71CE] font-mono text-sm hover:bg-[#FF71CE] hover:text-[#0D0221] transition-colors">← EXIT</Link>
+
       <div className="fixed inset-0 opacity-20 pointer-events-none" style={{
         backgroundImage: 'linear-gradient(#FF71CE 1px, transparent 1px), linear-gradient(90deg, #FF71CE 1px, transparent 1px)',
         backgroundSize: '50px 50px',
@@ -585,56 +548,27 @@ function Vaporwave() {
         transformOrigin: 'center top'
       }}></div>
 
-      {/* Sun */}
-      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full opacity-80"
-        style={{
-          background: 'linear-gradient(180deg, #FF71CE 0%, #B967FF 50%, #05FFA1 100%)',
-          boxShadow: '0 0 100px #FF71CE, 0 0 200px #B967FF'
-        }}></div>
+      <div className="absolute top-20 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full opacity-80" style={{
+        background: 'linear-gradient(180deg, #FF71CE 0%, #B967FF 50%, #05FFA1 100%)',
+        boxShadow: '0 0 100px #FF71CE, 0 0 200px #B967FF'
+      }}></div>
 
-      {/* Hero */}
       <section className="relative min-h-screen flex flex-col items-center justify-center p-8 text-center">
         <p className="font-mono text-sm tracking-[0.5em] text-[#05FFA1] mb-4 uppercase">Welcome to the grid</p>
-        <h1 className="text-6xl md:text-8xl font-serif mb-4" style={{
-          background: 'linear-gradient(180deg, #FF71CE, #B967FF, #01CDFE)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          ALEX LAMA
-        </h1>
-        <h2 className="text-4xl md:text-6xl font-serif mb-8" style={{
-          background: 'linear-gradient(180deg, #01CDFE, #05FFA1)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          ラマヌジェイム
-        </h2>
-        <p className="text-xl text-[#FF71CE] max-w-lg mb-8">
-          Product Designer @ Anthropic // Crafting AI interfaces in the digital realm
-        </p>
+        <h1 className="text-6xl md:text-8xl font-serif mb-4" style={{ background: 'linear-gradient(180deg, #FF71CE, #B967FF, #01CDFE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ALEX LAMA</h1>
+        <h2 className="text-4xl md:text-6xl font-serif mb-8" style={{ background: 'linear-gradient(180deg, #01CDFE, #05FFA1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ラマヌジェイム</h2>
+        <p className="text-xl text-[#FF71CE] max-w-lg mb-8">Product Designer @ Anthropic // Crafting AI interfaces in the digital realm</p>
         <div className="flex gap-4">
-          <a href="mailto:lamanoujaim@gmail.com" className="px-6 py-3 border-2 border-[#FF71CE] text-[#FF71CE] hover:bg-[#FF71CE] hover:text-[#0D0221] transition-colors font-mono">
-            CONNECT.exe
-          </a>
-          <a href="#work" className="px-6 py-3 border-2 border-[#05FFA1] text-[#05FFA1] hover:bg-[#05FFA1] hover:text-[#0D0221] transition-colors font-mono">
-            EXPLORE.sys
-          </a>
+          <a href="mailto:lamanoujaim@gmail.com" className="px-6 py-3 border-2 border-[#FF71CE] text-[#FF71CE] hover:bg-[#FF71CE] hover:text-[#0D0221] transition-colors font-mono">CONNECT.exe</a>
+          <a href="#work" className="px-6 py-3 border-2 border-[#05FFA1] text-[#05FFA1] hover:bg-[#05FFA1] hover:text-[#0D0221] transition-colors font-mono">EXPLORE.sys</a>
         </div>
       </section>
 
-      {/* Work */}
       <section id="work" className="relative max-w-4xl mx-auto px-6 py-24">
-        <h2 className="text-4xl font-serif text-center mb-12" style={{
-          background: 'linear-gradient(90deg, #FF71CE, #01CDFE)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          // EXPERIENCE.log
-        </h2>
+        <h2 className="text-4xl font-serif text-center mb-12" style={{ background: 'linear-gradient(90deg, #FF71CE, #01CDFE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>// EXPERIENCE.log</h2>
         <div className="space-y-6">
           {timeline.map((item, i) => (
-            <div key={i} className="border border-[#B967FF]/50 p-6 hover:border-[#FF71CE] hover:bg-[#FF71CE]/10 transition-colors"
-              style={{ boxShadow: '0 0 20px rgba(185, 103, 255, 0.2)' }}>
+            <div key={i} className="border border-[#B967FF]/50 p-6 hover:border-[#FF71CE] hover:bg-[#FF71CE]/10 transition-colors" style={{ boxShadow: '0 0 20px rgba(185, 103, 255, 0.2)' }}>
               <div className="flex justify-between items-baseline mb-2">
                 <span className="text-xl text-[#05FFA1]">{item.place}</span>
                 <span className="font-mono text-sm text-[#01CDFE]">{item.year}</span>
@@ -645,88 +579,51 @@ function Vaporwave() {
         </div>
       </section>
 
-      {/* Skills */}
       <section className="relative max-w-4xl mx-auto px-6 py-24">
-        <h2 className="text-4xl font-serif text-center mb-12" style={{
-          background: 'linear-gradient(90deg, #01CDFE, #05FFA1)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          // SKILLS.dat
-        </h2>
+        <h2 className="text-4xl font-serif text-center mb-12" style={{ background: 'linear-gradient(90deg, #01CDFE, #05FFA1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>// SKILLS.dat</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {["Product Design", "AI Interfaces", "Design Systems", "Research", "Prototyping", "Strategy", "Frontend", "Leadership"].map((skill, i) => (
-            <div key={i} className="border border-[#01CDFE]/50 p-4 text-center font-mono text-sm text-[#01CDFE] hover:bg-[#01CDFE]/20 hover:border-[#01CDFE] transition-colors">
-              {skill}
-            </div>
+            <div key={i} className="border border-[#01CDFE]/50 p-4 text-center font-mono text-sm text-[#01CDFE] hover:bg-[#01CDFE]/20 hover:border-[#01CDFE] transition-colors">{skill}</div>
           ))}
         </div>
       </section>
 
-      {/* Personal */}
       <section className="relative max-w-4xl mx-auto px-6 py-24 text-center">
-        <h2 className="text-4xl font-serif mb-8" style={{
-          background: 'linear-gradient(90deg, #FF71CE, #B967FF)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          // HUMAN.exe
-        </h2>
-        <p className="text-lg text-white/80 max-w-2xl mx-auto mb-4">
-          20 years piano // 5 languages // Photography for architecture mags // Woodworking with hand tools // Long-distance cycling // A permaculture garden that exists mostly in my imagination
-        </p>
-        <p className="text-[#05FFA1] font-mono text-sm">
-          Languages are design systems for thoughts // 言語は思考のためのデザインシステムです
-        </p>
+        <h2 className="text-4xl font-serif mb-8" style={{ background: 'linear-gradient(90deg, #FF71CE, #B967FF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>// HUMAN.exe</h2>
+        <p className="text-lg text-white/80 max-w-2xl mx-auto mb-4">20 years piano // 5 languages // Photography for architecture mags // Woodworking with hand tools // Long-distance cycling // A permaculture garden that exists mostly in my imagination</p>
+        <p className="text-[#05FFA1] font-mono text-sm">Languages are design systems for thoughts // 言語は思考のためのデザインシステムです</p>
       </section>
 
-      {/* Footer */}
       <footer className="relative text-center py-16 border-t border-[#B967FF]/30">
-        <h2 className="text-5xl font-serif mb-6" style={{
-          background: 'linear-gradient(180deg, #FF71CE, #01CDFE)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent'
-        }}>
-          接続する
-        </h2>
-        <a href="mailto:lamanoujaim@gmail.com" className="text-xl text-[#FF71CE] hover:text-[#05FFA1] transition-colors font-mono">
-          lamanoujaim@gmail.com
-        </a>
+        <h2 className="text-5xl font-serif mb-6" style={{ background: 'linear-gradient(180deg, #FF71CE, #01CDFE)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>接続する</h2>
+        <a href="mailto:lamanoujaim@gmail.com" className="text-xl text-[#FF71CE] hover:text-[#05FFA1] transition-colors font-mono">lamanoujaim@gmail.com</a>
         <div className="flex justify-center gap-8 mt-8 font-mono text-sm">
           <a href="https://linkedin.com/in/lamanoujaim" className="text-[#01CDFE] hover:text-[#FF71CE] transition-colors">LinkedIn</a>
           <a href="https://twitter.com/alexlamas" className="text-[#01CDFE] hover:text-[#FF71CE] transition-colors">Twitter</a>
         </div>
-        <div className="mt-8 font-mono text-xs text-[#B967FF]/50">
-          © {year} // A E S T H E T I C S
-        </div>
+        <div className="mt-8 font-mono text-xs text-[#B967FF]/50">© {year} // A E S T H E T I C S</div>
       </footer>
     </div>
   );
 }
 
 // ============================================
-// MAIN APP
+// MAIN APP WITH ROUTING
 // ============================================
 function App() {
-  const [theme, setTheme] = useState("mondrian");
-
-  const renderTheme = () => {
-    switch (theme) {
-      case "editorial": return <Editorial />;
-      case "terminal": return <Terminal />;
-      case "cards": return <Cards />;
-      case "brutalist": return <Brutalist />;
-      case "vaporwave": return <Vaporwave />;
-      default: return <Mondrian />;
-    }
-  };
-
   return (
-    <>
-      <ThemeSwitcher current={theme} onChange={setTheme} />
-      {renderTheme()}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/mondrian" element={<Mondrian />} />
+        <Route path="/editorial" element={<Editorial />} />
+        <Route path="/terminal" element={<Terminal />} />
+        <Route path="/cards" element={<Cards />} />
+        <Route path="/brutalist" element={<Brutalist />} />
+        <Route path="/vaporwave" element={<Vaporwave />} />
+      </Routes>
       <Analytics />
-    </>
+    </BrowserRouter>
   );
 }
 
