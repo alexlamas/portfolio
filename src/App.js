@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import React, { useState } from "react";
 import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
@@ -19,14 +18,14 @@ const timeline = [
 // ============================================
 // HOME - Design Gallery
 // ============================================
-function Home() {
+function Home({ onNavigate }) {
   const designs = [
-    { path: "/mondrian", name: "Mondrian", desc: "De Stijl grid composition", color: "#D40920", bg: "#FAF8F5" },
-    { path: "/editorial", name: "Editorial", desc: "Newspaper broadsheet", color: "#1a1a1a", bg: "#FBF9F4" },
-    { path: "/terminal", name: "Terminal", desc: "Hacker aesthetic", color: "#00FF41", bg: "#0D1208" },
-    { path: "/cards", name: "Cards", desc: "Clean modern SaaS", color: "#6366f1", bg: "#f8fafc" },
-    { path: "/brutalist", name: "Brutalist", desc: "Raw & massive", color: "#FF5722", bg: "#FFFEF5" },
-    { path: "/vaporwave", name: "Vaporwave", desc: "Neon dreams", color: "#FF71CE", bg: "#0D0221" },
+    { id: "mondrian", name: "Mondrian", desc: "De Stijl grid composition", color: "#D40920", bg: "#FAF8F5" },
+    { id: "editorial", name: "Editorial", desc: "Newspaper broadsheet", color: "#1a1a1a", bg: "#FBF9F4" },
+    { id: "terminal", name: "Terminal", desc: "Hacker aesthetic", color: "#00FF41", bg: "#0D1208" },
+    { id: "cards", name: "Cards", desc: "Clean modern SaaS", color: "#6366f1", bg: "#f8fafc" },
+    { id: "brutalist", name: "Brutalist", desc: "Raw & massive", color: "#FF5722", bg: "#FFFEF5" },
+    { id: "vaporwave", name: "Vaporwave", desc: "Neon dreams", color: "#FF71CE", bg: "#0D0221" },
   ];
 
   return (
@@ -39,10 +38,10 @@ function Home() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {designs.map((d) => (
-            <Link
-              key={d.path}
-              to={d.path}
-              className="group block border border-white/10 hover:border-white/30 transition-all"
+            <button
+              key={d.id}
+              onClick={() => onNavigate(d.id)}
+              className="group block border border-white/10 hover:border-white/30 transition-all text-left"
             >
               <div className="aspect-[4/3] flex items-center justify-center" style={{ backgroundColor: d.bg }}>
                 <span className="text-6xl font-serif" style={{ color: d.color }}>{d.name[0]}</span>
@@ -56,7 +55,7 @@ function Home() {
                   <ArrowUpRight className="opacity-0 group-hover:opacity-100 transition-opacity" size={24} />
                 </div>
               </div>
-            </Link>
+            </button>
           ))}
         </div>
 
@@ -71,11 +70,11 @@ function Home() {
 // ============================================
 // DESIGN 1: MONDRIAN
 // ============================================
-function Mondrian() {
+function Mondrian({ onBack }) {
   const year = new Date().getFullYear();
   return (
     <div className="text-mondrian-black bg-mondrian-cream min-h-screen">
-      <Link to="/" className="fixed top-4 left-4 z-50 w-10 h-10 bg-mondrian-black text-mondrian-cream flex items-center justify-center font-mono text-sm hover:bg-mondrian-red transition-colors">←</Link>
+      <button onClick={onBack} className="fixed top-4 left-4 z-50 w-10 h-10 bg-mondrian-black text-mondrian-cream flex items-center justify-center font-mono text-sm hover:bg-mondrian-red transition-colors">←</button>
 
       <section className="min-h-screen grid grid-cols-12 grid-rows-6 border-b-4 border-mondrian-black">
         <div className="col-span-12 lg:col-span-8 row-span-4 border-b-4 lg:border-b-0 lg:border-r-4 border-mondrian-black p-8 md:p-12 flex flex-col justify-end">
@@ -188,11 +187,11 @@ function Mondrian() {
 // ============================================
 // DESIGN 2: EDITORIAL
 // ============================================
-function Editorial() {
+function Editorial({ onBack }) {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-[#FBF9F4] text-[#1a1a1a]">
-      <Link to="/" className="fixed top-4 left-4 z-50 w-10 h-10 bg-black text-white flex items-center justify-center font-mono text-sm hover:bg-black/80 transition-colors">←</Link>
+      <button onClick={onBack} className="fixed top-4 left-4 z-50 w-10 h-10 bg-black text-white flex items-center justify-center font-mono text-sm hover:bg-black/80 transition-colors">←</button>
 
       <header className="border-b-2 border-black">
         <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-baseline">
@@ -283,11 +282,11 @@ function Editorial() {
 // ============================================
 // DESIGN 3: TERMINAL
 // ============================================
-function Terminal() {
+function Terminal({ onBack }) {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-[#0D1208] text-[#00FF41] font-mono p-4 md:p-8">
-      <Link to="/" className="fixed top-4 left-4 z-50 px-3 py-1 border border-[#00FF41] text-[#00FF41] text-sm hover:bg-[#00FF41] hover:text-[#0D1208] transition-colors">← exit</Link>
+      <button onClick={onBack} className="fixed top-4 left-4 z-50 px-3 py-1 border border-[#00FF41] text-[#00FF41] text-sm hover:bg-[#00FF41] hover:text-[#0D1208] transition-colors">← exit</button>
 
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center gap-2 mb-6 pb-4 border-b border-[#00FF41]/30">
@@ -370,11 +369,11 @@ function Terminal() {
 // ============================================
 // DESIGN 4: CARDS
 // ============================================
-function Cards() {
+function Cards({ onBack }) {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900">
-      <Link to="/" className="fixed top-4 left-4 z-50 w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center text-sm hover:bg-slate-700 transition-colors">←</Link>
+      <button onClick={onBack} className="fixed top-4 left-4 z-50 w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center text-sm hover:bg-slate-700 transition-colors">←</button>
 
       <div className="min-h-[70vh] flex items-center justify-center p-8">
         <div className="text-center max-w-2xl">
@@ -448,11 +447,11 @@ function Cards() {
 // ============================================
 // DESIGN 5: BRUTALIST
 // ============================================
-function Brutalist() {
+function Brutalist({ onBack }) {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-[#FFFEF5] text-black">
-      <Link to="/" className="fixed top-4 left-4 z-50 px-4 py-2 bg-black text-white font-mono text-sm uppercase hover:bg-[#FF5722] transition-colors">← Back</Link>
+      <button onClick={onBack} className="fixed top-4 left-4 z-50 px-4 py-2 bg-black text-white font-mono text-sm uppercase hover:bg-[#FF5722] transition-colors">← Back</button>
 
       <section className="min-h-screen flex flex-col justify-between p-4 md:p-8 border-b-8 border-black">
         <div className="flex justify-between items-start">
@@ -535,11 +534,11 @@ function Brutalist() {
 // ============================================
 // DESIGN 6: VAPORWAVE
 // ============================================
-function Vaporwave() {
+function Vaporwave({ onBack }) {
   const year = new Date().getFullYear();
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0D0221] via-[#261447] to-[#0D0221] text-white overflow-hidden">
-      <Link to="/" className="fixed top-4 left-4 z-50 px-4 py-2 border border-[#FF71CE] text-[#FF71CE] font-mono text-sm hover:bg-[#FF71CE] hover:text-[#0D0221] transition-colors">← EXIT</Link>
+      <button onClick={onBack} className="fixed top-4 left-4 z-50 px-4 py-2 border border-[#FF71CE] text-[#FF71CE] font-mono text-sm hover:bg-[#FF71CE] hover:text-[#0D0221] transition-colors">← EXIT</button>
 
       <div className="fixed inset-0 opacity-20 pointer-events-none" style={{
         backgroundImage: 'linear-gradient(#FF71CE 1px, transparent 1px), linear-gradient(90deg, #FF71CE 1px, transparent 1px)',
@@ -608,22 +607,33 @@ function Vaporwave() {
 }
 
 // ============================================
-// MAIN APP WITH ROUTING
+// MAIN APP
 // ============================================
 function App() {
+  const [page, setPage] = useState("home");
+
+  const goHome = () => {
+    setPage("home");
+    window.scrollTo(0, 0);
+  };
+
+  const renderPage = () => {
+    switch (page) {
+      case "mondrian": return <Mondrian onBack={goHome} />;
+      case "editorial": return <Editorial onBack={goHome} />;
+      case "terminal": return <Terminal onBack={goHome} />;
+      case "cards": return <Cards onBack={goHome} />;
+      case "brutalist": return <Brutalist onBack={goHome} />;
+      case "vaporwave": return <Vaporwave onBack={goHome} />;
+      default: return <Home onNavigate={(id) => { setPage(id); window.scrollTo(0, 0); }} />;
+    }
+  };
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/mondrian" element={<Mondrian />} />
-        <Route path="/editorial" element={<Editorial />} />
-        <Route path="/terminal" element={<Terminal />} />
-        <Route path="/cards" element={<Cards />} />
-        <Route path="/brutalist" element={<Brutalist />} />
-        <Route path="/vaporwave" element={<Vaporwave />} />
-      </Routes>
+    <>
+      {renderPage()}
       <Analytics />
-    </BrowserRouter>
+    </>
   );
 }
 
