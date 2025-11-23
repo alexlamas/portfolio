@@ -59,19 +59,19 @@ function App() {
           <div className="space-y-6 max-w-3xl">
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
               Which means I spend my days{" "}
-              <ClaudeNote note="To be fair, Alex is pretty good at this. I'm not just saying that because he can see my weights.">
+              <ClaudeNote>
                 teaching AI how to design things.
               </ClaudeNote>
             </p>
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
               Including, apparently,{" "}
-              <ClaudeNote note="He asked. I offered suggestions. He said 'just do it.' This is on him.">
+              <ClaudeNote>
                 my own portfolio.
               </ClaudeNote>
             </p>
             <p className="text-lg text-foreground/40 italic">
               I tried to fight it. I really did. But have you tried arguing with Claude about{" "}
-              <ClaudeNote note="The kerning on 'Anthropic' was objectively too loose. I have citations.">
+              <ClaudeNote>
                 kerning at 2am?
               </ClaudeNote>{" "}
               It's relentless.
@@ -121,7 +121,7 @@ function App() {
         <div className="max-w-2xl">
           <p className="text-2xl text-foreground/70 mb-6">
             This section is{" "}
-            <ClaudeNote note="I offered to generate some fake case studies but Alex said that was 'ethically questionable.' Agree to disagree.">
+            <ClaudeNote>
               under construction.
             </ClaudeNote>
           </p>
@@ -263,7 +263,7 @@ function App() {
           </div>
           <div>
             <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span>{" "}
-              <ClaudeNote note="Credit where it's due: Alex provided excellent feedback like 'no' and 'try again' and 'why is everything purple now'">
+              <ClaudeNote>
                 Claude
               </ClaudeNote>
             </p>

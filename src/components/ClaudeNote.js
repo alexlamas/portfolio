@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactDOM from "react-dom";
 
-export default function ClaudeNote({ children, note }) {
+export default function ClaudeNote({ children, context }) {
   const [show, setShow] = useState(false);
   const [pos, setPos] = useState({ top: 0 });
+  const [note, setNote] = useState(null);
+  const [loading, setLoading] = useState(false);
   const ref = useRef(null);
+  const fetchedRef = useRef(false);
 
   useEffect(() => {
     if (show && ref.current) {
@@ -12,6 +15,28 @@ export default function ClaudeNote({ children, note }) {
       setPos({ top: rect.top + rect.height / 2 });
     }
   }, [show]);
+
+  useEffect(() => {
+    if (show && !note && !loading && !fetchedRef.current) {
+      fetchedRef.current = true;
+      setLoading(true);
+      const text = ref.current?.innerText || "";
+      fetch("/api/note", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, context }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setNote(data.note);
+          setLoading(false);
+        })
+        .catch(() => {
+          setNote("I had something witty to say, but the words escaped me.");
+          setLoading(false);
+        });
+    }
+  }, [show, note, loading, context]);
 
   return (
     <>
@@ -66,7 +91,11 @@ export default function ClaudeNote({ children, note }) {
               Editor's Note
             </div>
             <div style={{ fontStyle: 'italic' }}>
-              {note}
+              {loading ? (
+                <span style={{ color: 'rgba(255,255,255,0.5)' }}>Thinking...</span>
+              ) : (
+                note
+              )}
             </div>
             <div style={{
               marginTop: '10px',
