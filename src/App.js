@@ -56,22 +56,22 @@ function App() {
             I design products at Anthropic.
           </h1>
 
-          <div className="space-y-6 max-w-2xl">
+          <div className="space-y-6 max-w-3xl">
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
               Which means I spend my days{" "}
-              <ClaudeNote note="To be fair, Alex is pretty good at this. I'm not just saying that because he can see my weights.">
+              <ClaudeNote>
                 teaching AI how to design things.
               </ClaudeNote>
             </p>
             <p className="text-xl md:text-2xl leading-relaxed text-foreground/70">
               Including, apparently,{" "}
-              <ClaudeNote note="He asked. I offered suggestions. He said 'just do it.' This is on him.">
+              <ClaudeNote>
                 my own portfolio.
               </ClaudeNote>
             </p>
             <p className="text-lg text-foreground/40 italic">
               I tried to fight it. I really did. But have you tried arguing with Claude about{" "}
-              <ClaudeNote note="The kerning on 'Anthropic' was objectively too loose. I have citations.">
+              <ClaudeNote>
                 kerning at 2am?
               </ClaudeNote>{" "}
               It's relentless.
@@ -121,7 +121,7 @@ function App() {
         <div className="max-w-2xl">
           <p className="text-2xl text-foreground/70 mb-6">
             This section is{" "}
-            <ClaudeNote note="I offered to generate some fake case studies but Alex said that was 'ethically questionable.' Agree to disagree.">
+            <ClaudeNote>
               under construction.
             </ClaudeNote>
           </p>
@@ -131,14 +131,6 @@ function App() {
           <p className="text-lg text-foreground/50 mb-8">
             The cobbler's children have no shoes. The designer's portfolio has no case studies. You get it.
           </p>
-          <div className="bg-foreground/5 rounded-lg p-6 font-mono text-sm border border-border">
-            <div className="text-foreground/40 mb-2">In the meantime:</div>
-            <ul className="space-y-2 text-foreground/70">
-              <li>→ Ask me about my work at <span className="text-foreground">Anthropic</span>, <span className="text-foreground">Airtable</span>, or <span className="text-foreground">Tray.io</span></li>
-              <li>→ Check my <a href="https://linkedin.com/in/lamanoujaim" target="_blank" rel="noreferrer" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">LinkedIn</a> for the professional version</li>
-              <li>→ Or just <a href="mailto:lamanoujaim@gmail.com" className="text-foreground border-b border-foreground/20 hover:border-highlight transition-colors">email me</a> — I'm better at talking about work than writing about it</li>
-            </ul>
-          </div>
         </div>
       </section>
 
@@ -271,7 +263,7 @@ function App() {
           </div>
           <div>
             <p>Design credit: <span className="line-through">Alex Lama-Noujaim</span>{" "}
-              <ClaudeNote note="Credit where it's due: Alex provided excellent feedback like 'no' and 'try again' and 'why is everything purple now'">
+              <ClaudeNote>
                 Claude
               </ClaudeNote>
             </p>
