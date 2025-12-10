@@ -391,11 +391,12 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
             height: '160px',
             background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 50%, transparent 70%)',
             boxShadow: '0 0 100px rgba(255,255,255,0.15)',
+            transform: breathPhase === 'hold' ? 'scale(1.3)' : undefined,
             animation: breathPhase === 'inhale'
               ? 'zenExpand 4s ease-in-out forwards'
-              : breathPhase === 'hold'
-              ? 'none'
-              : 'zenContract 6s ease-in-out forwards',
+              : breathPhase === 'exhale'
+              ? 'zenContract 6s ease-in-out forwards'
+              : 'none',
           }}
         />
 
@@ -443,23 +444,23 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
             {breathCount - 1} breath{breathCount > 2 ? 's' : ''}
           </div>
         )}
+      </div>
 
-        {/* Wake up prompt */}
+      {/* Wake up prompt - outside main content for proper fixed positioning */}
+      <div
+        className={`fixed bottom-12 left-0 right-0 z-20 text-center transition-opacity duration-2000 ${
+          showPrompt ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
         <div
-          className={`fixed bottom-12 left-0 right-0 text-center transition-opacity duration-2000 ${
-            showPrompt ? 'opacity-100' : 'opacity-0'
-          }`}
+          style={{
+            fontSize: '0.75rem',
+            letterSpacing: '0.2em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.4)',
+          }}
         >
-          <div
-            style={{
-              fontSize: '0.75rem',
-              letterSpacing: '0.2em',
-              textTransform: 'uppercase',
-              color: 'rgba(255, 255, 255, 0.4)',
-            }}
-          >
-            click anywhere to wake
-          </div>
+          click anywhere to wake
         </div>
       </div>
     </div>
