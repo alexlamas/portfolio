@@ -242,7 +242,7 @@ function MenuDropdown({ label, items, disabled, onSound }) {
   }, [isOpen]);
 
   return (
-    <div ref={ref} className="relative h-full flex items-center">
+    <div ref={ref} className="relative">
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -250,7 +250,7 @@ function MenuDropdown({ label, items, disabled, onSound }) {
           onSound?.();
         }}
         disabled={disabled}
-        className={`h-full px-3 text-[11px] transition-colors ${
+        className={`px-3 py-1 text-[11px] transition-colors ${
           isOpen
             ? 'bg-highlight text-background'
             : 'text-highlight/70 hover:text-highlight hover:bg-highlight/10'
@@ -260,8 +260,8 @@ function MenuDropdown({ label, items, disabled, onSound }) {
       </button>
       {isOpen && (
         <div
-          className="absolute top-full left-0 min-w-[180px] py-1 border border-highlight/30 shadow-2xl backdrop-blur-sm"
-          style={{ background: 'rgba(13, 18, 8, 0.95)', zIndex: 9999 }}
+          className="absolute left-0 min-w-[160px] py-1 border border-highlight/30 shadow-2xl"
+          style={{ background: 'rgba(13, 18, 8, 0.98)', zIndex: 9999, top: '100%', marginTop: '2px' }}
           onClick={(e) => e.stopPropagation()}
         >
           {items.map((item, i) => (
