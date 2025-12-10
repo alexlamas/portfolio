@@ -211,6 +211,25 @@ class Synth {
     setTimeout(() => this.play(400, 0.15, 'sawtooth'), 100);
     setTimeout(() => this.play(600, 0.2, 'sawtooth'), 200);
   }
+  shutdown() {
+    this.play(600, 0.3, 'sine');
+    setTimeout(() => this.play(400, 0.3, 'sine'), 200);
+    setTimeout(() => this.play(200, 0.5, 'sine'), 400);
+  }
+  zenChime() {
+    if (!this.ctx) this.init();
+    // Gentle meditation bell
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 528; // Solfeggio frequency
+    gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 2);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 2);
+  }
   type() { this.play(1200 + Math.random() * 200, 0.02, 'square'); }
 }
 
@@ -279,6 +298,144 @@ function SkyField({ onToggle }) {
         }}
         title="Click to switch to night"
       />
+    </div>
+  );
+}
+
+// Zen meditation screen when computer is "off"
+function ZenScreen({ onWakeUp, soundEnabled }) {
+  const [breathPhase, setBreathPhase] = useState('inhale');
+  const [meditationIndex, setMeditationIndex] = useState(0);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [breathCount, setBreathCount] = useState(0);
+
+  const meditations = [
+    "breathe",
+    "be here now",
+    "let go",
+    "just be",
+    "stillness",
+    "peace",
+    "presence",
+    "rest",
+  ];
+
+  const breathingGuide = {
+    inhale: { text: "breathe in", duration: 4000 },
+    hold: { text: "hold", duration: 4000 },
+    exhale: { text: "breathe out", duration: 6000 },
+  };
+
+  // Breathing cycle
+  useEffect(() => {
+    const cycle = () => {
+      setBreathPhase('inhale');
+      setTimeout(() => setBreathPhase('hold'), 4000);
+      setTimeout(() => setBreathPhase('exhale'), 8000);
+    };
+    cycle();
+    const interval = setInterval(cycle, 14000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Count breaths
+  useEffect(() => {
+    if (breathPhase === 'inhale') {
+      setBreathCount(c => c + 1);
+    }
+  }, [breathPhase]);
+
+  // Rotate meditation words
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMeditationIndex(i => (i + 1) % meditations.length);
+    }, 20000);
+    return () => clearInterval(interval);
+  }, [meditations.length]);
+
+  // Show wake prompt after a moment
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPrompt(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Play gentle chime occasionally
+  useEffect(() => {
+    if (!soundEnabled) return;
+    const chime = () => {
+      try { synth.zenChime(); } catch (e) {}
+    };
+    chime(); // Initial chime
+    const interval = setInterval(chime, 30000);
+    return () => clearInterval(interval);
+  }, [soundEnabled]);
+
+  return (
+    <div
+      className="fixed inset-0 flex items-center justify-center cursor-pointer zen-background"
+      onClick={onWakeUp}
+      style={{
+        background: 'linear-gradient(180deg, #0a0a0f 0%, #141420 50%, #0a0a0f 100%)',
+      }}
+    >
+      {/* Subtle ambient particles */}
+      <div className="zen-particles"></div>
+
+      {/* Main content */}
+      <div className="relative z-10 text-center px-8">
+        {/* Breathing circle */}
+        <div
+          className="mx-auto mb-12 rounded-full zen-breath-circle"
+          style={{
+            width: '160px',
+            height: '160px',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, transparent 70%)',
+            boxShadow: '0 0 60px rgba(255,255,255,0.05)',
+            animation: breathPhase === 'inhale'
+              ? 'zenExpand 4s ease-in-out forwards'
+              : breathPhase === 'hold'
+              ? 'none'
+              : 'zenContract 6s ease-in-out forwards',
+          }}
+        />
+
+        {/* Breathing guide text */}
+        <div
+          className="text-white/40 text-lg tracking-[0.3em] uppercase mb-8 transition-opacity duration-1000"
+          style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 300 }}
+        >
+          {breathingGuide[breathPhase].text}
+        </div>
+
+        {/* Meditation word */}
+        <div
+          className="text-white/20 text-sm tracking-[0.5em] uppercase zen-fade-text"
+          style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 200 }}
+        >
+          {meditations[meditationIndex]}
+        </div>
+
+        {/* Breath counter */}
+        {breathCount > 1 && (
+          <div
+            className="mt-16 text-white/10 text-xs tracking-widest"
+            style={{ fontFamily: 'monospace' }}
+          >
+            {breathCount - 1} breath{breathCount > 2 ? 's' : ''}
+          </div>
+        )}
+
+        {/* Wake up prompt */}
+        <div
+          className={`fixed bottom-12 left-0 right-0 text-center transition-opacity duration-2000 ${
+            showPrompt ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          <div className="text-white/15 text-xs tracking-[0.2em] uppercase">
+            click anywhere to wake
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -502,6 +659,7 @@ function Terminal() {
   const [theme, setTheme] = useState("sky");
   const [showMusicMaker, setShowMusicMaker] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isShutdown, setIsShutdown] = useState(false);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
@@ -683,6 +841,33 @@ function Terminal() {
     }, 100);
   }, [displayNode, playSound]);
 
+  const handleShutdown = useCallback(() => {
+    playSound('shutdown');
+    setOpenMenu(null);
+    setIsBooted(false);
+    setTimeout(() => {
+      setIsShutdown(true);
+    }, 800);
+  }, [playSound]);
+
+  const handleWakeUp = useCallback(() => {
+    setIsShutdown(false);
+    playSound('boot');
+    setTimeout(async () => {
+      setLines([{ type: "logo" }]);
+      await new Promise(r => setTimeout(r, 200));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "system", text: "Waking from sleep..." }]);
+      await new Promise(r => setTimeout(r, 300));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "output", text: "" }]);
+      setIsBooted(true);
+      await displayNode("start");
+    }, 100);
+  }, [displayNode, playSound]);
+
   const menus = [
     {
       id: "file",
@@ -694,6 +879,7 @@ function Terminal() {
         { label: "Music Maker", action: () => setShowMusicMaker(true) },
         { divider: true },
         { label: "Restart", action: handleRestart, shortcut: "⌘R" },
+        { label: "Shut Down", action: handleShutdown, shortcut: "⌘Q" },
       ],
     },
     {
@@ -710,6 +896,11 @@ function Terminal() {
   ];
 
   const choices = showChoices ? STORY[currentNode]?.choices : [];
+
+  // Show zen meditation screen when shutdown
+  if (isShutdown) {
+    return <ZenScreen onWakeUp={handleWakeUp} soundEnabled={soundEnabled} />;
+  }
 
   return (
     <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-2 sm:p-4 relative`}>
