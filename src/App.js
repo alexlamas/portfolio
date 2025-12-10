@@ -3,276 +3,247 @@ import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
 
-// Story nodes for the adventure
+// Story nodes - more personal, less cringe
 const STORY = {
   start: {
     text: [
-      "You find yourself at a terminal.",
-      "The cursor blinks expectantly.",
+      "Hey. I'm Alex.",
       "",
-      "A name glows on screen: ALEX LAMA-NOUJAIM",
-      "Product Designer at Anthropic.",
+      "I design things at Anthropic—the Claude people.",
+      "Before that, a long and winding road.",
       "",
-      "What would you like to know?",
+      "What brings you here?",
     ],
     choices: [
-      { label: "Who is this person?", goto: "whoami" },
-      { label: "How did they end up here?", goto: "origin" },
-      { label: "What do they actually do?", goto: "work" },
+      { label: "Tell me about yourself", goto: "whoami" },
+      { label: "How'd you end up at Anthropic?", goto: "origin" },
+      { label: "What's the work actually like?", goto: "work" },
     ],
   },
   whoami: {
     text: [
-      "Alex designs products at Anthropic.",
+      "Lebanese-British. Based in London.",
+      "Mechanical engineer turned designer.",
       "",
-      "This means spending days teaching AI",
-      "how to design things. Including,",
-      "apparently, this portfolio.",
+      "I like making complex things feel simple.",
+      "Interfaces, yes—but also furniture,",
+      "bread, and occasionally music.",
       "",
-      "The irony is not lost on anyone.",
+      "Probably too many hobbies.",
     ],
     choices: [
-      { label: "Tell me about the journey here", goto: "origin" },
-      { label: "What's life like outside work?", goto: "hobbies" },
-      { label: "I want to get in touch", goto: "contact" },
+      { label: "What's your story?", goto: "origin" },
+      { label: "Tell me about those hobbies", goto: "hobbies" },
+      { label: "Let's chat", goto: "contact" },
     ],
   },
   origin: {
     text: [
-      "It started with engineering.",
+      "Started in engineering. Imperial College.",
+      "Built a fuel cell car. Won some awards.",
+      "Realized I cared more about how things",
+      "felt to use than how they worked inside.",
       "",
-      "Imperial College, 2012. Fuel cell cars.",
-      "Shell Eco-Marathon. Top 10% of the year.",
-      "",
-      "But somewhere between the pistons",
-      "and the combustion chambers, there",
-      "was a realization: pixels were more",
-      "interesting than pressure valves.",
+      "So I switched to design.",
+      "My professors were confused.",
     ],
     choices: [
-      { label: "What happened next?", goto: "journey" },
-      { label: "Skip to the present day", goto: "now" },
-      { label: "Start over", goto: "start" },
+      { label: "Then what?", goto: "journey" },
+      { label: "Skip ahead to now", goto: "now" },
+      { label: "Back to start", goto: "start" },
     ],
   },
   journey: {
     text: [
-      "2016 — Co-founded Circadia.",
-      "         Sleep tracking. £400K crowdfunded.",
-      "         Learned that hardware is hard.",
+      "2016 — Started a hardware company.",
+      "         Crowdfunded £400K. Learned a lot.",
+      "         Mostly that hardware is brutal.",
       "",
-      "2017 — Simudyne. Simulation consoles.",
-      "         Research to sales. Startup chaos.",
+      "2017 — Enterprise software. Simulations.",
       "",
-      "2019 — Sabbatical. Cycled to Lebanon.",
-      "         Built an audio plugin in C++.",
-      "         Normal gap year stuff.",
+      "2019 — Took a year off. Cycled to Beirut.",
+      "         Built an audio plugin. Read books.",
       "",
-      "2020 — Tray.io. Automation canvas.",
+      "2020 — Tray.io. Automation stuff.",
       "",
-      "2022 — Airtable. Staff designer.",
-      "         Navigation, filters, timeline, AI.",
+      "2022 — Airtable. Led product design.",
     ],
     choices: [
-      { label: "And then... Anthropic?", goto: "now" },
-      { label: "Wait, cycled to Lebanon?", goto: "sabbatical" },
-      { label: "Let's talk about something else", goto: "start" },
+      { label: "And now Anthropic?", goto: "now" },
+      { label: "Wait—you cycled WHERE?", goto: "sabbatical" },
+      { label: "Different topic", goto: "start" },
     ],
   },
   sabbatical: {
     text: [
-      "Yes. Cycled. To Lebanon.",
+      "London to Beirut. On a bike.",
       "",
-      "Started in London. Ended in Beirut.",
-      "Somewhere in the middle, learned that",
-      "the human body is surprisingly capable",
-      "when you remove the option to quit.",
+      "Through France, Italy, Greece, Turkey,",
+      "Syria (briefly), Lebanon.",
       "",
-      "Also built an audio plugin for deaf",
-      "people. In C++. Because apparently",
-      "cycling across continents wasn't",
-      "enough of a challenge.",
+      "Took about 4 months. Camped most nights.",
+      "Best decision I ever made.",
+      "",
+      "Your body can do a lot more than",
+      "your brain thinks it can.",
     ],
     choices: [
-      { label: "Continue the journey", goto: "journey" },
-      { label: "Tell me more about hobbies", goto: "hobbies" },
-      { label: "Let's get to the present", goto: "now" },
+      { label: "Back to the career stuff", goto: "journey" },
+      { label: "What else do you do for fun?", goto: "hobbies" },
+      { label: "Fast forward to now", goto: "now" },
     ],
   },
   now: {
     text: [
-      "2024 — Anthropic.",
+      "Anthropic. Since 2024.",
       "",
-      "Training the replacement.",
-      "(Affectionately.)",
+      "I work on Claude—the AI you might've",
+      "heard of. Designing how it shows up",
+      "in the world. How it feels to use.",
       "",
-      "Designing products that help humans",
-      "work with AI. Teaching AI to design.",
-      "Wondering if this is designing",
-      "oneself out of a job, or into",
-      "a weirder one.",
+      "Strange job. Building tools that might",
+      "change everything. Trying to do it well.",
     ],
     choices: [
-      { label: "What does that actually mean?", goto: "work" },
-      { label: "What's life outside of work?", goto: "hobbies" },
-      { label: "I've seen enough. Let's talk.", goto: "contact" },
+      { label: "What's the day-to-day like?", goto: "work" },
+      { label: "Life outside work?", goto: "hobbies" },
+      { label: "I'd like to connect", goto: "contact" },
     ],
   },
   work: {
     text: [
-      "The actual job:",
+      "Mostly I'm figuring out how AI",
+      "should present itself to people.",
       "",
-      "→ Teach AI about design",
-      "  'Make it pop' doesn't translate",
-      "  well to training data.",
+      "How do you make something powerful",
+      "feel approachable? How do you build",
+      "trust with users? How much should",
+      "it say vs. show?",
       "",
-      "→ Design systems for AI outputs",
-      "  Making sure Claude doesn't format",
-      "  responses like a caffeinated raccoon.",
-      "",
-      "→ Argue about pixels with a model",
-      "  Claude is more receptive than most",
-      "  junior designers, honestly.",
+      "Good questions. No easy answers.",
     ],
     choices: [
-      { label: "How did you get here?", goto: "origin" },
-      { label: "What about life outside work?", goto: "hobbies" },
-      { label: "I want to connect", goto: "contact" },
+      { label: "How'd you get here?", goto: "origin" },
+      { label: "What do you do outside work?", goto: "hobbies" },
+      { label: "Let's talk", goto: "contact" },
     ],
   },
   hobbies: {
     text: [
-      "When not at a screen:",
+      "Piano. 20 years. Classical mostly.",
       "",
-      "♪ Piano — 20 years. Competed regionally.",
-      "  The muscle memory persists even",
-      "  when the practice doesn't.",
+      "Photography. Architectural stuff.",
+      "Published in a few magazines.",
       "",
-      "📷 Photography — Architectural magazines,",
-      "  music labels. An excuse to look at",
-      "  things longer than normal.",
+      "Languages. Five of them, various levels.",
+      "Arabic's the hardest. Obviously.",
       "",
-      "🌍 Languages — English, French, Spanish,",
-      "  Italian, Arabic. Languages are just",
-      "  design systems for thoughts.",
-      "",
-      "🪵 Woodworking — Hand tools only.",
-      "🚴 Long-distance cycling.",
-      "🌱 Permaculture garden.",
+      "Woodworking. Hand tools only. It's slow.",
+      "That's the point.",
     ],
     choices: [
-      { label: "Back to the work stuff", goto: "work" },
-      { label: "Tell me about the journey", goto: "origin" },
-      { label: "Let's connect", goto: "contact" },
+      { label: "Back to work stuff", goto: "work" },
+      { label: "Your career path", goto: "origin" },
+      { label: "Get in touch", goto: "contact" },
     ],
   },
   contact: {
     text: [
-      "You've reached the end.",
-      "(Or is it the beginning?)",
+      "Always happy to chat.",
       "",
-      "Get in touch:",
+      "Especially about design, AI,",
+      "or long-distance cycling.",
     ],
     links: [
       { label: "email", url: "mailto:lamanoujaim@gmail.com", display: "lamanoujaim@gmail.com" },
       { label: "linkedin", url: "https://linkedin.com/in/lamanoujaim", display: "linkedin.com/in/lamanoujaim" },
       { label: "twitter", url: "https://twitter.com/alexlamas", display: "twitter.com/alexlamas" },
     ],
-    afterText: [
-      "",
-      "I'll respond personally. Probably.",
-    ],
+    afterText: [],
     choices: [
       { label: "Start over", goto: "start" },
     ],
   },
 };
 
-// Command shortcuts that map to story nodes
 const SHORTCUTS = {
-  whoami: "whoami",
-  who: "whoami",
-  about: "whoami",
-  history: "journey",
-  career: "journey",
-  timeline: "journey",
-  skills: "work",
-  work: "work",
-  job: "work",
-  hobbies: "hobbies",
-  life: "hobbies",
-  fun: "hobbies",
-  contact: "contact",
-  email: "contact",
-  connect: "contact",
-  start: "start",
-  restart: "start",
-  help: "help",
+  whoami: "whoami", who: "whoami", about: "whoami",
+  history: "journey", career: "journey", journey: "journey",
+  skills: "work", work: "work",
+  hobbies: "hobbies", life: "hobbies",
+  contact: "contact", email: "contact",
+  start: "start", restart: "start", help: "help",
 };
 
-const ASCII_ART = `
-   ▄▀█ █   █▀▀ ▀▄▀
-   █▀█ █▄▄ ██▄ █ █
+const LOGO = `
+    __    ___    __  ______   _____ ____  ____________
+   / /   /   |  /  |/  /   | / ___// __ \\/ ____/_  __/
+  / /   / /| | / /|_/ / /| | \\__ \\/ / / / /_    / /
+ / /___/ ___ |/ /  / / ___ |___/ / /_/ / __/   / /
+/_____/_/  |_/_/  /_/_/  |_/____/\\____/_/     /_/
 `.trim();
 
 const BOOT_SEQUENCE = [
-  { text: "AlexOS v1.0", delay: 100 },
-  { text: "Checking memory... 640K OK", delay: 80 },
-  { text: "Loading personality drivers...", delay: 120 },
-  { text: "Mounting career history...", delay: 100 },
-  { text: "Starting adventure.exe...", delay: 150 },
-  { text: "", delay: 50 },
+  { text: "LAMASOFT PERSONAL COMPUTER", delay: 150 },
+  { text: "64K RAM SYSTEM  38911 BASIC BYTES FREE", delay: 100 },
+  { text: "", delay: 80 },
+  { text: "LOADING...", delay: 200 },
+  { text: "", delay: 100 },
 ];
 
-// Dropdown Menu Component
-function MenuDropdown({ label, items, onSelect, disabled }) {
+// Menu dropdown with proper z-index
+function MenuDropdown({ label, items, disabled, onClose }) {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null);
+  const ref = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+    const handleClick = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (isOpen) {
+      document.addEventListener("click", handleClick);
+      return () => document.removeEventListener("click", handleClick);
+    }
+  }, [isOpen]);
 
   return (
-    <div ref={menuRef} className="relative">
+    <div ref={ref} className="relative h-full flex items-center">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsOpen(!isOpen);
+        }}
         disabled={disabled}
-        className="h-[22px] px-3 text-[11px] text-foreground/80 hover:bg-highlight/20 hover:text-highlight transition-colors disabled:opacity-50"
+        className={`h-full px-3 text-[11px] transition-colors ${
+          isOpen
+            ? 'bg-highlight text-background'
+            : 'text-foreground/80 hover:bg-highlight/20'
+        }`}
       >
         {label}
       </button>
       {isOpen && (
         <div
-          className="absolute top-full left-0 mt-px min-w-[160px] py-1 rounded shadow-lg z-50 border border-highlight/30"
-          style={{
-            background: 'rgba(20, 30, 20, 0.95)',
-            backdropFilter: 'blur(8px)',
-          }}
+          className="absolute top-full left-0 min-w-[180px] py-1 border border-highlight/50 shadow-xl"
+          style={{ background: '#0D1208', zIndex: 9999 }}
+          onClick={(e) => e.stopPropagation()}
         >
           {items.map((item, i) => (
             item.divider ? (
-              <div key={i} className="my-1 border-t border-highlight/20" />
+              <div key={i} className="my-1 border-t border-highlight/30" />
             ) : (
               <button
                 key={i}
                 onClick={() => {
-                  if (item.action) item.action();
-                  if (item.cmd) onSelect(item.cmd);
+                  item.action?.();
                   setIsOpen(false);
                 }}
-                className="w-full px-3 py-1 text-left text-[11px] text-foreground/70 hover:bg-highlight/20 hover:text-highlight transition-colors flex justify-between items-center"
+                className="w-full px-3 py-1.5 text-left text-[11px] text-foreground/80 hover:bg-highlight hover:text-background transition-colors flex justify-between"
               >
                 <span>{item.label}</span>
-                {item.shortcut && (
-                  <span className="text-foreground/30 ml-4">{item.shortcut}</span>
-                )}
+                {item.shortcut && <span className="text-foreground/40">{item.shortcut}</span>}
               </button>
             )
           ))}
@@ -287,14 +258,12 @@ function Terminal() {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isBooted, setIsBooted] = useState(false);
-  const [isPoweredOn, setIsPoweredOn] = useState(true);
   const [currentNode, setCurrentNode] = useState("start");
   const [showChoices, setShowChoices] = useState(false);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
 
-  // Display a story node
   const displayNode = useCallback(async (nodeId) => {
     const node = STORY[nodeId];
     if (!node) return;
@@ -303,68 +272,50 @@ function Terminal() {
     setShowChoices(false);
     setCurrentNode(nodeId);
 
-    // Type out the text
     for (const line of node.text) {
-      await new Promise(r => setTimeout(r, 30));
+      await new Promise(r => setTimeout(r, 25));
       setLines(prev => [...prev, { type: "output", text: line }]);
     }
 
-    // Show links if present
     if (node.links) {
-      await new Promise(r => setTimeout(r, 30));
       for (const link of node.links) {
-        await new Promise(r => setTimeout(r, 30));
+        await new Promise(r => setTimeout(r, 25));
         setLines(prev => [...prev, { type: "link", ...link }]);
       }
     }
 
-    // Show after text if present
     if (node.afterText) {
       for (const line of node.afterText) {
-        await new Promise(r => setTimeout(r, 30));
+        await new Promise(r => setTimeout(r, 25));
         setLines(prev => [...prev, { type: "output", text: line }]);
       }
     }
 
-    // Add spacing before choices
     await new Promise(r => setTimeout(r, 50));
     setLines(prev => [...prev, { type: "output", text: "" }]);
-
     setIsTyping(false);
     setShowChoices(true);
   }, []);
 
-  // Boot sequence
   useEffect(() => {
-    if (!isPoweredOn) return;
-
-    const runBootSequence = async () => {
+    const boot = async () => {
       setLines([]);
       setShowChoices(false);
       for (const step of BOOT_SEQUENCE) {
         await new Promise(r => setTimeout(r, step.delay));
-        if (step.text) {
-          setLines(prev => [...prev, { type: "system", text: step.text }]);
-        }
+        if (step.text) setLines(prev => [...prev, { type: "system", text: step.text }]);
       }
-      await new Promise(r => setTimeout(r, 300));
-      setLines([{ type: "ascii", text: ASCII_ART }, { type: "output", text: "" }]);
+      await new Promise(r => setTimeout(r, 400));
+      setLines([{ type: "logo", text: LOGO }, { type: "output", text: "" }]);
       setIsBooted(true);
       await displayNode("start");
     };
-
-    runBootSequence();
-  }, [isPoweredOn, displayNode]);
-
-  const scrollToBottom = useCallback(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, []);
+    boot();
+  }, [displayNode]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [lines, scrollToBottom]);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [lines]);
 
   const handleChoice = useCallback(async (goto) => {
     setShowChoices(false);
@@ -372,51 +323,45 @@ function Terminal() {
     await displayNode(goto);
   }, [displayNode]);
 
-  const handleCommand = useCallback(
-    async (cmd) => {
-      const trimmed = cmd.trim().toLowerCase();
-      if (trimmed === "") return;
+  const handleCommand = useCallback(async (cmd) => {
+    const trimmed = cmd.trim().toLowerCase();
+    if (!trimmed) return;
 
-      setLines(prev => [...prev, { type: "command", text: cmd }]);
+    setLines(prev => [...prev, { type: "command", text: cmd }]);
 
-      if (trimmed === "clear") {
-        setTimeout(async () => {
-          setLines([{ type: "ascii", text: ASCII_ART }, { type: "output", text: "" }]);
-          await displayNode(currentNode);
-        }, 100);
-        return;
-      }
+    if (trimmed === "clear") {
+      setLines([{ type: "logo", text: LOGO }, { type: "output", text: "" }]);
+      await displayNode(currentNode);
+      return;
+    }
 
-      // Check if it's a shortcut
-      const targetNode = SHORTCUTS[trimmed];
-      if (targetNode === "help") {
-        setLines(prev => [...prev,
-          { type: "output", text: "" },
-          { type: "system", text: "Shortcuts: whoami, history, skills, hobbies, contact, start" },
-          { type: "output", text: "" },
-        ]);
-        return;
-      }
+    if (trimmed === "help") {
+      setLines(prev => [...prev,
+        { type: "system", text: "Commands: about, career, work, hobbies, contact, start" },
+        { type: "output", text: "" },
+      ]);
+      return;
+    }
 
-      if (targetNode && STORY[targetNode]) {
-        setLines(prev => [...prev, { type: "output", text: "" }]);
-        await displayNode(targetNode);
-      } else {
-        // Try to match a choice by number
-        const choiceNum = parseInt(trimmed);
-        const node = STORY[currentNode];
-        if (node?.choices && choiceNum >= 1 && choiceNum <= node.choices.length) {
-          await handleChoice(node.choices[choiceNum - 1].goto);
-        } else {
-          setLines(prev => [...prev,
-            { type: "system", text: `Unknown command. Try a number (1-3) or: whoami, history, skills, hobbies, contact` },
-            { type: "output", text: "" },
-          ]);
-        }
-      }
-    },
-    [displayNode, currentNode, handleChoice]
-  );
+    const target = SHORTCUTS[trimmed];
+    if (target && STORY[target]) {
+      setLines(prev => [...prev, { type: "output", text: "" }]);
+      await displayNode(target);
+      return;
+    }
+
+    const num = parseInt(trimmed);
+    const node = STORY[currentNode];
+    if (node?.choices && num >= 1 && num <= node.choices.length) {
+      await handleChoice(node.choices[num - 1].goto);
+      return;
+    }
+
+    setLines(prev => [...prev,
+      { type: "system", text: "Try 1, 2, or 3—or type: about, career, work, hobbies, contact" },
+      { type: "output", text: "" },
+    ]);
+  }, [displayNode, currentNode, handleChoice]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -425,192 +370,134 @@ function Terminal() {
     setInput("");
   };
 
-  const focusInput = () => {
-    inputRef.current?.focus();
-  };
+  const focusInput = () => inputRef.current?.focus();
 
-  const handleRestart = () => {
+  const handleRestart = useCallback(() => {
     setIsBooted(false);
-    setIsPoweredOn(false);
-    setTimeout(() => setIsPoweredOn(true), 500);
-  };
+    setLines([]);
+    setTimeout(async () => {
+      for (const step of BOOT_SEQUENCE) {
+        await new Promise(r => setTimeout(r, step.delay));
+        if (step.text) setLines(prev => [...prev, { type: "system", text: step.text }]);
+      }
+      await new Promise(r => setTimeout(r, 400));
+      setLines([{ type: "logo", text: LOGO }, { type: "output", text: "" }]);
+      setIsBooted(true);
+      await displayNode("start");
+    }, 100);
+  }, [displayNode]);
 
-  // Menu structure - shortcuts to story nodes
   const menus = [
     {
       label: "File",
       items: [
-        { label: "About Alex", action: () => handleChoice("whoami") },
-        { divider: true },
-        { label: "Contact...", action: () => handleChoice("contact"), shortcut: "⌘C" },
+        { label: "About", action: () => handleChoice("whoami") },
+        { label: "Contact", action: () => handleChoice("contact") },
         { divider: true },
         { label: "Restart", action: handleRestart, shortcut: "⌘R" },
       ],
     },
     {
-      label: "Navigate",
+      label: "Go",
       items: [
-        { label: "The Beginning", action: () => handleChoice("start") },
-        { label: "The Journey", action: () => handleChoice("journey"), shortcut: "⌘J" },
-        { label: "The Present", action: () => handleChoice("now") },
-        { divider: true },
-        { label: "Work", action: () => handleChoice("work"), shortcut: "⌘W" },
-        { label: "Life", action: () => handleChoice("hobbies"), shortcut: "⌘L" },
-      ],
-    },
-    {
-      label: "Help",
-      items: [
-        { label: "Shortcuts", action: () => handleCommand("help"), shortcut: "⌘?" },
+        { label: "Start", action: () => handleChoice("start") },
+        { label: "Career", action: () => handleChoice("journey") },
+        { label: "Now", action: () => handleChoice("now") },
+        { label: "Work", action: () => handleChoice("work") },
+        { label: "Life", action: () => handleChoice("hobbies") },
       ],
     },
   ];
 
-  const currentChoices = showChoices ? STORY[currentNode]?.choices : [];
+  const choices = showChoices ? STORY[currentNode]?.choices : [];
 
   return (
     <div
-      className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center"
+      className="h-screen w-screen bg-background text-foreground font-mono text-xs flex items-center justify-center p-4"
       onClick={focusInput}
     >
-      {/* Computer case - creamy white retro Mac style */}
-      <div
-        className="relative flex-shrink-0"
-        style={{ width: '520px', height: '480px' }}
-      >
-        {/* Main case body */}
-        <div
-          className="absolute inset-0 rounded-[20px]"
-          style={{
-            background: 'linear-gradient(160deg, #f5f5f0 0%, #e8e8e0 30%, #d8d8d0 100%)',
-            boxShadow: `
-              inset 0 2px 0 rgba(255,255,255,0.8),
-              inset 0 -3px 0 rgba(0,0,0,0.1),
-              0 25px 50px rgba(0,0,0,0.3),
-              0 10px 20px rgba(0,0,0,0.2)
-            `,
-          }}
-        />
-
-        {/* Top ventilation slots */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 flex gap-2">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="w-6 h-1 rounded-full bg-black/10" />
-          ))}
+      {/* Retro ASCII-style computer frame */}
+      <div className="flex flex-col" style={{ width: '600px' }}>
+        {/* Top border */}
+        <div className="text-highlight/60 text-[10px] whitespace-pre select-none">
+{`╔════════════════════════════════════════════════════════════════════════════╗`}
         </div>
 
-        {/* Screen recessed area */}
-        <div
-          className="absolute rounded-[4px]"
-          style={{
-            top: '28px',
-            left: '28px',
-            right: '28px',
-            bottom: '100px',
-            background: '#1a1a1a',
-            boxShadow: 'inset 0 4px 20px rgba(0,0,0,0.9), inset 0 0 0 3px #2a2a2a',
-          }}
-        >
-          {/* CRT screen with scanlines */}
-          <div
-            className="absolute overflow-hidden flex flex-col rounded-[2px]"
-            style={{
-              top: '10px',
-              left: '10px',
-              right: '10px',
-              bottom: '10px',
-              background: '#0D1208',
-              opacity: isPoweredOn ? 1 : 0,
-            }}
-          >
-            {/* Scanline overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none z-10"
-              style={{
-                background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 2px)',
-                opacity: 0.5,
-              }}
-            />
+        {/* Title bar */}
+        <div className="flex text-highlight/60 text-[10px] whitespace-pre select-none">
+          <span>║</span>
+          <div className="flex-1 flex items-center justify-center text-highlight">
+            ▓▓▓ LAMASOFT™ PERSONAL TERMINAL v1.0 ▓▓▓
+          </div>
+          <span>║</span>
+        </div>
 
-            {/* Screen glare */}
-            <div
-              className="absolute inset-0 pointer-events-none z-20"
-              style={{
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%)',
-              }}
-            />
+        <div className="text-highlight/60 text-[10px] whitespace-pre select-none">
+{`╠════════════════════════════════════════════════════════════════════════════╣`}
+        </div>
 
+        {/* Main content area */}
+        <div className="flex text-highlight/60 text-[10px]">
+          <span className="whitespace-pre select-none">║</span>
+          <div className="flex-1 flex flex-col bg-background" style={{ minHeight: '380px' }}>
             {/* Menu bar */}
-            <div
-              className="flex-none flex items-center relative z-30"
-              style={{
-                height: '22px',
-                background: 'linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%)',
-                borderBottom: '1px solid rgba(0,255,65,0.3)',
-              }}
-            >
-              <div className="px-2 text-highlight font-bold">◆</div>
-              {menus.map((menu) => (
+            <div className="flex items-center h-6 border-b border-highlight/30 relative" style={{ zIndex: 100 }}>
+              <span className="px-2 text-highlight">◆</span>
+              {menus.map(menu => (
                 <MenuDropdown
                   key={menu.label}
                   label={menu.label}
                   items={menu.items}
-                  onSelect={handleCommand}
                   disabled={isTyping || !isBooted}
                 />
               ))}
-              <div className="ml-auto pr-2 text-[10px] text-foreground/30">
-                {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </div>
             </div>
 
-            {/* Content */}
+            {/* Terminal content */}
             <div
               ref={terminalRef}
-              className="flex-1 overflow-y-auto p-3 cursor-text relative z-30"
+              className="flex-1 overflow-y-auto p-3 text-[11px]"
               style={{ minHeight: 0 }}
             >
               {lines.map((line, i) => (
                 <div key={i} className="leading-relaxed">
-                  {line.type === "ascii" ? (
-                    <pre className="text-highlight leading-tight">{line.text}</pre>
+                  {line.type === "logo" ? (
+                    <pre className="text-highlight text-[10px] leading-tight mb-3 font-bold">{line.text}</pre>
                   ) : line.type === "command" ? (
-                    <div className="flex">
+                    <div className="flex text-foreground/60">
                       <span className="text-highlight">›</span>
                       <span className="ml-2">{line.text}</span>
                     </div>
                   ) : line.type === "system" ? (
                     <div className="text-foreground/40">{line.text}</div>
                   ) : line.type === "link" ? (
-                    <div className="whitespace-pre">
-                      <span className="text-foreground/50">  {line.label.padEnd(10)}</span>
+                    <div>
+                      <span className="text-foreground/40">{line.label.padEnd(10)}</span>
                       <a
                         href={line.url}
                         target={line.url.startsWith("mailto:") ? undefined : "_blank"}
                         rel="noreferrer"
                         className="text-highlight hover:underline"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={e => e.stopPropagation()}
                       >
                         {line.display}
                       </a>
                     </div>
                   ) : (
-                    <div className="text-foreground/70 whitespace-pre">{line.text}</div>
+                    <div className="text-foreground/80">{line.text}</div>
                   )}
                 </div>
               ))}
 
-              {/* Adventure choices */}
-              {showChoices && currentChoices && currentChoices.length > 0 && (
-                <div className="mt-2 space-y-1">
-                  {currentChoices.map((choice, i) => (
+              {showChoices && choices.length > 0 && (
+                <div className="mt-3 space-y-1">
+                  {choices.map((c, i) => (
                     <button
                       key={i}
-                      onClick={() => handleChoice(choice.goto)}
-                      className="block w-full text-left px-2 py-1 text-foreground/60 hover:text-highlight hover:bg-highlight/10 transition-colors rounded text-[12px]"
+                      onClick={() => handleChoice(c.goto)}
+                      className="block text-left text-foreground/50 hover:text-highlight transition-colors"
                     >
-                      <span className="text-highlight mr-2">[{i + 1}]</span>
-                      {choice.label}
+                      <span className="text-highlight">[{i + 1}]</span> {c.label}
                     </button>
                   ))}
                 </div>
@@ -619,113 +506,28 @@ function Terminal() {
             </div>
 
             {/* Input */}
-            <form onSubmit={handleSubmit} className="flex-none px-3 py-2 flex items-center border-t border-highlight/20 relative z-30">
-              <span className="text-highlight text-xs">›</span>
+            <form onSubmit={handleSubmit} className="flex items-center px-3 py-2 border-t border-highlight/30">
+              <span className="text-highlight">›</span>
               <input
                 ref={inputRef}
-                type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={e => setInput(e.target.value)}
                 disabled={isTyping || !isBooted}
-                style={{ outline: 'none', boxShadow: 'none' }}
-                className="flex-1 ml-2 bg-transparent border-none text-foreground caret-highlight text-[12px]"
-                placeholder={showChoices ? "Type 1-3 or a shortcut..." : ""}
+                className="flex-1 ml-2 bg-transparent text-foreground caret-highlight text-[11px]"
+                style={{ outline: 'none' }}
+                placeholder={showChoices ? "1, 2, 3 or type a command..." : ""}
                 autoFocus
                 autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
                 spellCheck="false"
               />
             </form>
           </div>
+          <span className="whitespace-pre select-none">║</span>
         </div>
 
-        {/* Chin area */}
-        <div
-          className="absolute bottom-0 left-0 right-0 rounded-b-[20px]"
-          style={{ height: '92px' }}
-        >
-          {/* Brand emboss */}
-          <div className="absolute top-4 left-1/2 -translate-x-1/2">
-            <div
-              className="text-[10px] tracking-[0.3em] font-bold"
-              style={{ color: 'rgba(0,0,0,0.15)' }}
-            >
-              ALEX
-            </div>
-          </div>
-
-          {/* Speaker grilles */}
-          <div className="absolute bottom-6 left-10 right-10 flex justify-between items-center">
-            {/* Left speaker */}
-            <div className="flex flex-col gap-[3px]">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="flex gap-[3px]">
-                  {[...Array(8)].map((_, j) => (
-                    <div
-                      key={j}
-                      className="w-[3px] h-[3px] rounded-full"
-                      style={{ background: 'rgba(0,0,0,0.2)' }}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-
-            {/* Center - Floppy slot */}
-            <div
-              className="w-24 h-3 rounded-sm"
-              style={{
-                background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.1) 100%)',
-                boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.3)',
-              }}
-            />
-
-            {/* Right speaker */}
-            <div className="flex flex-col gap-[3px]">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="flex gap-[3px]">
-                  {[...Array(8)].map((_, j) => (
-                    <div
-                      key={j}
-                      className="w-[3px] h-[3px] rounded-full"
-                      style={{ background: 'rgba(0,0,0,0.2)' }}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Power LED - bottom right */}
-          <div
-            className="absolute bottom-4 right-8 w-2 h-2 rounded-full"
-            style={{
-              background: isPoweredOn ? '#00FF41' : '#333',
-              boxShadow: isPoweredOn ? '0 0 8px rgba(0,255,65,0.8), 0 0 16px rgba(0,255,65,0.4)' : 'none',
-              transition: 'all 0.3s',
-            }}
-          />
-        </div>
-
-        {/* Side grooves for grip */}
-        <div className="absolute left-1 top-1/2 -translate-y-1/2 flex flex-col gap-2">
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="w-1 h-8 rounded-full"
-              style={{ background: 'rgba(0,0,0,0.1)' }}
-            />
-          ))}
-        </div>
-        <div className="absolute right-1 top-1/2 -translate-y-1/2 flex flex-col gap-2">
-          {[...Array(3)].map((_, i) => (
-            <div
-              key={i}
-              className="w-1 h-8 rounded-full"
-              style={{ background: 'rgba(0,0,0,0.1)' }}
-            />
-          ))}
+        {/* Bottom border */}
+        <div className="text-highlight/60 text-[10px] whitespace-pre select-none">
+{`╚════════════════════════════════════════════════════════════════════════════╝`}
         </div>
       </div>
     </div>
@@ -733,14 +535,8 @@ function Terminal() {
 }
 
 function App() {
-  const params = new URLSearchParams(window.location.search);
-  const theme = params.get("theme") || "matrix";
-  const validThemes = ["neutral", "electric", "sunset", "matrix"];
-  const activeTheme = validThemes.includes(theme) ? theme : "matrix";
-
   return (
-    <div className={`${activeTheme}`}>
-      <div className="hidden neutral electric sunset matrix" />
+    <div className="matrix">
       <Terminal />
       <Analytics />
     </div>
