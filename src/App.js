@@ -373,11 +373,11 @@ function MusicMaker({ onClose, playSound }) {
           </button>
         </div>
       </div>
-      <div className="flex gap-1 overflow-x-auto">
+      <div className="flex gap-1 overflow-x-auto flex-nowrap">
         <div className="flex flex-col gap-[3px] text-[9px] text-highlight/40 pr-1 shrink-0">
           {noteNames.map(n => <div key={n} className="h-[22px] flex items-center">{n}</div>)}
         </div>
-        <div className="flex gap-[3px]">
+        <div className="flex gap-[3px] flex-nowrap shrink-0">
           {sequence.map((step, stepIdx) => (
             <div key={stepIdx} className="flex flex-col gap-[3px]">
               {step.map((active, noteIdx) => (
@@ -394,14 +394,16 @@ function MusicMaker({ onClose, playSound }) {
                     height: '22px',
                     minWidth: '22px',
                     minHeight: '22px',
-                    pointerEvents: 'auto'
+                    pointerEvents: 'auto',
+                    border: '1px solid',
+                    borderColor: active ? 'transparent' : 'hsla(var(--twc-highlight), 0.4)'
                   }}
-                  className={`rounded-sm transition-all cursor-pointer border-0 ${
+                  className={`rounded-sm transition-all cursor-pointer ${
                     active
                       ? 'bg-highlight'
                       : currentStep === stepIdx
-                        ? 'bg-highlight/30'
-                        : 'bg-highlight/10 hover:bg-highlight/30'
+                        ? 'bg-highlight/40'
+                        : 'bg-highlight/20 hover:bg-highlight/40'
                   }`}
                 />
               ))}
