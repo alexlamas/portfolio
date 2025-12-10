@@ -176,12 +176,19 @@ const SHORTCUTS = {
 };
 
 const LOGO = `
-█    ▄▀▄ █▄ ▄█ ▄▀▄ ▄▀▀ ▄▀▄ █▀ ▀█▀
-█▄▄ █▀█ █ ▀ █ █▀█ ▄██ ▀▄▀ █▀  █`.trim();
+░██╗░░░░░░█████╗░███╗░░░███╗░█████╗░░██████╗░█████╗░███████╗████████╗
+░██║░░░░░██╔══██╗████╗░████║██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝
+░██║░░░░░███████║██╔████╔██║███████║╚█████╗░██║░░██║█████╗░░░░░██║░░░
+░██║░░░░░██╔══██║██║╚██╔╝██║██╔══██║░╚═══██╗██║░░██║██╔══╝░░░░░██║░░░
+░███████╗██║░░██║██║░╚═╝░██║██║░░██║██████╔╝╚█████╔╝██║░░░░░░░░██║░░░
+░╚══════╝╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═════╝░░╚════╝░╚═╝░░░░░░░░╚═╝░░░
+`.trim();
 
 const BOOT_SEQUENCE = [
-  { text: "LAMASOFT v1.0", delay: 150 },
-  { text: "LOADING...", delay: 300 },
+  { text: "═══════════════════════════════════════════════════════════════════", delay: 50 },
+  { text: "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  system ready", delay: 150 },
+  { text: "═══════════════════════════════════════════════════════════════════", delay: 50 },
+  { text: "", delay: 100 },
 ];
 
 // Menu dropdown with proper z-index
@@ -310,6 +317,18 @@ function Terminal() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
 
+  // Keep input always focused
+  useEffect(() => {
+    const keepFocus = () => {
+      if (isBooted && !isTyping) {
+        inputRef.current?.focus();
+      }
+    };
+    keepFocus();
+    window.addEventListener('click', keepFocus);
+    return () => window.removeEventListener('click', keepFocus);
+  }, [isBooted, isTyping]);
+
   const handleChoice = useCallback(async (goto) => {
     setShowChoices(false);
     setLines(prev => [...prev, { type: "output", text: "" }]);
@@ -410,7 +429,7 @@ function Terminal() {
       onClick={focusInput}
     >
       {/* Simple window */}
-      <div className="border border-highlight/50 w-[520px]" style={{ background: '#0D1208' }}>
+      <div className="border border-highlight/50 w-[600px]" style={{ background: '#0D1208' }}>
         {/* Title bar */}
         <div className="flex items-center justify-between px-3 py-1.5 border-b border-highlight/30">
           <div className="flex items-center gap-2">
@@ -438,7 +457,7 @@ function Terminal() {
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
               {line.type === "logo" ? (
-                <pre className="text-highlight text-[11px] leading-tight mb-4">{line.text}</pre>
+                <pre className="text-highlight text-[8px] leading-tight mb-3">{line.text}</pre>
               ) : line.type === "command" ? (
                 <div className="flex text-foreground/60">
                   <span className="text-highlight">›</span>
@@ -479,6 +498,13 @@ function Terminal() {
             </div>
           )}
           <div ref={bottomRef} />
+        </div>
+
+        {/* Status bar */}
+        <div className="flex items-center justify-between px-4 py-1 border-t border-highlight/30 text-[10px] text-foreground/40">
+          <span>■ TRACKING</span>
+          <span>NODE: {currentNode.toUpperCase()}</span>
+          <span>◇ OBSERVING</span>
         </div>
 
         {/* Input */}
