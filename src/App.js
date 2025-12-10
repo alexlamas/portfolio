@@ -382,15 +382,15 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
       <div className="zen-particles"></div>
 
       {/* Main content */}
-      <div className="relative z-10 text-center px-8">
+      <div className="relative z-10 w-full flex flex-col items-center justify-center px-8">
         {/* Breathing circle */}
         <div
-          className="mx-auto mb-12 rounded-full zen-breath-circle"
+          className="mb-12 rounded-full zen-breath-circle"
           style={{
             width: '160px',
             height: '160px',
-            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, transparent 70%)',
-            boxShadow: '0 0 80px rgba(255,255,255,0.1)',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 50%, transparent 70%)',
+            boxShadow: '0 0 100px rgba(255,255,255,0.15)',
             animation: breathPhase === 'inhale'
               ? 'zenExpand 4s ease-in-out forwards'
               : breathPhase === 'hold'
@@ -401,16 +401,30 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
 
         {/* Breathing guide text */}
         <div
-          className="text-white/60 text-lg tracking-[0.3em] uppercase mb-8 transition-opacity duration-1000"
-          style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 300 }}
+          className="text-center mb-8 transition-opacity duration-1000"
+          style={{
+            fontFamily: 'system-ui, sans-serif',
+            fontWeight: 300,
+            fontSize: '1.25rem',
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.7)',
+          }}
         >
           {breathingGuide[breathPhase].text}
         </div>
 
         {/* Meditation word */}
         <div
-          className="text-white/30 text-sm tracking-[0.5em] uppercase zen-fade-text"
-          style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 200 }}
+          className="text-center zen-fade-text"
+          style={{
+            fontFamily: 'system-ui, sans-serif',
+            fontWeight: 200,
+            fontSize: '0.875rem',
+            letterSpacing: '0.5em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.4)',
+          }}
         >
           {meditations[meditationIndex]}
         </div>
@@ -418,8 +432,13 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         {/* Breath counter */}
         {breathCount > 1 && (
           <div
-            className="mt-16 text-white/20 text-xs tracking-widest"
-            style={{ fontFamily: 'monospace' }}
+            className="mt-16 text-center"
+            style={{
+              fontFamily: 'monospace',
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              color: 'rgba(255, 255, 255, 0.3)',
+            }}
           >
             {breathCount - 1} breath{breathCount > 2 ? 's' : ''}
           </div>
@@ -431,7 +450,14 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
             showPrompt ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="text-white/30 text-xs tracking-[0.2em] uppercase">
+          <div
+            style={{
+              fontSize: '0.75rem',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'rgba(255, 255, 255, 0.4)',
+            }}
+          >
             click anywhere to wake
           </div>
         </div>
