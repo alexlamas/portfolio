@@ -1738,6 +1738,18 @@ input.key {
   }
 }
 
+/* Sun corona pulse animation */
+@keyframes sunPulse {
+  0%, 100% {
+    transform: scale(2);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(2.2);
+    opacity: 0.8;
+  }
+}
+
 /* Moon drop animation - drops from above */
 @keyframes moonRise {
   0% {

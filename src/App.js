@@ -279,10 +279,10 @@ function SkyField({ onToggle }) {
       <div className="cloud x3 pointer-events-none"></div>
       <div className="cloud x4 pointer-events-none"></div>
       <div className="cloud x5 pointer-events-none"></div>
-      {/* Clickable Sun */}
+      {/* Clickable Sun with corona */}
       <button
         onClick={onToggle}
-        className="sun-rise cursor-pointer transition-transform duration-300 hover:scale-110"
+        className="sun-rise cursor-pointer transition-transform duration-300 hover:scale-105 group"
         style={{
           position: 'fixed',
           top: '50px',
@@ -291,13 +291,41 @@ function SkyField({ onToggle }) {
           height: '140px',
           borderRadius: '50%',
           border: 'none',
-          background: 'radial-gradient(circle, #FFF9C4 0%, #FFE082 30%, #FFB300 100%)',
-          boxShadow: '0 0 80px rgba(255,200,0,0.8), 0 0 150px rgba(255,180,0,0.5), 0 0 200px rgba(255,150,0,0.3)',
+          background: 'transparent',
           zIndex: 10,
           animation: 'sunRise 1.5s ease-out forwards',
         }}
         title="Click to switch to night"
-      />
+      >
+        {/* Outer corona glow */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,200,100,0.4) 0%, rgba(255,150,50,0.2) 40%, transparent 70%)',
+            transform: 'scale(2)',
+            animation: 'sunPulse 4s ease-in-out infinite',
+          }}
+        />
+        {/* Middle corona */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,220,150,0.6) 0%, rgba(255,180,80,0.3) 50%, transparent 70%)',
+            transform: 'scale(1.4)',
+          }}
+        />
+        {/* Sun surface with limb darkening */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: `
+              radial-gradient(circle at 35% 35%, rgba(255,255,255,0.9) 0%, transparent 25%),
+              radial-gradient(circle, #FFFDE7 0%, #FFF59D 20%, #FFEE58 40%, #FFD54F 60%, #FFCA28 80%, #FFA726 100%)
+            `,
+            boxShadow: 'inset -8px -8px 20px rgba(255,152,0,0.4), inset 4px 4px 10px rgba(255,255,255,0.5)',
+          }}
+        />
+      </button>
     </div>
   );
 }
