@@ -784,29 +784,65 @@ function Terminal() {
       setLines([]);
       setShowChoices(false);
 
+      const delay = (ms) => new Promise(r => setTimeout(r, ms));
+      const addLine = (type, text) => setLines(prev => [...prev, { type, text }]);
+
       // Boot sequence
-      await new Promise(r => setTimeout(r, 200));
+      await delay(200);
       setIsBooted(true); // Show terminal
 
-      await new Promise(r => setTimeout(r, 300));
-      setLines([{ type: "system", text: "BIOS v2.4.1 ... OK" }]);
-      await new Promise(r => setTimeout(r, 150));
-      setLines(prev => [...prev, { type: "system", text: "Memory check ... 64KB OK" }]);
-      await new Promise(r => setTimeout(r, 150));
-      setLines(prev => [...prev, { type: "system", text: "Loading LAMASOFT.EXE ..." }]);
-      await new Promise(r => setTimeout(r, 400));
+      await delay(400);
+      setLines([{ type: "system", text: "LAMASOFT BIOS v2.4.1" }]);
+      await delay(100);
+      addLine("system", "─".repeat(35));
+      await delay(300);
+
+      // System checks
+      addLine("system", "CPU ............ 6502 @ 1MHz");
+      await delay(150);
+      addLine("system", "Memory ......... 64KB OK");
+      await delay(150);
+      addLine("system", "Display ........ CRT 80x24");
+      await delay(150);
+      addLine("system", "Sound .......... SID chip OK");
+      await delay(200);
+
+      addLine("output", "");
+      addLine("system", "Loading LAMASOFT.EXE");
+      await delay(200);
+
+      // Progress bar animation
+      const progressSteps = 20;
+      for (let i = 1; i <= progressSteps; i++) {
+        const filled = "█".repeat(i);
+        const empty = "░".repeat(progressSteps - i);
+        const percent = Math.floor((i / progressSteps) * 100);
+        setLines(prev => {
+          const newLines = [...prev];
+          const lastIndex = newLines.length - 1;
+          if (newLines[lastIndex]?.type === "progress") {
+            newLines[lastIndex] = { type: "progress", text: `[${filled}${empty}] ${percent}%` };
+          } else {
+            newLines.push({ type: "progress", text: `[${filled}${empty}] ${percent}%` });
+          }
+          return newLines;
+        });
+        await delay(60);
+      }
+
+      await delay(200);
       playSound('boot');
 
-      setLines(prev => [...prev, { type: "output", text: "" }]);
-      setLines(prev => [...prev, { type: "logo" }]);
-      await new Promise(r => setTimeout(r, 200));
-      setLines(prev => [...prev, { type: "system", text: "─".repeat(50) }]);
-      await new Promise(r => setTimeout(r, 100));
-      setLines(prev => [...prev, { type: "system", text: "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  ready" }]);
-      await new Promise(r => setTimeout(r, 100));
-      setLines(prev => [...prev, { type: "system", text: "─".repeat(50) }]);
-      await new Promise(r => setTimeout(r, 100));
-      setLines(prev => [...prev, { type: "output", text: "" }]);
+      addLine("output", "");
+      addLine("logo", "");
+      await delay(300);
+      addLine("system", "─".repeat(50));
+      await delay(100);
+      addLine("system", "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  ready");
+      await delay(100);
+      addLine("system", "─".repeat(50));
+      await delay(100);
+      addLine("output", "");
 
       await displayNode("start");
     };
@@ -1062,6 +1098,8 @@ function Terminal() {
                 </div>
               ) : line.type === "system" ? (
                 <div className="text-highlight/50 text-[11px]">{line.text}</div>
+              ) : line.type === "progress" ? (
+                <div className="text-highlight/70 text-[11px] font-mono">{line.text}</div>
               ) : line.type === "link" ? (
                 <div className="flex flex-col sm:flex-row">
                   <span className="text-foreground/40 w-16 sm:w-20 text-[10px] sm:text-[12px]">{line.label}</span>
