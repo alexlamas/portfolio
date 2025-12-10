@@ -477,12 +477,12 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme
                   onSound?.();
                   item.action?.();
                 }}
-                className={`w-full px-3 py-1.5 text-left text-[11px] text-highlight transition-colors flex justify-between ${
+                className={`w-full px-3 py-1.5 text-left text-[11px] text-highlight transition-colors flex justify-between whitespace-nowrap ${
                   isDark ? 'hover:bg-highlight/20' : 'hover:bg-highlight/10'
                 }`}
               >
                 <span>{item.label}</span>
-                {item.shortcut && <span className="text-highlight/60">{item.shortcut}</span>}
+                {item.shortcut && <span className="text-highlight/60 ml-4">{item.shortcut}</span>}
               </button>
             )
           ))}
