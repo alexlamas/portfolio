@@ -392,8 +392,8 @@ function MusicMaker({ onClose, playSound }) {
         </div>
       </div>
       <div className="flex gap-1 overflow-x-auto flex-nowrap">
-        <div className="flex flex-col gap-[3px] text-[9px] text-highlight/40 pr-1 shrink-0">
-          {noteNames.map(n => <div key={n} className="h-[22px] flex items-center">{n}</div>)}
+        <div className="flex flex-col gap-[3px] text-[9px] text-highlight/60 pr-1 shrink-0">
+          {noteNames.map(n => <div key={n} className="h-[20px] flex items-center">{n}</div>)}
         </div>
         <div className="flex gap-[3px] flex-nowrap shrink-0">
           {sequence.map((step, stepIdx) => (
@@ -408,21 +408,21 @@ function MusicMaker({ onClose, playSound }) {
                     toggleCell(stepIdx, noteIdx);
                   }}
                   style={{
-                    width: '22px',
-                    height: '22px',
-                    minWidth: '22px',
-                    minHeight: '22px',
+                    width: '20px',
+                    height: '20px',
+                    minWidth: '20px',
+                    minHeight: '20px',
                     pointerEvents: 'auto',
-                    border: '1px solid',
-                    borderColor: active ? 'transparent' : 'hsla(var(--twc-highlight), 0.4)'
-                  }}
-                  className={`rounded-sm transition-all cursor-pointer ${
-                    active
-                      ? 'bg-highlight'
+                    border: active ? '2px solid' : '1px solid',
+                    borderColor: active ? 'hsl(var(--twc-highlight))' : 'hsla(var(--twc-highlight), 0.3)',
+                    background: active
+                      ? 'hsl(var(--twc-highlight))'
                       : currentStep === stepIdx
-                        ? 'bg-highlight/40'
-                        : 'bg-highlight/20 hover:bg-highlight/40'
-                  }`}
+                        ? 'hsla(var(--twc-highlight), 0.3)'
+                        : 'hsla(var(--twc-highlight), 0.1)',
+                    boxShadow: active ? '0 0 8px hsla(var(--twc-highlight), 0.6)' : 'none'
+                  }}
+                  className="rounded-sm transition-all cursor-pointer hover:opacity-80"
                 />
               ))}
             </div>
@@ -450,7 +450,7 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme
         disabled={disabled}
         className={`px-3 py-1 text-[11px] transition-colors ${
           isOpen
-            ? (isDark ? 'bg-highlight/30 text-highlight' : 'bg-highlight text-white')
+            ? 'bg-highlight/20 text-highlight'
             : 'text-highlight/70 hover:text-highlight hover:bg-highlight/10'
         }`}
       >
@@ -477,11 +477,7 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme
                   onSound?.();
                   item.action?.();
                 }}
-                className={`w-full px-3 py-1.5 text-left text-[11px] transition-colors flex justify-between whitespace-nowrap text-highlight ${
-                  isDark
-                    ? 'hover:bg-highlight/20'
-                    : 'hover:bg-highlight/20'
-                }`}
+                className="w-full px-3 py-1.5 text-left text-[11px] transition-colors flex justify-between whitespace-nowrap text-highlight hover:bg-highlight/30"
               >
                 <span>{item.label}</span>
                 {item.shortcut && <span className="opacity-50 ml-4">{item.shortcut}</span>}
