@@ -211,6 +211,25 @@ class Synth {
     setTimeout(() => this.play(400, 0.15, 'sawtooth'), 100);
     setTimeout(() => this.play(600, 0.2, 'sawtooth'), 200);
   }
+  shutdown() {
+    this.play(600, 0.3, 'sine');
+    setTimeout(() => this.play(400, 0.3, 'sine'), 200);
+    setTimeout(() => this.play(200, 0.5, 'sine'), 400);
+  }
+  zenChime() {
+    if (!this.ctx) this.init();
+    // Gentle meditation bell
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = 528; // Solfeggio frequency
+    gain.gain.setValueAtTime(0.08, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 2);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + 2);
+  }
   type() { this.play(1200 + Math.random() * 200, 0.02, 'square'); }
 }
 
@@ -260,10 +279,10 @@ function SkyField({ onToggle }) {
       <div className="cloud x3 pointer-events-none"></div>
       <div className="cloud x4 pointer-events-none"></div>
       <div className="cloud x5 pointer-events-none"></div>
-      {/* Clickable Sun */}
+      {/* Clickable Sun with corona */}
       <button
         onClick={onToggle}
-        className="sun-rise cursor-pointer transition-transform duration-300 hover:scale-110"
+        className="sun-rise cursor-pointer transition-transform duration-300 hover:scale-105 group"
         style={{
           position: 'fixed',
           top: '50px',
@@ -272,13 +291,211 @@ function SkyField({ onToggle }) {
           height: '140px',
           borderRadius: '50%',
           border: 'none',
-          background: 'radial-gradient(circle, #FFF9C4 0%, #FFE082 30%, #FFB300 100%)',
-          boxShadow: '0 0 80px rgba(255,200,0,0.8), 0 0 150px rgba(255,180,0,0.5), 0 0 200px rgba(255,150,0,0.3)',
+          background: 'transparent',
           zIndex: 10,
           animation: 'sunRise 1.5s ease-out forwards',
         }}
         title="Click to switch to night"
-      />
+      >
+        {/* Outer corona glow */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,200,100,0.4) 0%, rgba(255,150,50,0.2) 40%, transparent 70%)',
+            transform: 'scale(2)',
+            animation: 'sunPulse 4s ease-in-out infinite',
+          }}
+        />
+        {/* Middle corona */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(255,220,150,0.6) 0%, rgba(255,180,80,0.3) 50%, transparent 70%)',
+            transform: 'scale(1.4)',
+          }}
+        />
+        {/* Sun surface with limb darkening */}
+        <div
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: `
+              radial-gradient(circle at 35% 35%, rgba(255,255,255,0.9) 0%, transparent 25%),
+              radial-gradient(circle, #FFFDE7 0%, #FFF59D 20%, #FFEE58 40%, #FFD54F 60%, #FFCA28 80%, #FFA726 100%)
+            `,
+            boxShadow: 'inset -8px -8px 20px rgba(255,152,0,0.4), inset 4px 4px 10px rgba(255,255,255,0.5)',
+          }}
+        />
+      </button>
+    </div>
+  );
+}
+
+// Zen meditation screen when computer is "off"
+function ZenScreen({ onWakeUp, soundEnabled }) {
+  const [breathPhase, setBreathPhase] = useState('inhale');
+  const [meditationIndex, setMeditationIndex] = useState(0);
+  const [showPrompt, setShowPrompt] = useState(false);
+  const [breathCount, setBreathCount] = useState(0);
+
+  const meditations = [
+    "breathe",
+    "be here now",
+    "let go",
+    "just be",
+    "stillness",
+    "peace",
+    "presence",
+    "rest",
+  ];
+
+  const breathingGuide = {
+    inhale: { text: "breathe in", duration: 4000 },
+    hold: { text: "hold", duration: 4000 },
+    exhale: { text: "breathe out", duration: 6000 },
+  };
+
+  // Breathing cycle
+  useEffect(() => {
+    const cycle = () => {
+      setBreathPhase('inhale');
+      setTimeout(() => setBreathPhase('hold'), 4000);
+      setTimeout(() => setBreathPhase('exhale'), 8000);
+    };
+    cycle();
+    const interval = setInterval(cycle, 14000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Count breaths
+  useEffect(() => {
+    if (breathPhase === 'inhale') {
+      setBreathCount(c => c + 1);
+    }
+  }, [breathPhase]);
+
+  // Rotate meditation words
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMeditationIndex(i => (i + 1) % meditations.length);
+    }, 20000);
+    return () => clearInterval(interval);
+  }, [meditations.length]);
+
+  // Show wake prompt after a moment
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPrompt(true), 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Play gentle chime occasionally
+  useEffect(() => {
+    if (!soundEnabled) return;
+    const chime = () => {
+      try { synth.zenChime(); } catch (e) {}
+    };
+    chime(); // Initial chime
+    const interval = setInterval(chime, 30000);
+    return () => clearInterval(interval);
+  }, [soundEnabled]);
+
+  return (
+    <div
+      className="fixed inset-0 flex items-center justify-center cursor-pointer"
+      onClick={onWakeUp}
+      style={{
+        background: 'linear-gradient(180deg, #0a0a0f 0%, #141420 50%, #0a0a0f 100%)',
+      }}
+    >
+      {/* Subtle ambient particles */}
+      <div className="zen-particles"></div>
+
+      {/* Main content */}
+      <div className="relative z-10 w-full flex flex-col items-center px-8">
+        {/* Breathing circle */}
+        <div
+          className="rounded-full zen-breath-circle"
+          style={{
+            width: '160px',
+            height: '160px',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.08) 50%, transparent 70%)',
+            boxShadow: '0 0 100px rgba(255,255,255,0.15)',
+            transform: breathPhase === 'hold' ? 'scale(1.3)' : undefined,
+            animation: breathPhase === 'inhale'
+              ? 'zenExpand 4s ease-in-out forwards'
+              : breathPhase === 'exhale'
+              ? 'zenContract 6s ease-in-out forwards'
+              : 'none',
+          }}
+        />
+
+        {/* Breathing guide text */}
+        <div
+          className="text-center transition-opacity duration-1000"
+          style={{
+            marginTop: '120px',
+            fontFamily: 'system-ui, sans-serif',
+            fontWeight: 300,
+            fontSize: '1.25rem',
+            letterSpacing: '0.3em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.7)',
+          }}
+        >
+          {breathingGuide[breathPhase].text}
+        </div>
+
+        {/* Meditation word */}
+        <div
+          className="text-center zen-fade-text"
+          style={{
+            marginTop: '32px',
+            fontFamily: 'system-ui, sans-serif',
+            fontWeight: 200,
+            fontSize: '0.875rem',
+            letterSpacing: '0.5em',
+            textTransform: 'uppercase',
+            color: 'rgba(255, 255, 255, 0.4)',
+          }}
+        >
+          {meditations[meditationIndex]}
+        </div>
+
+        {/* Breath counter */}
+        {breathCount > 1 && (
+          <div
+            className="text-center"
+            style={{
+              marginTop: '32px',
+              fontFamily: 'monospace',
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              color: 'rgba(255, 255, 255, 0.3)',
+            }}
+          >
+            {breathCount - 1} breath{breathCount > 2 ? 's' : ''}
+          </div>
+        )}
+      </div>
+
+      {/* Wake up prompt - absolutely positioned at bottom */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '3rem',
+          left: 0,
+          right: 0,
+          textAlign: 'center',
+          zIndex: 20,
+          opacity: showPrompt ? 1 : 0,
+          transition: 'opacity 2s ease',
+          fontSize: '0.75rem',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          color: 'rgba(255, 255, 255, 0.4)',
+        }}
+      >
+        click anywhere to wake
+      </div>
     </div>
   );
 }
@@ -502,6 +719,7 @@ function Terminal() {
   const [theme, setTheme] = useState("sky");
   const [showMusicMaker, setShowMusicMaker] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [isShutdown, setIsShutdown] = useState(false);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
@@ -530,13 +748,19 @@ function Terminal() {
     }
   }, [soundEnabled]);
 
-  const displayNode = useCallback(async (nodeId) => {
+  const displayNode = useCallback(async (nodeId, showDivider = false) => {
     const node = STORY[nodeId];
     if (!node) return;
 
     setIsTyping(true);
     setShowChoices(false);
     setCurrentNode(nodeId);
+
+    // Add divider before new content (except on first load)
+    if (showDivider) {
+      setLines(prev => [...prev, { type: "system", text: "─".repeat(40) }]);
+      await new Promise(r => setTimeout(r, 50));
+    }
 
     for (const line of node.text) {
       await new Promise(r => setTimeout(r, 25));
@@ -613,7 +837,7 @@ function Terminal() {
     playSound('select');
     setShowChoices(false);
     setLines(prev => [...prev, { type: "output", text: "" }]);
-    await displayNode(goto);
+    await displayNode(goto, true);
   }, [displayNode, playSound]);
 
   const handleCommand = useCallback(async (cmd) => {
@@ -640,7 +864,7 @@ function Terminal() {
     const target = SHORTCUTS[trimmed];
     if (target && STORY[target]) {
       setLines(prev => [...prev, { type: "output", text: "" }]);
-      await displayNode(target);
+      await displayNode(target, true);
       return;
     }
 
@@ -683,6 +907,33 @@ function Terminal() {
     }, 100);
   }, [displayNode, playSound]);
 
+  const handleShutdown = useCallback(() => {
+    playSound('shutdown');
+    setOpenMenu(null);
+    setIsBooted(false);
+    setTimeout(() => {
+      setIsShutdown(true);
+    }, 800);
+  }, [playSound]);
+
+  const handleWakeUp = useCallback(() => {
+    setIsShutdown(false);
+    playSound('boot');
+    setTimeout(async () => {
+      setLines([{ type: "logo" }]);
+      await new Promise(r => setTimeout(r, 200));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "system", text: "Waking from sleep..." }]);
+      await new Promise(r => setTimeout(r, 300));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "output", text: "" }]);
+      setIsBooted(true);
+      await displayNode("start");
+    }, 100);
+  }, [displayNode, playSound]);
+
   const menus = [
     {
       id: "file",
@@ -694,6 +945,15 @@ function Terminal() {
         { label: "Music Maker", action: () => setShowMusicMaker(true) },
         { divider: true },
         { label: "Restart", action: handleRestart, shortcut: "⌘R" },
+        { label: "Shut Down", action: handleShutdown, shortcut: "⌘Q" },
+      ],
+    },
+    {
+      id: "view",
+      label: "View",
+      items: [
+        { label: theme === "sky" ? "✓ Day" : "Day", action: () => setTheme("sky") },
+        { label: theme === "space" ? "✓ Night" : "Night", action: () => setTheme("space") },
       ],
     },
     {
@@ -710,6 +970,11 @@ function Terminal() {
   ];
 
   const choices = showChoices ? STORY[currentNode]?.choices : [];
+
+  // Show zen meditation screen when shutdown
+  if (isShutdown) {
+    return <ZenScreen onWakeUp={handleWakeUp} soundEnabled={soundEnabled} />;
+  }
 
   return (
     <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-2 sm:p-4 relative`}>
@@ -734,11 +999,11 @@ function Terminal() {
         }}
       >
         {/* Title bar */}
-        <div className="flex items-center px-2 sm:px-3 py-2 border-b border-highlight/30 bg-highlight/5">
+        <div className="flex items-center px-3 sm:px-4 py-2 border-b border-highlight/30 bg-highlight/5">
           <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
             <span className="text-highlight text-lg shrink-0">◆</span>
             <span className="text-highlight text-[10px] sm:text-[12px] font-bold tracking-wider truncate">LAMASOFT.EXE</span>
-            <div ref={menuRef} className="flex gap-0.5 sm:gap-1 ml-1 sm:ml-2">
+            <div ref={menuRef} className="flex gap-0.5 sm:gap-1 ml-2 sm:ml-3">
               {menus.map(menu => (
                 <MenuDropdown
                   key={menu.id}
@@ -844,7 +1109,7 @@ function Terminal() {
         </div>
 
         {/* Status bar */}
-        <div className="flex items-center justify-between px-2 sm:px-4 py-1.5 border-t border-highlight/20 text-[9px] sm:text-[10px] text-highlight/40 bg-highlight/5">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 border-t border-highlight/20 text-[9px] sm:text-[10px] text-highlight/40 bg-highlight/5">
           <div className="flex items-center gap-1 sm:gap-2">
             <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-highlight/60 animate-pulse"></span>
             <span>{currentTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
@@ -857,8 +1122,8 @@ function Terminal() {
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="flex items-center px-2 sm:px-4 py-2 sm:py-3 border-t border-highlight/30 bg-black/20">
-          <span className="text-highlight text-base sm:text-lg">❯</span>
+        <form onSubmit={handleSubmit} className="flex items-center px-3 sm:px-4 py-2 sm:py-3 border-t border-highlight/30 bg-black/20">
+          <span className="text-highlight text-base sm:text-lg ml-0.5">❯</span>
           <input
             ref={inputRef}
             value={input}
