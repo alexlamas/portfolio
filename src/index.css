@@ -20,4 +20,20 @@ input.key {
   font-family: "password";
 }
 
+*, *:focus, *:focus-visible, *:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+input, input:focus, input:focus-visible, textarea, textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+  -webkit-appearance: none;
+}
+
+button:focus, button:focus-visible {
+  outline: none !important;
+}
+
 
