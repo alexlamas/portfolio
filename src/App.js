@@ -428,8 +428,9 @@ function Terminal() {
   const [showChoices, setShowChoices] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [openMenu, setOpenMenu] = useState(null);
-  const [theme, setTheme] = useState("space");
+  const [theme, setTheme] = useState("sky");
   const [showMusicMaker, setShowMusicMaker] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
@@ -444,6 +445,12 @@ function Terminal() {
     };
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
+  // Update time every minute
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 60000);
+    return () => clearInterval(timer);
   }, []);
 
   const playSound = useCallback((type) => {
@@ -655,21 +662,23 @@ function Terminal() {
           <div className="flex items-center gap-1">
             <button
               onClick={() => { setTheme(theme === "space" ? "sky" : "space"); playSound('click'); }}
-              className="px-2 py-1 text-[11px] transition-colors text-highlight/70 hover:text-highlight hover:bg-highlight/10"
+              className="px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] transition-colors text-highlight/70 hover:text-highlight hover:bg-highlight/10"
               title={`Switch to ${theme === "space" ? "Sky" : "Space"}`}
             >
-              {theme === "space" ? "🌙" : "☀️"}
+              <span className="hidden sm:inline">{theme === "space" ? "◐ Space" : "○ Sky"}</span>
+              <span className="sm:hidden">{theme === "space" ? "◐" : "○"}</span>
             </button>
             <button
               onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
-              className={`px-2 py-1 text-[11px] transition-colors ${
+              className={`px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] transition-colors ${
                 soundEnabled
                   ? 'text-highlight bg-highlight/10'
                   : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
               }`}
               title={soundEnabled ? "Sound On" : "Sound Off"}
             >
-              {soundEnabled ? '♪' : '♪̸'}
+              <span className="hidden sm:inline">{soundEnabled ? '♪ Sound' : '♪ Muted'}</span>
+              <span className="sm:hidden">{soundEnabled ? '♪' : '♪̸'}</span>
             </button>
           </div>
         </div>
@@ -743,11 +752,11 @@ function Terminal() {
         <div className="flex items-center justify-between px-2 sm:px-4 py-1.5 border-t border-highlight/20 text-[9px] sm:text-[10px] text-highlight/40 bg-highlight/5">
           <div className="flex items-center gap-1 sm:gap-2">
             <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-highlight/60 animate-pulse"></span>
-            <span className="hidden sm:inline">TRACKING</span>
+            <span>{currentTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
           </div>
-          <span>NODE: {currentNode.toUpperCase()}</span>
+          <span>{currentNode.toUpperCase()}</span>
           <div className="flex items-center gap-1 sm:gap-2">
-            <span className="hidden sm:inline">OBSERVING</span>
+            <span>London, UK</span>
             <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-highlight/40"></span>
           </div>
         </div>
