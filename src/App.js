@@ -778,12 +778,20 @@ function Terminal() {
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
               {line.type === "logo" ? (
-                <div className="text-highlight mb-3 text-[8px] sm:text-[12px] font-bold tracking-wider overflow-x-auto whitespace-pre" style={{ fontFamily: 'monospace' }}>
-                  <div>_       _    __  __    _    ____   ___  _____ _____ </div>
-                  <div>| |     / \  |  \/  |  / \  / ___| / _ \|  ___|_   _|</div>
-                  <div>| |    / _ \ | |\/| | / _ \ \___ \| | | | |_    | |  </div>
-                  <div>| |___/ ___ \| |  | |/ ___ \ ___) | |_| |  _|   | |  </div>
-                  <div>|_____/_/   \_\_|  |_/_/   \_\____/ \___/|_|     |_|  </div>
+                <div className="mb-4">
+                  <div
+                    className="text-highlight font-serif tracking-tight"
+                    style={{
+                      fontSize: 'clamp(28px, 8vw, 48px)',
+                      lineHeight: 1,
+                      letterSpacing: '-0.02em'
+                    }}
+                  >
+                    LAMASOFT
+                  </div>
+                  <div className="text-highlight/50 text-[10px] sm:text-[11px] tracking-widest mt-1 font-mono">
+                    PERSONAL TERMINAL
+                  </div>
                 </div>
               ) : line.type === "command" ? (
                 <div className="flex text-foreground/60">
