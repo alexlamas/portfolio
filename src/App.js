@@ -1076,6 +1076,8 @@ function Terminal() {
                     {line.display}
                   </a>
                 </div>
+              ) : line.text === "" ? (
+                <div className="h-3" />
               ) : (
                 <div className="text-foreground/80">{line.text}</div>
               )}
