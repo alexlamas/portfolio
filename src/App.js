@@ -372,7 +372,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center cursor-pointer zen-background"
+      className="fixed inset-0 flex items-center justify-center cursor-pointer"
       onClick={onWakeUp}
       style={{
         background: 'linear-gradient(180deg, #0a0a0f 0%, #141420 50%, #0a0a0f 100%)',
@@ -389,8 +389,8 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
           style={{
             width: '160px',
             height: '160px',
-            background: 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, transparent 70%)',
-            boxShadow: '0 0 60px rgba(255,255,255,0.05)',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 50%, transparent 70%)',
+            boxShadow: '0 0 80px rgba(255,255,255,0.1)',
             animation: breathPhase === 'inhale'
               ? 'zenExpand 4s ease-in-out forwards'
               : breathPhase === 'hold'
@@ -401,7 +401,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
 
         {/* Breathing guide text */}
         <div
-          className="text-white/40 text-lg tracking-[0.3em] uppercase mb-8 transition-opacity duration-1000"
+          className="text-white/60 text-lg tracking-[0.3em] uppercase mb-8 transition-opacity duration-1000"
           style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 300 }}
         >
           {breathingGuide[breathPhase].text}
@@ -409,7 +409,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
 
         {/* Meditation word */}
         <div
-          className="text-white/20 text-sm tracking-[0.5em] uppercase zen-fade-text"
+          className="text-white/30 text-sm tracking-[0.5em] uppercase zen-fade-text"
           style={{ fontFamily: 'system-ui, sans-serif', fontWeight: 200 }}
         >
           {meditations[meditationIndex]}
@@ -418,7 +418,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         {/* Breath counter */}
         {breathCount > 1 && (
           <div
-            className="mt-16 text-white/10 text-xs tracking-widest"
+            className="mt-16 text-white/20 text-xs tracking-widest"
             style={{ fontFamily: 'monospace' }}
           >
             {breathCount - 1} breath{breathCount > 2 ? 's' : ''}
@@ -431,7 +431,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
             showPrompt ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="text-white/15 text-xs tracking-[0.2em] uppercase">
+          <div className="text-white/30 text-xs tracking-[0.2em] uppercase">
             click anywhere to wake
           </div>
         </div>
@@ -883,6 +883,14 @@ function Terminal() {
       ],
     },
     {
+      id: "view",
+      label: "View",
+      items: [
+        { label: theme === "sky" ? "✓ Day" : "Day", action: () => setTheme("sky") },
+        { label: theme === "space" ? "✓ Night" : "Night", action: () => setTheme("space") },
+      ],
+    },
+    {
       id: "go",
       label: "Go",
       items: [
@@ -925,11 +933,11 @@ function Terminal() {
         }}
       >
         {/* Title bar */}
-        <div className="flex items-center px-2 sm:px-3 py-2 border-b border-highlight/30 bg-highlight/5">
+        <div className="flex items-center px-3 sm:px-4 py-2 border-b border-highlight/30 bg-highlight/5">
           <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
             <span className="text-highlight text-lg shrink-0">◆</span>
             <span className="text-highlight text-[10px] sm:text-[12px] font-bold tracking-wider truncate">LAMASOFT.EXE</span>
-            <div ref={menuRef} className="flex gap-0.5 sm:gap-1 ml-1 sm:ml-2">
+            <div ref={menuRef} className="flex gap-0.5 sm:gap-1 ml-2 sm:ml-3">
               {menus.map(menu => (
                 <MenuDropdown
                   key={menu.id}
@@ -1035,7 +1043,7 @@ function Terminal() {
         </div>
 
         {/* Status bar */}
-        <div className="flex items-center justify-between px-2 sm:px-4 py-1.5 border-t border-highlight/20 text-[9px] sm:text-[10px] text-highlight/40 bg-highlight/5">
+        <div className="flex items-center justify-between px-3 sm:px-4 py-1.5 border-t border-highlight/20 text-[9px] sm:text-[10px] text-highlight/40 bg-highlight/5">
           <div className="flex items-center gap-1 sm:gap-2">
             <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-highlight/60 animate-pulse"></span>
             <span>{currentTime.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })}</span>
@@ -1048,8 +1056,8 @@ function Terminal() {
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="flex items-center px-2 sm:px-4 py-2 sm:py-3 border-t border-highlight/30 bg-black/20">
-          <span className="text-highlight text-base sm:text-lg">❯</span>
+        <form onSubmit={handleSubmit} className="flex items-center px-3 sm:px-4 py-2 sm:py-3 border-t border-highlight/30 bg-black/20">
+          <span className="text-highlight text-base sm:text-lg ml-0.5">❯</span>
           <input
             ref={inputRef}
             value={input}

@@ -1726,11 +1726,11 @@ input.key {
   }
 }
 
-/* Sun rise animation */
+/* Sun rise animation - rises from below */
 @keyframes sunRise {
   0% {
     transform: translateY(100px);
-    opacity: 0.3;
+    opacity: 0;
   }
   100% {
     transform: translateY(0);
@@ -1738,11 +1738,11 @@ input.key {
   }
 }
 
-/* Moon rise animation */
+/* Moon drop animation - drops from above */
 @keyframes moonRise {
   0% {
-    transform: translateY(100px);
-    opacity: 0.3;
+    transform: translateY(-100px);
+    opacity: 0;
   }
   100% {
     transform: translateY(0);
