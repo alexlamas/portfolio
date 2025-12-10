@@ -782,14 +782,14 @@ function Terminal() {
                   <div
                     className="text-highlight font-serif tracking-tight"
                     style={{
-                      fontSize: 'clamp(28px, 8vw, 48px)',
+                      fontSize: 'clamp(36px, 12vw, 64px)',
                       lineHeight: 1,
                       letterSpacing: '-0.02em'
                     }}
                   >
                     LAMASOFT
                   </div>
-                  <div className="text-highlight/50 text-[10px] sm:text-[11px] tracking-widest mt-1 font-mono">
+                  <div className="text-highlight/50 text-[11px] sm:text-[12px] tracking-widest mt-2 font-mono">
                     PERSONAL TERMINAL
                   </div>
                 </div>
