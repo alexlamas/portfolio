@@ -216,26 +216,51 @@ class Synth {
 
 const synth = new Synth();
 
-// Stars background component (Space theme)
-function StarField() {
+// Stars background component (Space theme) with moon
+function StarField({ onToggle }) {
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
-      <div className="stars"></div>
-      <div className="stars2"></div>
-      <div className="stars3"></div>
+    <div className="fixed inset-0 overflow-hidden">
+      <div className="stars pointer-events-none"></div>
+      <div className="stars2 pointer-events-none"></div>
+      <div className="stars3 pointer-events-none"></div>
+      {/* Clickable Moon */}
+      <button
+        onClick={onToggle}
+        className="absolute top-[15%] right-[15%] w-16 h-16 rounded-full cursor-pointer transition-all duration-300 hover:scale-110"
+        style={{
+          background: 'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 50%, #c0c0c0 100%)',
+          boxShadow: '0 0 40px rgba(255,255,255,0.4), 0 0 80px rgba(255,255,255,0.2), inset -8px -8px 20px rgba(0,0,0,0.1)',
+        }}
+        title="Switch to day"
+      >
+        {/* Moon craters */}
+        <div className="absolute top-3 left-4 w-3 h-3 rounded-full bg-gray-300/50"></div>
+        <div className="absolute top-8 left-8 w-2 h-2 rounded-full bg-gray-300/50"></div>
+        <div className="absolute top-5 right-4 w-4 h-4 rounded-full bg-gray-300/40"></div>
+      </button>
     </div>
   );
 }
 
-// Clouds background component (Sky theme)
-function SkyField() {
+// Clouds background component (Sky theme) with sun
+function SkyField({ onToggle }) {
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none sky-gradient">
-      <div className="cloud x1"></div>
-      <div className="cloud x2"></div>
-      <div className="cloud x3"></div>
-      <div className="cloud x4"></div>
-      <div className="cloud x5"></div>
+    <div className="fixed inset-0 overflow-hidden sky-gradient">
+      <div className="cloud x1 pointer-events-none"></div>
+      <div className="cloud x2 pointer-events-none"></div>
+      <div className="cloud x3 pointer-events-none"></div>
+      <div className="cloud x4 pointer-events-none"></div>
+      <div className="cloud x5 pointer-events-none"></div>
+      {/* Clickable Sun */}
+      <button
+        onClick={onToggle}
+        className="absolute top-[12%] right-[12%] w-20 h-20 rounded-full cursor-pointer transition-all duration-300 hover:scale-110 animate-pulse"
+        style={{
+          background: 'radial-gradient(circle, #FFE484 0%, #FFD54F 40%, #FFB300 100%)',
+          boxShadow: '0 0 60px rgba(255,200,0,0.6), 0 0 120px rgba(255,180,0,0.3)',
+        }}
+        title="Switch to night"
+      />
     </div>
   );
 }
@@ -321,35 +346,62 @@ function MusicMaker({ onClose, playSound }) {
   }, []);
 
   return (
-    <div className="space-y-3 relative z-10">
+    <div className="space-y-3 relative" style={{ zIndex: 100 }}>
       <div className="flex justify-between items-center text-[11px]">
-        <span className="text-highlight">♫ MUSIC MAKER</span>
-        <div className="flex gap-2">
-          <button type="button" onClick={togglePlay} className="text-highlight hover:text-foreground cursor-pointer">
+        <span className="text-highlight">MUSIC MAKER</span>
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); togglePlay(); }}
+            className="text-highlight hover:text-foreground cursor-pointer px-2 py-1 bg-highlight/10 rounded"
+          >
             {isPlaying ? '■ Stop' : '▶ Play'}
           </button>
-          <button type="button" onClick={clearAll} className="text-highlight/50 hover:text-highlight cursor-pointer">Clear</button>
-          <button type="button" onClick={onClose} className="text-highlight/50 hover:text-highlight cursor-pointer">✕</button>
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); clearAll(); }}
+            className="text-highlight/50 hover:text-highlight cursor-pointer px-2 py-1"
+          >
+            Clear
+          </button>
+          <button
+            type="button"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); onClose(); }}
+            className="text-highlight/50 hover:text-highlight cursor-pointer px-2 py-1"
+          >
+            X
+          </button>
         </div>
       </div>
       <div className="flex gap-1 overflow-x-auto">
-        <div className="flex flex-col gap-[2px] text-[9px] text-highlight/40 pr-1 shrink-0">
-          {noteNames.map(n => <div key={n} className="h-[18px] flex items-center">{n}</div>)}
+        <div className="flex flex-col gap-[3px] text-[9px] text-highlight/40 pr-1 shrink-0">
+          {noteNames.map(n => <div key={n} className="h-[22px] flex items-center">{n}</div>)}
         </div>
-        <div className="flex gap-[2px]">
+        <div className="flex gap-[3px]">
           {sequence.map((step, stepIdx) => (
-            <div key={stepIdx} className="flex flex-col gap-[2px]">
+            <div key={stepIdx} className="flex flex-col gap-[3px]">
               {step.map((active, noteIdx) => (
                 <button
                   type="button"
                   key={noteIdx}
-                  onClick={() => toggleCell(stepIdx, noteIdx)}
-                  className={`w-[18px] h-[18px] rounded-sm transition-all cursor-pointer ${
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleCell(stepIdx, noteIdx);
+                  }}
+                  style={{
+                    width: '22px',
+                    height: '22px',
+                    minWidth: '22px',
+                    minHeight: '22px',
+                    pointerEvents: 'auto'
+                  }}
+                  className={`rounded-sm transition-all cursor-pointer border-0 ${
                     active
                       ? 'bg-highlight'
                       : currentStep === stepIdx
                         ? 'bg-highlight/30'
-                        : 'bg-highlight/10 hover:bg-highlight/20'
+                        : 'bg-highlight/10 hover:bg-highlight/30'
                   }`}
                 />
               ))}
@@ -525,15 +577,19 @@ function Terminal() {
   }, [lines]);
 
   useEffect(() => {
-    const keepFocus = () => {
-      if (isBooted && !isTyping) {
+    const keepFocus = (e) => {
+      // Don't steal focus if clicking on buttons or interactive elements
+      if (e?.target?.tagName === 'BUTTON' || e?.target?.closest?.('button')) {
+        return;
+      }
+      if (isBooted && !isTyping && !showMusicMaker) {
         inputRef.current?.focus();
       }
     };
     keepFocus();
     window.addEventListener('click', keepFocus);
     return () => window.removeEventListener('click', keepFocus);
-  }, [isBooted, isTyping]);
+  }, [isBooted, isTyping, showMusicMaker]);
 
   const handleChoice = useCallback(async (goto) => {
     playSound('select');
@@ -639,7 +695,11 @@ function Terminal() {
 
   return (
     <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-2 sm:p-4 relative`}>
-      {theme === "sky" ? <SkyField /> : <StarField />}
+      {theme === "sky" ? (
+        <SkyField onToggle={() => { setTheme("space"); playSound('click'); }} />
+      ) : (
+        <StarField onToggle={() => { setTheme("sky"); playSound('click'); }} />
+      )}
 
       {/* Terminal window with glow */}
       <div
@@ -675,28 +735,19 @@ function Terminal() {
               ))}
             </div>
           </div>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => { setTheme(theme === "space" ? "sky" : "space"); playSound('click'); }}
-              className="px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] transition-colors text-highlight/70 hover:text-highlight hover:bg-highlight/10"
-              title={`Switch to ${theme === "space" ? "Sky" : "Space"}`}
-            >
-              <span className="hidden sm:inline">{theme === "space" ? "◐ Space" : "○ Sky"}</span>
-              <span className="sm:hidden">{theme === "space" ? "◐" : "○"}</span>
-            </button>
-            <button
-              onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
-              className={`px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] transition-colors ${
-                soundEnabled
-                  ? 'text-highlight bg-highlight/10'
-                  : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
-              }`}
-              title={soundEnabled ? "Sound On" : "Sound Off"}
-            >
-              <span className="hidden sm:inline">{soundEnabled ? '♪ Sound' : '♪ Muted'}</span>
-              <span className="sm:hidden">{soundEnabled ? '♪' : '♪̸'}</span>
-            </button>
-          </div>
+          <button
+            onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
+            className={`px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] transition-colors ${
+              soundEnabled
+                ? 'text-highlight bg-highlight/10'
+                : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
+            }`}
+            title={soundEnabled ? "Sound On" : "Sound Off"}
+          >
+            <span className="hidden sm:inline">{soundEnabled ? '♪ Sound' : '♪ Muted'}</span>
+            <span className="sm:hidden">{soundEnabled ? '♪' : '♪'}</span>
+            {!soundEnabled && <span className="sm:hidden text-[8px] ml-0.5">off</span>}
+          </button>
         </div>
 
         {/* Terminal content */}
@@ -708,13 +759,12 @@ function Terminal() {
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
               {line.type === "logo" ? (
-                <div className="text-highlight mb-3 text-[7px] sm:text-[11px] font-bold tracking-widest overflow-x-auto">
-                  <div>██╗      █████╗ ███╗   ███╗ █████╗ ███████╗ ██████╗ ███████╗████████╗</div>
-                  <div>██║     ██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔═══██╗██╔════╝╚══██╔══╝</div>
-                  <div>██║     ███████║██╔████╔██║███████║███████╗██║   ██║█████╗     ██║</div>
-                  <div>██║     ██╔══██║██║╚██╔╝██║██╔══██║╚════██║██║   ██║██╔══╝     ██║</div>
-                  <div>███████╗██║  ██║██║ ╚═╝ ██║██║  ██║███████║╚██████╔╝██║        ██║</div>
-                  <div>╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝        ╚═╝</div>
+                <div className="text-highlight mb-3 text-[8px] sm:text-[12px] font-bold tracking-wider overflow-x-auto whitespace-pre" style={{ fontFamily: 'monospace' }}>
+                  <div>_       _    __  __    _    ____   ___  _____ _____ </div>
+                  <div>| |     / \  |  \/  |  / \  / ___| / _ \|  ___|_   _|</div>
+                  <div>| |    / _ \ | |\/| | / _ \ \___ \| | | | |_    | |  </div>
+                  <div>| |___/ ___ \| |  | |/ ___ \ ___) | |_| |  _|   | |  </div>
+                  <div>|_____/_/   \_\_|  |_/_/   \_\____/ \___/|_|     |_|  </div>
                 </div>
               ) : line.type === "command" ? (
                 <div className="flex text-foreground/60">
@@ -757,7 +807,11 @@ function Terminal() {
           )}
 
           {showMusicMaker && (
-            <div className="mt-4 p-3 border border-highlight/30 rounded bg-background/50">
+            <div
+              className="mt-4 p-3 border border-highlight/30 rounded bg-background/50"
+              onClick={(e) => e.stopPropagation()}
+              style={{ position: 'relative', zIndex: 50 }}
+            >
               <MusicMaker onClose={() => setShowMusicMaker(false)} playSound={playSound} />
             </div>
           )}
