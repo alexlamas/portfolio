@@ -404,7 +404,9 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme
                   onSound?.();
                   item.action?.();
                 }}
-                className="w-full px-3 py-1.5 text-left text-[11px] text-highlight hover:bg-highlight hover:text-background transition-colors flex justify-between"
+                className={`w-full px-3 py-1.5 text-left text-[11px] text-highlight transition-colors flex justify-between ${
+                  isDark ? 'hover:bg-highlight/20' : 'hover:bg-highlight/10'
+                }`}
               >
                 <span>{item.label}</span>
                 {item.shortcut && <span className="text-highlight/60">{item.shortcut}</span>}
@@ -615,12 +617,14 @@ function Terminal() {
   const choices = showChoices ? STORY[currentNode]?.choices : [];
 
   return (
-    <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-4 relative`}>
+    <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-2 sm:p-4 relative`}>
       {theme === "sky" ? <SkyField /> : <StarField />}
 
       {/* Terminal window with glow */}
       <div
-        className="relative border border-highlight/40 w-[580px] rounded-sm shadow-2xl"
+        className={`relative border border-highlight/40 w-full max-w-[580px] rounded-sm shadow-2xl transition-all duration-500 ${
+          isBooted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`}
         style={{
           background: theme === "sky" ? 'rgba(255, 255, 255, 0.85)' : 'rgba(13, 18, 8, 0.92)',
           boxShadow: theme === "sky"
@@ -629,11 +633,11 @@ function Terminal() {
         }}
       >
         {/* Title bar */}
-        <div className="flex items-center px-3 py-2 border-b border-highlight/30 bg-highlight/5">
-          <div className="flex items-center gap-3 flex-1">
-            <span className="text-highlight text-lg">◆</span>
-            <span className="text-highlight text-[12px] font-bold tracking-wider">LAMASOFT.EXE</span>
-            <div ref={menuRef} className="flex gap-1 ml-2">
+        <div className="flex items-center px-2 sm:px-3 py-2 border-b border-highlight/30 bg-highlight/5">
+          <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
+            <span className="text-highlight text-lg shrink-0">◆</span>
+            <span className="text-highlight text-[10px] sm:text-[12px] font-bold tracking-wider truncate">LAMASOFT.EXE</span>
+            <div ref={menuRef} className="flex gap-0.5 sm:gap-1 ml-1 sm:ml-2">
               {menus.map(menu => (
                 <MenuDropdown
                   key={menu.id}
@@ -673,18 +677,19 @@ function Terminal() {
         {/* Terminal content */}
         <div
           ref={terminalRef}
-          className="overflow-y-auto p-4 text-[13px]"
-          style={{ height: '400px' }}
+          className="overflow-y-auto p-3 sm:p-4 text-[12px] sm:text-[13px]"
+          style={{ height: 'min(400px, 60vh)' }}
         >
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
               {line.type === "logo" ? (
-                <div className="text-highlight mb-3 text-[12px] font-bold" style={{fontFamily: 'monospace', letterSpacing: '0.05em'}}>
-                  <pre style={{margin: 0, lineHeight: 1.2}}>{`
- _    ____ _  _ ____ ____ ____ ____ ___
- |    |__| |\\/| |__| [__  |  | |___  |
- |___ |  | |  | |  | ___] |__| |     |
-                  `.trim()}</pre>
+                <div className="text-highlight mb-3 text-[7px] sm:text-[11px] font-bold tracking-widest overflow-x-auto">
+                  <div>██╗      █████╗ ███╗   ███╗ █████╗ ███████╗ ██████╗ ███████╗████████╗</div>
+                  <div>██║     ██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔═══██╗██╔════╝╚══██╔══╝</div>
+                  <div>██║     ███████║██╔████╔██║███████║███████╗██║   ██║█████╗     ██║</div>
+                  <div>██║     ██╔══██║██║╚██╔╝██║██╔══██║╚════██║██║   ██║██╔══╝     ██║</div>
+                  <div>███████╗██║  ██║██║ ╚═╝ ██║██║  ██║███████║╚██████╔╝██║        ██║</div>
+                  <div>╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝        ╚═╝</div>
                 </div>
               ) : line.type === "command" ? (
                 <div className="flex text-foreground/60">
@@ -694,13 +699,13 @@ function Terminal() {
               ) : line.type === "system" ? (
                 <div className="text-highlight/50 text-[11px]">{line.text}</div>
               ) : line.type === "link" ? (
-                <div className="flex">
-                  <span className="text-foreground/40 w-20">{line.label}</span>
+                <div className="flex flex-col sm:flex-row">
+                  <span className="text-foreground/40 w-16 sm:w-20 text-[10px] sm:text-[12px]">{line.label}</span>
                   <a
                     href={line.url}
                     target={line.url.startsWith("mailto:") ? undefined : "_blank"}
                     rel="noreferrer"
-                    className="text-highlight hover:underline"
+                    className="text-highlight hover:underline text-[11px] sm:text-[13px] break-all"
                     onClick={e => { e.stopPropagation(); playSound('click'); }}
                   >
                     {line.display}
@@ -735,30 +740,30 @@ function Terminal() {
         </div>
 
         {/* Status bar */}
-        <div className="flex items-center justify-between px-4 py-1.5 border-t border-highlight/20 text-[10px] text-highlight/40 bg-highlight/5">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-highlight/60 animate-pulse"></span>
-            <span>TRACKING</span>
+        <div className="flex items-center justify-between px-2 sm:px-4 py-1.5 border-t border-highlight/20 text-[9px] sm:text-[10px] text-highlight/40 bg-highlight/5">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-highlight/60 animate-pulse"></span>
+            <span className="hidden sm:inline">TRACKING</span>
           </div>
           <span>NODE: {currentNode.toUpperCase()}</span>
-          <div className="flex items-center gap-2">
-            <span>OBSERVING</span>
-            <span className="inline-block w-2 h-2 rounded-full bg-highlight/40"></span>
+          <div className="flex items-center gap-1 sm:gap-2">
+            <span className="hidden sm:inline">OBSERVING</span>
+            <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-highlight/40"></span>
           </div>
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="flex items-center px-4 py-3 border-t border-highlight/30 bg-black/20">
-          <span className="text-highlight text-lg">❯</span>
+        <form onSubmit={handleSubmit} className="flex items-center px-2 sm:px-4 py-2 sm:py-3 border-t border-highlight/30 bg-black/20">
+          <span className="text-highlight text-base sm:text-lg">❯</span>
           <input
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={() => playSound('type')}
             disabled={isTyping || !isBooted}
-            className="flex-1 ml-3 bg-transparent text-foreground caret-highlight text-[13px]"
+            className="flex-1 ml-2 sm:ml-3 bg-transparent text-foreground caret-highlight text-[12px] sm:text-[13px]"
             style={{ outline: 'none' }}
-            placeholder={showChoices ? "1, 2, 3 or type a command..." : ""}
+            placeholder={showChoices ? "1, 2, 3 or type..." : ""}
             autoFocus
             autoComplete="off"
             spellCheck="false"
