@@ -410,10 +410,10 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
       <div className="zen-particles"></div>
 
       {/* Main content */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center px-8">
+      <div className="relative z-10 w-full flex flex-col items-center px-8">
         {/* Breathing circle */}
         <div
-          className="mb-12 rounded-full zen-breath-circle"
+          className="rounded-full zen-breath-circle"
           style={{
             width: '160px',
             height: '160px',
@@ -430,8 +430,9 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
 
         {/* Breathing guide text */}
         <div
-          className="text-center mb-8 transition-opacity duration-1000"
+          className="text-center transition-opacity duration-1000"
           style={{
+            marginTop: '80px',
             fontFamily: 'system-ui, sans-serif',
             fontWeight: 300,
             fontSize: '1.25rem',
@@ -447,6 +448,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         <div
           className="text-center zen-fade-text"
           style={{
+            marginTop: '24px',
             fontFamily: 'system-ui, sans-serif',
             fontWeight: 200,
             fontSize: '0.875rem',
@@ -461,8 +463,9 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         {/* Breath counter */}
         {breathCount > 1 && (
           <div
-            className="mt-16 text-center"
+            className="text-center"
             style={{
+              marginTop: '48px',
               fontFamily: 'monospace',
               fontSize: '0.75rem',
               letterSpacing: '0.1em',
@@ -474,23 +477,23 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         )}
       </div>
 
-      {/* Wake up prompt - outside main content for proper fixed positioning */}
+      {/* Wake up prompt */}
       <div
-        className={`fixed bottom-12 inset-x-0 z-20 flex justify-center transition-opacity duration-2000 ${
-          showPrompt ? 'opacity-100' : 'opacity-0'
-        }`}
+        style={{
+          position: 'fixed',
+          bottom: '48px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 20,
+          opacity: showPrompt ? 1 : 0,
+          transition: 'opacity 2s ease',
+          fontSize: '0.75rem',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+          color: 'rgba(255, 255, 255, 0.4)',
+        }}
       >
-        <div
-          style={{
-            fontSize: '0.75rem',
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'rgba(255, 255, 255, 0.4)',
-            textAlign: 'center',
-          }}
-        >
-          click anywhere to wake
-        </div>
+        click anywhere to wake
       </div>
     </div>
   );
