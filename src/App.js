@@ -321,29 +321,30 @@ function MusicMaker({ onClose, playSound }) {
   }, []);
 
   return (
-    <div className="space-y-3">
+    <div className="space-y-3 relative z-10">
       <div className="flex justify-between items-center text-[11px]">
         <span className="text-highlight">♫ MUSIC MAKER</span>
         <div className="flex gap-2">
-          <button onClick={togglePlay} className="text-highlight hover:text-foreground">
+          <button type="button" onClick={togglePlay} className="text-highlight hover:text-foreground cursor-pointer">
             {isPlaying ? '■ Stop' : '▶ Play'}
           </button>
-          <button onClick={clearAll} className="text-highlight/50 hover:text-highlight">Clear</button>
-          <button onClick={onClose} className="text-highlight/50 hover:text-highlight">✕</button>
+          <button type="button" onClick={clearAll} className="text-highlight/50 hover:text-highlight cursor-pointer">Clear</button>
+          <button type="button" onClick={onClose} className="text-highlight/50 hover:text-highlight cursor-pointer">✕</button>
         </div>
       </div>
-      <div className="flex gap-1">
-        <div className="flex flex-col gap-[2px] text-[9px] text-highlight/40 pr-1">
-          {noteNames.map(n => <div key={n} className="h-[14px] flex items-center">{n}</div>)}
+      <div className="flex gap-1 overflow-x-auto">
+        <div className="flex flex-col gap-[2px] text-[9px] text-highlight/40 pr-1 shrink-0">
+          {noteNames.map(n => <div key={n} className="h-[18px] flex items-center">{n}</div>)}
         </div>
         <div className="flex gap-[2px]">
           {sequence.map((step, stepIdx) => (
             <div key={stepIdx} className="flex flex-col gap-[2px]">
               {step.map((active, noteIdx) => (
                 <button
+                  type="button"
                   key={noteIdx}
                   onClick={() => toggleCell(stepIdx, noteIdx)}
-                  className={`w-[14px] h-[14px] rounded-sm transition-all ${
+                  className={`w-[18px] h-[18px] rounded-sm transition-all cursor-pointer ${
                     active
                       ? 'bg-highlight'
                       : currentStep === stepIdx
@@ -489,18 +490,31 @@ function Terminal() {
     const boot = async () => {
       setLines([]);
       setShowChoices(false);
-      await new Promise(r => setTimeout(r, 300));
-      playSound('boot');
-      setLines([{ type: "logo" }]);
+
+      // Boot sequence
       await new Promise(r => setTimeout(r, 200));
-      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      setIsBooted(true); // Show terminal
+
+      await new Promise(r => setTimeout(r, 300));
+      setLines([{ type: "system", text: "BIOS v2.4.1 ... OK" }]);
+      await new Promise(r => setTimeout(r, 150));
+      setLines(prev => [...prev, { type: "system", text: "Memory check ... 64KB OK" }]);
+      await new Promise(r => setTimeout(r, 150));
+      setLines(prev => [...prev, { type: "system", text: "Loading LAMASOFT.EXE ..." }]);
+      await new Promise(r => setTimeout(r, 400));
+      playSound('boot');
+
+      setLines(prev => [...prev, { type: "output", text: "" }]);
+      setLines(prev => [...prev, { type: "logo" }]);
+      await new Promise(r => setTimeout(r, 200));
+      setLines(prev => [...prev, { type: "system", text: "─".repeat(50) }]);
       await new Promise(r => setTimeout(r, 100));
       setLines(prev => [...prev, { type: "system", text: "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  ready" }]);
       await new Promise(r => setTimeout(r, 100));
-      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      setLines(prev => [...prev, { type: "system", text: "─".repeat(50) }]);
       await new Promise(r => setTimeout(r, 100));
       setLines(prev => [...prev, { type: "output", text: "" }]);
-      setIsBooted(true);
+
       await displayNode("start");
     };
     boot();
@@ -629,10 +643,12 @@ function Terminal() {
 
       {/* Terminal window with glow */}
       <div
-        className={`relative border border-highlight/40 w-full max-w-[580px] rounded-sm shadow-2xl transition-all duration-500 ${
-          isBooted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        className={`relative border border-highlight/40 rounded-sm shadow-2xl transition-all duration-700 ease-out ${
+          isBooted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
         }`}
         style={{
+          width: '100%',
+          maxWidth: '580px',
           background: theme === "sky" ? 'rgba(255, 255, 255, 0.85)' : 'rgba(13, 18, 8, 0.92)',
           boxShadow: theme === "sky"
             ? '0 0 60px rgba(135, 206, 235, 0.3), 0 0 100px rgba(135, 206, 235, 0.1), inset 0 0 60px rgba(255, 255, 255, 0.3)'
