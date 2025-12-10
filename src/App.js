@@ -346,8 +346,9 @@ function MusicMaker({ onClose, playSound }) {
 }
 
 // Menu dropdown - controlled component
-function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound }) {
+function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme }) {
   const ref = useRef(null);
+  const isDark = theme === "space";
 
   return (
     <div ref={ref} className="relative">
@@ -368,8 +369,13 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound }) {
       </button>
       {isOpen && (
         <div
-          className="absolute left-0 min-w-[160px] py-1 border border-highlight/30 shadow-2xl"
-          style={{ background: 'rgba(13, 18, 8, 0.98)', zIndex: 9999, top: '100%', marginTop: '2px' }}
+          className="absolute left-0 min-w-[160px] py-1 border border-highlight/30 shadow-2xl backdrop-blur-md"
+          style={{
+            background: isDark ? 'rgba(13, 18, 8, 0.98)' : 'rgba(255, 255, 255, 0.95)',
+            zIndex: 9999,
+            top: '100%',
+            marginTop: '2px'
+          }}
           onClick={(e) => e.stopPropagation()}
         >
           {items.map((item, i) => (
@@ -382,10 +388,10 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound }) {
                   onSound?.();
                   item.action?.();
                 }}
-                className="w-full px-3 py-1.5 text-left text-[11px] text-highlight/70 hover:bg-highlight hover:text-background transition-colors flex justify-between"
+                className="w-full px-3 py-1.5 text-left text-[11px] text-highlight hover:bg-highlight hover:text-background transition-colors flex justify-between"
               >
                 <span>{item.label}</span>
-                {item.shortcut && <span className="text-highlight/40">{item.shortcut}</span>}
+                {item.shortcut && <span className="text-highlight/60">{item.shortcut}</span>}
               </button>
             )
           ))}
@@ -588,14 +594,6 @@ function Terminal() {
         { label: "Life", action: () => handleChoice("hobbies") },
       ],
     },
-    {
-      id: "view",
-      label: "View",
-      items: [
-        { label: theme === "space" ? "● Space" : "○ Space", action: () => setTheme("space") },
-        { label: theme === "sky" ? "● Sky" : "○ Sky", action: () => setTheme("sky") },
-      ],
-    },
   ];
 
   const choices = showChoices ? STORY[currentNode]?.choices : [];
@@ -629,21 +627,31 @@ function Terminal() {
                   isOpen={openMenu === menu.id}
                   onToggle={() => setOpenMenu(openMenu === menu.id ? null : menu.id)}
                   onSound={() => playSound('click')}
+                  theme={theme}
                 />
               ))}
             </div>
           </div>
-          <button
-            onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
-            className={`px-3 py-1 text-[11px] transition-colors ${
-              soundEnabled
-                ? 'text-highlight bg-highlight/10'
-                : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
-            }`}
-            title={soundEnabled ? "Sound On" : "Sound Off"}
-          >
-            {soundEnabled ? '♪ Sound' : '♪ Sound'}
-          </button>
+          <div className="flex items-center gap-1">
+            <button
+              onClick={() => { setTheme(theme === "space" ? "sky" : "space"); playSound('click'); }}
+              className="px-2 py-1 text-[11px] transition-colors text-highlight/70 hover:text-highlight hover:bg-highlight/10"
+              title={`Switch to ${theme === "space" ? "Sky" : "Space"}`}
+            >
+              {theme === "space" ? "🌙" : "☀️"}
+            </button>
+            <button
+              onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
+              className={`px-2 py-1 text-[11px] transition-colors ${
+                soundEnabled
+                  ? 'text-highlight bg-highlight/10'
+                  : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
+              }`}
+              title={soundEnabled ? "Sound On" : "Sound Off"}
+            >
+              {soundEnabled ? '♪' : '♪̸'}
+            </button>
+          </div>
         </div>
 
         {/* Terminal content */}
