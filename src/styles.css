@@ -1589,4 +1589,125 @@ input.key {
   }
 }
 
+/* Star field animation */
+.stars, .stars2, .stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.stars {
+  background: transparent;
+  animation: animStar 50s linear infinite;
+}
+
+.stars2 {
+  background: transparent;
+  animation: animStar 100s linear infinite;
+}
+
+.stars3 {
+  background: transparent;
+  animation: animStar 150s linear infinite;
+}
+
+.stars:after, .stars2:after, .stars3:after {
+  content: " ";
+  position: absolute;
+  top: 2000px;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+/* Generate stars using box-shadow */
+.stars {
+  box-shadow:
+    1624px 1523px #fff, 1971px 1841px #fff, 1310px 614px #fff,
+    521px 1891px #fff, 1117px 428px #fff, 903px 1766px #fff,
+    185px 947px #fff, 1476px 1358px #fff, 1829px 1112px #fff,
+    727px 1963px #fff, 1558px 397px #fff, 422px 1634px #fff,
+    1889px 823px #fff, 647px 1245px #fff, 1123px 1891px #fff,
+    234px 567px #fff, 1756px 1034px #fff, 892px 234px #fff,
+    1345px 1678px #fff, 567px 890px #fff, 1901px 456px #fff,
+    123px 1234px #fff, 1567px 789px #fff, 890px 1567px #fff,
+    456px 123px #fff, 1234px 890px #fff, 789px 456px #fff,
+    1678px 1345px #fff, 345px 1890px #fff, 1890px 567px #fff;
+}
+
+.stars:after {
+  box-shadow:
+    1624px 1523px #fff, 1971px 1841px #fff, 1310px 614px #fff,
+    521px 1891px #fff, 1117px 428px #fff, 903px 1766px #fff,
+    185px 947px #fff, 1476px 1358px #fff, 1829px 1112px #fff,
+    727px 1963px #fff, 1558px 397px #fff, 422px 1634px #fff,
+    1889px 823px #fff, 647px 1245px #fff, 1123px 1891px #fff,
+    234px 567px #fff, 1756px 1034px #fff, 892px 234px #fff,
+    1345px 1678px #fff, 567px 890px #fff, 1901px 456px #fff,
+    123px 1234px #fff, 1567px 789px #fff, 890px 1567px #fff,
+    456px 123px #fff, 1234px 890px #fff, 789px 456px #fff,
+    1678px 1345px #fff, 345px 1890px #fff, 1890px 567px #fff;
+}
+
+.stars2 {
+  box-shadow:
+    234px 456px rgba(255,255,255,0.8), 678px 890px rgba(255,255,255,0.8),
+    1012px 234px rgba(255,255,255,0.8), 1456px 678px rgba(255,255,255,0.8),
+    1890px 1012px rgba(255,255,255,0.8), 345px 1456px rgba(255,255,255,0.8),
+    789px 1890px rgba(255,255,255,0.8), 1123px 345px rgba(255,255,255,0.8),
+    1567px 789px rgba(255,255,255,0.8), 90px 1123px rgba(255,255,255,0.8),
+    534px 1567px rgba(255,255,255,0.8), 978px 90px rgba(255,255,255,0.8),
+    1412px 534px rgba(255,255,255,0.8), 1856px 978px rgba(255,255,255,0.8),
+    190px 1412px rgba(255,255,255,0.8), 634px 1856px rgba(255,255,255,0.8);
+}
+
+.stars2:after {
+  box-shadow:
+    234px 456px rgba(255,255,255,0.8), 678px 890px rgba(255,255,255,0.8),
+    1012px 234px rgba(255,255,255,0.8), 1456px 678px rgba(255,255,255,0.8),
+    1890px 1012px rgba(255,255,255,0.8), 345px 1456px rgba(255,255,255,0.8),
+    789px 1890px rgba(255,255,255,0.8), 1123px 345px rgba(255,255,255,0.8),
+    1567px 789px rgba(255,255,255,0.8), 90px 1123px rgba(255,255,255,0.8),
+    534px 1567px rgba(255,255,255,0.8), 978px 90px rgba(255,255,255,0.8),
+    1412px 534px rgba(255,255,255,0.8), 1856px 978px rgba(255,255,255,0.8),
+    190px 1412px rgba(255,255,255,0.8), 634px 1856px rgba(255,255,255,0.8);
+}
+
+.stars3 {
+  box-shadow:
+    456px 789px rgba(255,255,255,0.6), 1234px 567px rgba(255,255,255,0.6),
+    890px 1345px rgba(255,255,255,0.6), 123px 890px rgba(255,255,255,0.6),
+    1678px 1234px rgba(255,255,255,0.6), 567px 1678px rgba(255,255,255,0.6),
+    1345px 123px rgba(255,255,255,0.6), 890px 567px rgba(255,255,255,0.6),
+    1900px 1800px rgba(255,255,255,0.6), 300px 400px rgba(255,255,255,0.6);
+}
+
+.stars3:after {
+  box-shadow:
+    456px 789px rgba(255,255,255,0.6), 1234px 567px rgba(255,255,255,0.6),
+    890px 1345px rgba(255,255,255,0.6), 123px 890px rgba(255,255,255,0.6),
+    1678px 1234px rgba(255,255,255,0.6), 567px 1678px rgba(255,255,255,0.6),
+    1345px 123px rgba(255,255,255,0.6), 890px 567px rgba(255,255,255,0.6),
+    1900px 1800px rgba(255,255,255,0.6), 300px 400px rgba(255,255,255,0.6);
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+/* Remove focus outline for input */
+*:focus, *:focus-visible {
+  outline: none !important;
+}
+
 

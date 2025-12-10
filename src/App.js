@@ -3,7 +3,7 @@ import "./styles.css";
 import "./fonts/fonts.css";
 import { Analytics } from "@vercel/analytics/react";
 
-// Story nodes - more personal, less cringe
+// Story nodes
 const STORY = {
   start: {
     text: [
@@ -175,24 +175,57 @@ const SHORTCUTS = {
   start: "start", restart: "start", help: "help",
 };
 
-const LOGO = `
-░██╗░░░░░░█████╗░███╗░░░███╗░█████╗░░██████╗░█████╗░███████╗████████╗
-░██║░░░░░██╔══██╗████╗░████║██╔══██╗██╔════╝██╔══██╗██╔════╝╚══██╔══╝
-░██║░░░░░███████║██╔████╔██║███████║╚█████╗░██║░░██║█████╗░░░░░██║░░░
-░██║░░░░░██╔══██║██║╚██╔╝██║██╔══██║░╚═══██╗██║░░██║██╔══╝░░░░░██║░░░
-░███████╗██║░░██║██║░╚═╝░██║██║░░██║██████╔╝╚█████╔╝██║░░░░░░░░██║░░░
-░╚══════╝╚═╝░░╚═╝╚═╝░░░░░╚═╝╚═╝░░╚═╝╚═════╝░░╚════╝░╚═╝░░░░░░░░╚═╝░░░
-`.trim();
+// Simple synth using Web Audio API
+class Synth {
+  constructor() {
+    this.ctx = null;
+  }
 
-const BOOT_SEQUENCE = [
-  { text: "═══════════════════════════════════════════════════════════════════", delay: 50 },
-  { text: "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  system ready", delay: 150 },
-  { text: "═══════════════════════════════════════════════════════════════════", delay: 50 },
-  { text: "", delay: 100 },
-];
+  init() {
+    if (!this.ctx) {
+      this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+  }
 
-// Menu dropdown with proper z-index
-function MenuDropdown({ label, items, disabled, onClose }) {
+  play(freq = 440, duration = 0.1, type = 'sine') {
+    if (!this.ctx) this.init();
+    const osc = this.ctx.createOscillator();
+    const gain = this.ctx.createGain();
+    osc.type = type;
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.1, this.ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(this.ctx.destination);
+    osc.start();
+    osc.stop(this.ctx.currentTime + duration);
+  }
+
+  click() { this.play(800, 0.05, 'square'); }
+  select() { this.play(600, 0.08, 'sine'); }
+  boot() {
+    this.play(200, 0.15, 'sawtooth');
+    setTimeout(() => this.play(400, 0.15, 'sawtooth'), 100);
+    setTimeout(() => this.play(600, 0.2, 'sawtooth'), 200);
+  }
+  type() { this.play(1200 + Math.random() * 200, 0.02, 'square'); }
+}
+
+const synth = new Synth();
+
+// Stars background component
+function StarField() {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      <div className="stars"></div>
+      <div className="stars2"></div>
+      <div className="stars3"></div>
+    </div>
+  );
+}
+
+// Menu dropdown
+function MenuDropdown({ label, items, disabled, onSound }) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef(null);
 
@@ -214,36 +247,38 @@ function MenuDropdown({ label, items, disabled, onClose }) {
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
+          onSound?.();
         }}
         disabled={disabled}
         className={`h-full px-3 text-[11px] transition-colors ${
           isOpen
             ? 'bg-highlight text-background'
-            : 'text-foreground/80 hover:bg-highlight/20'
+            : 'text-highlight/70 hover:text-highlight hover:bg-highlight/10'
         }`}
       >
         {label}
       </button>
       {isOpen && (
         <div
-          className="absolute top-full left-0 min-w-[180px] py-1 border border-highlight/50 shadow-xl"
-          style={{ background: '#0D1208', zIndex: 9999 }}
+          className="absolute top-full left-0 min-w-[180px] py-1 border border-highlight/30 shadow-2xl backdrop-blur-sm"
+          style={{ background: 'rgba(13, 18, 8, 0.95)', zIndex: 9999 }}
           onClick={(e) => e.stopPropagation()}
         >
           {items.map((item, i) => (
             item.divider ? (
-              <div key={i} className="my-1 border-t border-highlight/30" />
+              <div key={i} className="my-1 border-t border-highlight/20" />
             ) : (
               <button
                 key={i}
                 onClick={() => {
+                  onSound?.();
                   item.action?.();
                   setIsOpen(false);
                 }}
-                className="w-full px-3 py-1.5 text-left text-[11px] text-foreground/80 hover:bg-highlight hover:text-background transition-colors flex justify-between"
+                className="w-full px-3 py-1.5 text-left text-[11px] text-highlight/70 hover:bg-highlight hover:text-background transition-colors flex justify-between"
               >
                 <span>{item.label}</span>
-                {item.shortcut && <span className="text-foreground/40">{item.shortcut}</span>}
+                {item.shortcut && <span className="text-highlight/40">{item.shortcut}</span>}
               </button>
             )
           ))}
@@ -260,9 +295,16 @@ function Terminal() {
   const [isBooted, setIsBooted] = useState(false);
   const [currentNode, setCurrentNode] = useState("start");
   const [showChoices, setShowChoices] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
+
+  const playSound = useCallback((type) => {
+    if (soundEnabled) {
+      try { synth[type]?.(); } catch (e) {}
+    }
+  }, [soundEnabled]);
 
   const displayNode = useCallback(async (nodeId) => {
     const node = STORY[nodeId];
@@ -284,13 +326,6 @@ function Terminal() {
       }
     }
 
-    if (node.afterText) {
-      for (const line of node.afterText) {
-        await new Promise(r => setTimeout(r, 25));
-        setLines(prev => [...prev, { type: "output", text: line }]);
-      }
-    }
-
     await new Promise(r => setTimeout(r, 50));
     setLines(prev => [...prev, { type: "output", text: "" }]);
     setIsTyping(false);
@@ -301,23 +336,27 @@ function Terminal() {
     const boot = async () => {
       setLines([]);
       setShowChoices(false);
-      for (const step of BOOT_SEQUENCE) {
-        await new Promise(r => setTimeout(r, step.delay));
-        if (step.text) setLines(prev => [...prev, { type: "system", text: step.text }]);
-      }
-      await new Promise(r => setTimeout(r, 400));
-      setLines([{ type: "logo", text: LOGO }, { type: "output", text: "" }]);
+      await new Promise(r => setTimeout(r, 300));
+      playSound('boot');
+      setLines([{ type: "logo" }]);
+      await new Promise(r => setTimeout(r, 200));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "system", text: "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  ready" }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "output", text: "" }]);
       setIsBooted(true);
       await displayNode("start");
     };
     boot();
-  }, [displayNode]);
+  }, [displayNode, playSound]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [lines]);
 
-  // Keep input always focused
   useEffect(() => {
     const keepFocus = () => {
       if (isBooted && !isTyping) {
@@ -330,19 +369,21 @@ function Terminal() {
   }, [isBooted, isTyping]);
 
   const handleChoice = useCallback(async (goto) => {
+    playSound('select');
     setShowChoices(false);
     setLines(prev => [...prev, { type: "output", text: "" }]);
     await displayNode(goto);
-  }, [displayNode]);
+  }, [displayNode, playSound]);
 
   const handleCommand = useCallback(async (cmd) => {
     const trimmed = cmd.trim().toLowerCase();
     if (!trimmed) return;
 
+    playSound('click');
     setLines(prev => [...prev, { type: "command", text: cmd }]);
 
     if (trimmed === "clear") {
-      setLines([{ type: "logo", text: LOGO }, { type: "output", text: "" }]);
+      setLines([{ type: "logo" }, { type: "output", text: "" }]);
       await displayNode(currentNode);
       return;
     }
@@ -373,7 +414,7 @@ function Terminal() {
       { type: "system", text: "Try 1, 2, or 3—or type: about, career, work, hobbies, contact" },
       { type: "output", text: "" },
     ]);
-  }, [displayNode, currentNode, handleChoice]);
+  }, [displayNode, currentNode, handleChoice, playSound]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -382,22 +423,24 @@ function Terminal() {
     setInput("");
   };
 
-  const focusInput = () => inputRef.current?.focus();
-
   const handleRestart = useCallback(() => {
+    playSound('boot');
     setIsBooted(false);
     setLines([]);
     setTimeout(async () => {
-      for (const step of BOOT_SEQUENCE) {
-        await new Promise(r => setTimeout(r, step.delay));
-        if (step.text) setLines(prev => [...prev, { type: "system", text: step.text }]);
-      }
-      await new Promise(r => setTimeout(r, 400));
-      setLines([{ type: "logo", text: LOGO }, { type: "output", text: "" }]);
+      setLines([{ type: "logo" }]);
+      await new Promise(r => setTimeout(r, 200));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "system", text: "LAMASOFT PERSONAL TERMINAL v1.0  //  夢  //  ready" }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "system", text: "═".repeat(56) }]);
+      await new Promise(r => setTimeout(r, 100));
+      setLines(prev => [...prev, { type: "output", text: "" }]);
       setIsBooted(true);
       await displayNode("start");
     }, 100);
-  }, [displayNode]);
+  }, [displayNode, playSound]);
 
   const menus = [
     {
@@ -419,61 +462,81 @@ function Terminal() {
         { label: "Life", action: () => handleChoice("hobbies") },
       ],
     },
+    {
+      label: "Sound",
+      items: [
+        { label: soundEnabled ? "✓ Enabled" : "  Disabled", action: () => setSoundEnabled(!soundEnabled) },
+      ],
+    },
   ];
 
   const choices = showChoices ? STORY[currentNode]?.choices : [];
 
   return (
-    <div
-      className="h-screen w-screen bg-background text-foreground font-mono text-xs flex items-center justify-center p-4"
-      onClick={focusInput}
-    >
-      {/* Simple window */}
-      <div className="border border-highlight/50 w-[600px]" style={{ background: '#0D1208' }}>
+    <div className="h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-4 relative">
+      <StarField />
+
+      {/* Terminal window with glow */}
+      <div
+        className="relative border border-highlight/40 w-[580px] rounded-sm shadow-2xl"
+        style={{
+          background: 'rgba(13, 18, 8, 0.92)',
+          boxShadow: '0 0 60px rgba(0, 255, 65, 0.15), 0 0 100px rgba(0, 255, 65, 0.05), inset 0 0 60px rgba(0, 0, 0, 0.5)',
+        }}
+      >
         {/* Title bar */}
-        <div className="flex items-center justify-between px-3 py-1.5 border-b border-highlight/30">
-          <div className="flex items-center gap-2">
-            <span className="text-highlight">◆</span>
-            <span className="text-highlight text-[11px] font-bold tracking-wide">LAMASOFT.EXE</span>
+        <div className="flex items-center px-3 py-2 border-b border-highlight/30 bg-highlight/5">
+          <div className="flex items-center gap-3 flex-1">
+            <span className="text-highlight text-lg">◆</span>
+            <span className="text-highlight text-[12px] font-bold tracking-wider">LAMASOFT.EXE</span>
+            <div className="flex gap-1 ml-2">
+              {menus.map(menu => (
+                <MenuDropdown
+                  key={menu.label}
+                  label={menu.label}
+                  items={menu.items}
+                  disabled={isTyping || !isBooted}
+                  onSound={() => playSound('click')}
+                />
+              ))}
+            </div>
           </div>
-          <div className="flex gap-1">
-            {menus.map(menu => (
-              <MenuDropdown
-                key={menu.label}
-                label={menu.label}
-                items={menu.items}
-                disabled={isTyping || !isBooted}
-              />
-            ))}
-          </div>
+          <div className="text-[10px] text-highlight/40">v1.0</div>
         </div>
 
         {/* Terminal content */}
         <div
           ref={terminalRef}
-          className="overflow-y-auto p-4 text-[12px]"
-          style={{ height: '380px' }}
+          className="overflow-y-auto p-4 text-[13px]"
+          style={{ height: '400px' }}
         >
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
               {line.type === "logo" ? (
-                <pre className="text-highlight text-[8px] leading-tight mb-3">{line.text}</pre>
+                <div className="text-highlight mb-3 text-[11px] font-bold tracking-widest">
+                  <div>██╗      █████╗ ███╗   ███╗ █████╗ ███████╗ ██████╗ ███████╗████████╗</div>
+                  <div>██║     ██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔═══██╗██╔════╝╚══██╔══╝</div>
+                  <div>██║     ███████║██╔████╔██║███████║███████╗██║   ██║█████╗     ██║</div>
+                  <div>██║     ██╔══██║██║╚██╔╝██║██╔══██║╚════██║██║   ██║██╔══╝     ██║</div>
+                  <div>███████╗██║  ██║██║ ╚═╝ ██║██║  ██║███████║╚██████╔╝██║        ██║</div>
+                  <div>╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝        ╚═╝</div>
+                </div>
               ) : line.type === "command" ? (
                 <div className="flex text-foreground/60">
-                  <span className="text-highlight">›</span>
+                  <span className="text-highlight">❯</span>
                   <span className="ml-2">{line.text}</span>
                 </div>
               ) : line.type === "system" ? (
-                <div className="text-foreground/50 text-[11px]">{line.text}</div>
+                <div className="text-highlight/50 text-[11px]">{line.text}</div>
               ) : line.type === "link" ? (
-                <div>
-                  <span className="text-foreground/40">{line.label.padEnd(10)}</span>
+                <div className="flex">
+                  <span className="text-foreground/40 w-20">{line.label}</span>
                   <a
                     href={line.url}
                     target={line.url.startsWith("mailto:") ? undefined : "_blank"}
                     rel="noreferrer"
                     className="text-highlight hover:underline"
-                    onClick={e => e.stopPropagation()}
+                    onClick={e => { e.stopPropagation(); playSound('click'); }}
                   >
                     {line.display}
                   </a>
@@ -501,21 +564,28 @@ function Terminal() {
         </div>
 
         {/* Status bar */}
-        <div className="flex items-center justify-between px-4 py-1 border-t border-highlight/30 text-[10px] text-foreground/40">
-          <span>■ TRACKING</span>
+        <div className="flex items-center justify-between px-4 py-1.5 border-t border-highlight/20 text-[10px] text-highlight/40 bg-highlight/5">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-2 h-2 rounded-full bg-highlight/60 animate-pulse"></span>
+            <span>TRACKING</span>
+          </div>
           <span>NODE: {currentNode.toUpperCase()}</span>
-          <span>◇ OBSERVING</span>
+          <div className="flex items-center gap-2">
+            <span>OBSERVING</span>
+            <span className="inline-block w-2 h-2 rounded-full bg-highlight/40"></span>
+          </div>
         </div>
 
         {/* Input */}
-        <form onSubmit={handleSubmit} className="flex items-center px-4 py-2 border-t border-highlight/30">
-          <span className="text-highlight">›</span>
+        <form onSubmit={handleSubmit} className="flex items-center px-4 py-3 border-t border-highlight/30 bg-black/20">
+          <span className="text-highlight text-lg">❯</span>
           <input
             ref={inputRef}
             value={input}
             onChange={e => setInput(e.target.value)}
+            onKeyDown={() => playSound('type')}
             disabled={isTyping || !isBooted}
-            className="flex-1 ml-2 bg-transparent text-foreground caret-highlight text-[12px]"
+            className="flex-1 ml-3 bg-transparent text-foreground caret-highlight text-[13px]"
             style={{ outline: 'none' }}
             placeholder={showChoices ? "1, 2, 3 or type a command..." : ""}
             autoFocus
@@ -523,6 +593,14 @@ function Terminal() {
             spellCheck="false"
           />
         </form>
+
+        {/* Scanlines effect */}
+        <div
+          className="absolute inset-0 pointer-events-none rounded-sm opacity-[0.03]"
+          style={{
+            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,65,0.1) 2px, rgba(0,255,65,0.1) 4px)'
+          }}
+        />
       </div>
     </div>
   );
@@ -530,7 +608,7 @@ function Terminal() {
 
 function App() {
   return (
-    <div className="matrix">
+    <div className="matrix bg-[#050808]">
       <Terminal />
       <Analytics />
     </div>
