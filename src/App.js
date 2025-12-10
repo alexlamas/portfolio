@@ -219,24 +219,33 @@ const synth = new Synth();
 // Stars background component (Space theme) with moon
 function StarField({ onToggle }) {
   return (
-    <div className="fixed inset-0 overflow-hidden">
+    <div className="fixed inset-0 overflow-hidden" style={{ background: 'linear-gradient(to bottom, #0a0a1a 0%, #1a1a2e 100%)' }}>
       <div className="stars pointer-events-none"></div>
       <div className="stars2 pointer-events-none"></div>
       <div className="stars3 pointer-events-none"></div>
       {/* Clickable Moon */}
       <button
         onClick={onToggle}
-        className="absolute top-[15%] right-[15%] w-16 h-16 rounded-full cursor-pointer transition-all duration-300 hover:scale-110"
+        className="cursor-pointer transition-transform duration-300 hover:scale-110"
         style={{
-          background: 'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 50%, #c0c0c0 100%)',
-          boxShadow: '0 0 40px rgba(255,255,255,0.4), 0 0 80px rgba(255,255,255,0.2), inset -8px -8px 20px rgba(0,0,0,0.1)',
+          position: 'fixed',
+          top: '80px',
+          right: '80px',
+          width: '60px',
+          height: '60px',
+          borderRadius: '50%',
+          border: 'none',
+          background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 50%, #d0d0d0 100%)',
+          boxShadow: '0 0 30px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.3), inset -8px -8px 15px rgba(0,0,0,0.15)',
+          zIndex: 10,
+          animation: 'moonRise 1.5s ease-out forwards',
         }}
-        title="Switch to day"
+        title="Click to switch to day"
       >
         {/* Moon craters */}
-        <div className="absolute top-3 left-4 w-3 h-3 rounded-full bg-gray-300/50"></div>
-        <div className="absolute top-8 left-8 w-2 h-2 rounded-full bg-gray-300/50"></div>
-        <div className="absolute top-5 right-4 w-4 h-4 rounded-full bg-gray-300/40"></div>
+        <div style={{ position: 'absolute', top: '10px', left: '12px', width: '10px', height: '10px', borderRadius: '50%', background: 'rgba(180,180,180,0.4)' }}></div>
+        <div style={{ position: 'absolute', top: '28px', left: '28px', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(180,180,180,0.3)' }}></div>
+        <div style={{ position: 'absolute', top: '18px', right: '12px', width: '12px', height: '12px', borderRadius: '50%', background: 'rgba(180,180,180,0.35)' }}></div>
       </button>
     </div>
   );
@@ -254,12 +263,21 @@ function SkyField({ onToggle }) {
       {/* Clickable Sun */}
       <button
         onClick={onToggle}
-        className="absolute top-[12%] right-[12%] w-20 h-20 rounded-full cursor-pointer transition-all duration-300 hover:scale-110 animate-pulse"
+        className="sun-rise cursor-pointer transition-transform duration-300 hover:scale-110"
         style={{
-          background: 'radial-gradient(circle, #FFE484 0%, #FFD54F 40%, #FFB300 100%)',
-          boxShadow: '0 0 60px rgba(255,200,0,0.6), 0 0 120px rgba(255,180,0,0.3)',
+          position: 'fixed',
+          top: '80px',
+          right: '80px',
+          width: '70px',
+          height: '70px',
+          borderRadius: '50%',
+          border: 'none',
+          background: 'radial-gradient(circle, #FFF9C4 0%, #FFE082 30%, #FFB300 100%)',
+          boxShadow: '0 0 40px rgba(255,200,0,0.8), 0 0 80px rgba(255,180,0,0.5), 0 0 120px rgba(255,150,0,0.3)',
+          zIndex: 10,
+          animation: 'sunRise 1.5s ease-out forwards',
         }}
-        title="Switch to night"
+        title="Click to switch to night"
       />
     </div>
   );

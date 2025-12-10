@@ -1725,3 +1725,27 @@ input.key {
     left: 100vw;
   }
 }
+
+/* Sun rise animation */
+@keyframes sunRise {
+  0% {
+    transform: translateY(100px);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Moon rise animation */
+@keyframes moonRise {
+  0% {
+    transform: translateY(100px);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
