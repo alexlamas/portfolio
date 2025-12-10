@@ -229,23 +229,23 @@ function StarField({ onToggle }) {
         className="cursor-pointer transition-transform duration-300 hover:scale-110"
         style={{
           position: 'fixed',
-          top: '80px',
-          right: '80px',
-          width: '60px',
-          height: '60px',
+          top: '60px',
+          right: '60px',
+          width: '120px',
+          height: '120px',
           borderRadius: '50%',
           border: 'none',
           background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 50%, #d0d0d0 100%)',
-          boxShadow: '0 0 30px rgba(255,255,255,0.5), 0 0 60px rgba(255,255,255,0.3), inset -8px -8px 15px rgba(0,0,0,0.15)',
+          boxShadow: '0 0 50px rgba(255,255,255,0.5), 0 0 100px rgba(255,255,255,0.3), inset -15px -15px 30px rgba(0,0,0,0.15)',
           zIndex: 10,
           animation: 'moonRise 1.5s ease-out forwards',
         }}
         title="Click to switch to day"
       >
         {/* Moon craters */}
-        <div style={{ position: 'absolute', top: '10px', left: '12px', width: '10px', height: '10px', borderRadius: '50%', background: 'rgba(180,180,180,0.4)' }}></div>
-        <div style={{ position: 'absolute', top: '28px', left: '28px', width: '8px', height: '8px', borderRadius: '50%', background: 'rgba(180,180,180,0.3)' }}></div>
-        <div style={{ position: 'absolute', top: '18px', right: '12px', width: '12px', height: '12px', borderRadius: '50%', background: 'rgba(180,180,180,0.35)' }}></div>
+        <div style={{ position: 'absolute', top: '20px', left: '24px', width: '20px', height: '20px', borderRadius: '50%', background: 'rgba(180,180,180,0.4)' }}></div>
+        <div style={{ position: 'absolute', top: '56px', left: '56px', width: '16px', height: '16px', borderRadius: '50%', background: 'rgba(180,180,180,0.3)' }}></div>
+        <div style={{ position: 'absolute', top: '36px', right: '24px', width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(180,180,180,0.35)' }}></div>
       </button>
     </div>
   );
@@ -266,14 +266,14 @@ function SkyField({ onToggle }) {
         className="sun-rise cursor-pointer transition-transform duration-300 hover:scale-110"
         style={{
           position: 'fixed',
-          top: '80px',
-          right: '80px',
-          width: '70px',
-          height: '70px',
+          top: '50px',
+          right: '50px',
+          width: '140px',
+          height: '140px',
           borderRadius: '50%',
           border: 'none',
           background: 'radial-gradient(circle, #FFF9C4 0%, #FFE082 30%, #FFB300 100%)',
-          boxShadow: '0 0 40px rgba(255,200,0,0.8), 0 0 80px rgba(255,180,0,0.5), 0 0 120px rgba(255,150,0,0.3)',
+          boxShadow: '0 0 80px rgba(255,200,0,0.8), 0 0 150px rgba(255,180,0,0.5), 0 0 200px rgba(255,150,0,0.3)',
           zIndex: 10,
           animation: 'sunRise 1.5s ease-out forwards',
         }}
