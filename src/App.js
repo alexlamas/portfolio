@@ -757,15 +757,15 @@ function Terminal() {
           </div>
           <button
             onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
-            className={`px-2 sm:px-3 py-1 text-[10px] sm:text-[11px] transition-colors flex items-center gap-1 ${
+            className={`px-3 py-1.5 text-[12px] sm:text-[13px] transition-colors flex items-center gap-2 rounded ${
               soundEnabled
-                ? 'text-highlight bg-highlight/10'
-                : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
+                ? 'text-highlight bg-highlight/15'
+                : 'text-highlight/60 hover:text-highlight hover:bg-highlight/10'
             }`}
             title={soundEnabled ? "Sound On" : "Sound Off"}
           >
-            <span>{soundEnabled ? '♪' : '♪'}</span>
-            <span className="hidden sm:inline">{soundEnabled ? 'Sound' : 'Muted'}</span>
+            <span className="text-[14px]">{soundEnabled ? '♪' : '♪'}</span>
+            <span>{soundEnabled ? 'Sound' : 'Muted'}</span>
           </button>
         </div>
 
