@@ -82,7 +82,7 @@ const STORY = {
     text: [
       "London to Beirut, on a bike.",
       "Through France, Italy, Greece, Turkey,",
-      "Syria (briefly), Lebanon.",
+      "and Lebanon.",
       "",
       "> 4,583 km | 3.5 months | mostly camping",
       "",
