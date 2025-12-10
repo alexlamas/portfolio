@@ -655,13 +655,12 @@ function Terminal() {
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
               {line.type === "logo" ? (
-                <div className="text-highlight mb-3 text-[11px] font-bold tracking-widest">
-                  <div>██╗      █████╗ ███╗   ███╗ █████╗ ███████╗ ██████╗ ███████╗████████╗</div>
-                  <div>██║     ██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔═══██╗██╔════╝╚══██╔══╝</div>
-                  <div>██║     ███████║██╔████╔██║███████║███████╗██║   ██║█████╗     ██║</div>
-                  <div>██║     ██╔══██║██║╚██╔╝██║██╔══██║╚════██║██║   ██║██╔══╝     ██║</div>
-                  <div>███████╗██║  ██║██║ ╚═╝ ██║██║  ██║███████║╚██████╔╝██║        ██║</div>
-                  <div>╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═╝        ╚═╝</div>
+                <div className="text-highlight mb-3 text-[12px] font-bold" style={{fontFamily: 'monospace', letterSpacing: '0.05em'}}>
+                  <pre style={{margin: 0, lineHeight: 1.2}}>{`
+ _    ____ _  _ ____ ____ ____ ____ ___
+ |    |__| |\\/| |__| [__  |  | |___  |
+ |___ |  | |  | |  | ___] |__| |     |
+                  `.trim()}</pre>
                 </div>
               ) : line.type === "command" ? (
                 <div className="flex text-foreground/60">
