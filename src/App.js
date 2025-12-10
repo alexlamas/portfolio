@@ -176,19 +176,12 @@ const SHORTCUTS = {
 };
 
 const LOGO = `
-    __    ___    __  ______   _____ ____  ____________
-   / /   /   |  /  |/  /   | / ___// __ \\/ ____/_  __/
-  / /   / /| | / /|_/ / /| | \\__ \\/ / / / /_    / /
- / /___/ ___ |/ /  / / ___ |___/ / /_/ / __/   / /
-/_____/_/  |_/_/  /_/_/  |_/____/\\____/_/     /_/
-`.trim();
+█    ▄▀▄ █▄ ▄█ ▄▀▄ ▄▀▀ ▄▀▄ █▀ ▀█▀
+█▄▄ █▀█ █ ▀ █ █▀█ ▄██ ▀▄▀ █▀  █`.trim();
 
 const BOOT_SEQUENCE = [
-  { text: "LAMASOFT PERSONAL COMPUTER", delay: 150 },
-  { text: "64K RAM SYSTEM  38911 BASIC BYTES FREE", delay: 100 },
-  { text: "", delay: 80 },
-  { text: "LOADING...", delay: 200 },
-  { text: "", delay: 100 },
+  { text: "LAMASOFT v1.0", delay: 150 },
+  { text: "LOADING...", delay: 300 },
 ];
 
 // Menu dropdown with proper z-index
@@ -416,119 +409,94 @@ function Terminal() {
       className="h-screen w-screen bg-background text-foreground font-mono text-xs flex items-center justify-center p-4"
       onClick={focusInput}
     >
-      {/* Retro ASCII-style computer frame */}
-      <div className="flex flex-col" style={{ width: '600px' }}>
-        {/* Top border */}
-        <div className="text-highlight/60 text-[10px] whitespace-pre select-none">
-{`╔════════════════════════════════════════════════════════════════════════════╗`}
-        </div>
-
+      {/* Simple window */}
+      <div className="border border-highlight/50 w-[520px]" style={{ background: '#0D1208' }}>
         {/* Title bar */}
-        <div className="flex text-highlight/60 text-[10px] whitespace-pre select-none">
-          <span>║</span>
-          <div className="flex-1 flex items-center justify-center text-highlight">
-            ▓▓▓ LAMASOFT™ PERSONAL TERMINAL v1.0 ▓▓▓
+        <div className="flex items-center justify-between px-3 py-1.5 border-b border-highlight/30">
+          <div className="flex items-center gap-2">
+            <span className="text-highlight">◆</span>
+            <span className="text-highlight text-[11px] font-bold tracking-wide">LAMASOFT.EXE</span>
           </div>
-          <span>║</span>
-        </div>
-
-        <div className="text-highlight/60 text-[10px] whitespace-pre select-none">
-{`╠════════════════════════════════════════════════════════════════════════════╣`}
-        </div>
-
-        {/* Main content area */}
-        <div className="flex text-highlight/60 text-[10px]">
-          <span className="whitespace-pre select-none">║</span>
-          <div className="flex-1 flex flex-col bg-background" style={{ minHeight: '380px' }}>
-            {/* Menu bar */}
-            <div className="flex items-center h-6 border-b border-highlight/30 relative" style={{ zIndex: 100 }}>
-              <span className="px-2 text-highlight">◆</span>
-              {menus.map(menu => (
-                <MenuDropdown
-                  key={menu.label}
-                  label={menu.label}
-                  items={menu.items}
-                  disabled={isTyping || !isBooted}
-                />
-              ))}
-            </div>
-
-            {/* Terminal content */}
-            <div
-              ref={terminalRef}
-              className="flex-1 overflow-y-auto p-3 text-[11px]"
-              style={{ minHeight: 0 }}
-            >
-              {lines.map((line, i) => (
-                <div key={i} className="leading-relaxed">
-                  {line.type === "logo" ? (
-                    <pre className="text-highlight text-[10px] leading-tight mb-3 font-bold">{line.text}</pre>
-                  ) : line.type === "command" ? (
-                    <div className="flex text-foreground/60">
-                      <span className="text-highlight">›</span>
-                      <span className="ml-2">{line.text}</span>
-                    </div>
-                  ) : line.type === "system" ? (
-                    <div className="text-foreground/40">{line.text}</div>
-                  ) : line.type === "link" ? (
-                    <div>
-                      <span className="text-foreground/40">{line.label.padEnd(10)}</span>
-                      <a
-                        href={line.url}
-                        target={line.url.startsWith("mailto:") ? undefined : "_blank"}
-                        rel="noreferrer"
-                        className="text-highlight hover:underline"
-                        onClick={e => e.stopPropagation()}
-                      >
-                        {line.display}
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="text-foreground/80">{line.text}</div>
-                  )}
-                </div>
-              ))}
-
-              {showChoices && choices.length > 0 && (
-                <div className="mt-3 space-y-1">
-                  {choices.map((c, i) => (
-                    <button
-                      key={i}
-                      onClick={() => handleChoice(c.goto)}
-                      className="block text-left text-foreground/50 hover:text-highlight transition-colors"
-                    >
-                      <span className="text-highlight">[{i + 1}]</span> {c.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <div ref={bottomRef} />
-            </div>
-
-            {/* Input */}
-            <form onSubmit={handleSubmit} className="flex items-center px-3 py-2 border-t border-highlight/30">
-              <span className="text-highlight">›</span>
-              <input
-                ref={inputRef}
-                value={input}
-                onChange={e => setInput(e.target.value)}
+          <div className="flex gap-1">
+            {menus.map(menu => (
+              <MenuDropdown
+                key={menu.label}
+                label={menu.label}
+                items={menu.items}
                 disabled={isTyping || !isBooted}
-                className="flex-1 ml-2 bg-transparent text-foreground caret-highlight text-[11px]"
-                style={{ outline: 'none' }}
-                placeholder={showChoices ? "1, 2, 3 or type a command..." : ""}
-                autoFocus
-                autoComplete="off"
-                spellCheck="false"
               />
-            </form>
+            ))}
           </div>
-          <span className="whitespace-pre select-none">║</span>
         </div>
 
-        {/* Bottom border */}
-        <div className="text-highlight/60 text-[10px] whitespace-pre select-none">
-{`╚════════════════════════════════════════════════════════════════════════════╝`}
+        {/* Terminal content */}
+        <div
+          ref={terminalRef}
+          className="overflow-y-auto p-4 text-[12px]"
+          style={{ height: '380px' }}
+        >
+          {lines.map((line, i) => (
+            <div key={i} className="leading-relaxed">
+              {line.type === "logo" ? (
+                <pre className="text-highlight text-[11px] leading-tight mb-4">{line.text}</pre>
+              ) : line.type === "command" ? (
+                <div className="flex text-foreground/60">
+                  <span className="text-highlight">›</span>
+                  <span className="ml-2">{line.text}</span>
+                </div>
+              ) : line.type === "system" ? (
+                <div className="text-foreground/50 text-[11px]">{line.text}</div>
+              ) : line.type === "link" ? (
+                <div>
+                  <span className="text-foreground/40">{line.label.padEnd(10)}</span>
+                  <a
+                    href={line.url}
+                    target={line.url.startsWith("mailto:") ? undefined : "_blank"}
+                    rel="noreferrer"
+                    className="text-highlight hover:underline"
+                    onClick={e => e.stopPropagation()}
+                  >
+                    {line.display}
+                  </a>
+                </div>
+              ) : (
+                <div className="text-foreground/80">{line.text}</div>
+              )}
+            </div>
+          ))}
+
+          {showChoices && choices.length > 0 && (
+            <div className="mt-4 space-y-1">
+              {choices.map((c, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleChoice(c.goto)}
+                  className="block text-left text-foreground/50 hover:text-highlight transition-colors"
+                >
+                  <span className="text-highlight">[{i + 1}]</span> {c.label}
+                </button>
+              ))}
+            </div>
+          )}
+          <div ref={bottomRef} />
         </div>
+
+        {/* Input */}
+        <form onSubmit={handleSubmit} className="flex items-center px-4 py-2 border-t border-highlight/30">
+          <span className="text-highlight">›</span>
+          <input
+            ref={inputRef}
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            disabled={isTyping || !isBooted}
+            className="flex-1 ml-2 bg-transparent text-foreground caret-highlight text-[12px]"
+            style={{ outline: 'none' }}
+            placeholder={showChoices ? "1, 2, 3 or type a command..." : ""}
+            autoFocus
+            autoComplete="off"
+            spellCheck="false"
+          />
+        </form>
       </div>
     </div>
   );
