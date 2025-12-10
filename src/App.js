@@ -221,108 +221,161 @@ function Terminal() {
       className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center"
       onClick={focusInput}
     >
-      {/* Computer frame */}
-      <div className="relative">
-        {/* Outer bezel */}
+      {/* Computer case */}
+      <div
+        className="relative flex-shrink-0"
+        style={{
+          width: '500px',
+          height: '460px',
+        }}
+      >
+        {/* Outer case */}
         <div
-          className="rounded-[24px] p-6 pb-12"
+          className="absolute inset-0 rounded-[32px]"
           style={{
-            width: '580px',
-            background: 'linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%)',
-            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.5)',
+            background: 'linear-gradient(145deg, #3d3d3d 0%, #2a2a2a 50%, #1f1f1f 100%)',
+            boxShadow: `
+              inset 0 2px 0 rgba(255,255,255,0.15),
+              inset 0 -2px 0 rgba(0,0,0,0.3),
+              0 30px 60px rgba(0,0,0,0.4)
+            `,
+          }}
+        />
+
+        {/* Inner case edge */}
+        <div
+          className="absolute rounded-[28px]"
+          style={{
+            top: '8px',
+            left: '8px',
+            right: '8px',
+            bottom: '60px',
+            background: 'linear-gradient(180deg, #333 0%, #252525 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1)',
+          }}
+        />
+
+        {/* Screen area */}
+        <div
+          className="absolute rounded-[8px]"
+          style={{
+            top: '24px',
+            left: '24px',
+            right: '24px',
+            bottom: '76px',
+            background: '#0a0a0a',
+            boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.9)',
           }}
         >
-          {/* Screen bezel */}
+          {/* Actual screen */}
           <div
-            className="rounded-[4px] p-1"
+            className="absolute overflow-hidden flex flex-col bg-background rounded-[4px]"
             style={{
-              background: '#111',
-              boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.8)',
+              top: '8px',
+              left: '8px',
+              right: '8px',
+              bottom: '8px',
             }}
           >
-            {/* Screen */}
-            <div className="w-[520px] h-[380px] overflow-hidden flex flex-col bg-background rounded-[2px]">
-              {/* Menu bar */}
-              <div className="flex-none h-6 flex items-center bg-gradient-to-b from-foreground/15 to-foreground/5 border-b border-highlight/20 text-[11px]">
-                {/* Logo */}
-                <div className="px-3 text-highlight font-bold">◆</div>
-                {/* Menu items */}
-                {menuItems.map((item) => (
-                  <button
-                    key={item.cmd}
-                    onClick={() => handleSuggestionClick(item.cmd)}
-                    disabled={isTyping}
-                    className="h-full px-3 text-foreground/80 hover:bg-highlight/20 hover:text-highlight transition-colors disabled:opacity-50"
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-
-              {/* Buffer content - scrollable */}
-              <div
-                ref={terminalRef}
-                className="flex-1 overflow-y-auto p-3 cursor-text min-h-0"
-              >
-                {lines.map((line, i) => (
-                  <div key={i} className="leading-relaxed">
-                    {line.type === "ascii" ? (
-                      <pre className="text-highlight leading-tight">{line.text}</pre>
-                    ) : line.type === "command" ? (
-                      <div className="flex">
-                        <span className="text-highlight">λ</span>
-                        <span className="ml-2">{line.text}</span>
-                      </div>
-                    ) : line.type === "system" ? (
-                      <div className="text-foreground/40">{line.text}</div>
-                    ) : line.type === "link" ? (
-                      <div className="whitespace-pre">
-                        <span className="text-foreground/50">  {line.label.padEnd(10)}</span>
-                        <a
-                          href={line.url}
-                          target={line.url.startsWith("mailto:") ? undefined : "_blank"}
-                          rel="noreferrer"
-                          className="text-highlight hover:underline"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {line.display}
-                        </a>
-                      </div>
-                    ) : (
-                      <div className="text-foreground/70 whitespace-pre">
-                        {line.text}
-                      </div>
-                    )}
-                  </div>
-                ))}
-                <div ref={bottomRef} />
-              </div>
-
-              {/* Input */}
-              <form onSubmit={handleSubmit} className="flex-none px-3 py-2 flex items-center border-t border-highlight/30 bg-background">
-                <span className="text-highlight text-xs">→</span>
-                <input
-                  ref={inputRef}
-                  type="text"
-                  value={input}
-                  onChange={(e) => setInput(e.target.value)}
+            {/* Menu bar */}
+            <div
+              className="flex-none flex items-center text-[11px]"
+              style={{
+                height: '22px',
+                background: 'linear-gradient(180deg, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.05) 100%)',
+                borderBottom: '1px solid rgba(0,255,65,0.2)',
+              }}
+            >
+              <div className="px-2 text-highlight">◆</div>
+              {menuItems.map((item) => (
+                <button
+                  key={item.cmd}
+                  onClick={() => handleSuggestionClick(item.cmd)}
                   disabled={isTyping}
-                  style={{ outline: 'none', boxShadow: 'none' }}
-                  className="flex-1 ml-2 bg-transparent border-none text-foreground caret-highlight"
-                  autoFocus
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck="false"
-                />
-              </form>
+                  className="h-full px-2 text-foreground/70 hover:bg-white/10 hover:text-highlight transition-colors disabled:opacity-50"
+                >
+                  {item.label}
+                </button>
+              ))}
             </div>
+
+            {/* Content */}
+            <div
+              ref={terminalRef}
+              className="flex-1 overflow-y-auto p-3 cursor-text"
+              style={{ minHeight: 0 }}
+            >
+              {lines.map((line, i) => (
+                <div key={i} className="leading-relaxed">
+                  {line.type === "ascii" ? (
+                    <pre className="text-highlight leading-tight">{line.text}</pre>
+                  ) : line.type === "command" ? (
+                    <div className="flex">
+                      <span className="text-highlight">λ</span>
+                      <span className="ml-2">{line.text}</span>
+                    </div>
+                  ) : line.type === "system" ? (
+                    <div className="text-foreground/40">{line.text}</div>
+                  ) : line.type === "link" ? (
+                    <div className="whitespace-pre">
+                      <span className="text-foreground/50">  {line.label.padEnd(10)}</span>
+                      <a
+                        href={line.url}
+                        target={line.url.startsWith("mailto:") ? undefined : "_blank"}
+                        rel="noreferrer"
+                        className="text-highlight hover:underline"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {line.display}
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="text-foreground/70 whitespace-pre">
+                      {line.text}
+                    </div>
+                  )}
+                </div>
+              ))}
+              <div ref={bottomRef} />
+            </div>
+
+            {/* Input */}
+            <form onSubmit={handleSubmit} className="flex-none px-3 py-2 flex items-center border-t border-highlight/20">
+              <span className="text-highlight text-xs">›</span>
+              <input
+                ref={inputRef}
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                disabled={isTyping}
+                style={{ outline: 'none', boxShadow: 'none' }}
+                className="flex-1 ml-2 bg-transparent border-none text-foreground caret-highlight"
+                autoFocus
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+              />
+            </form>
           </div>
         </div>
 
-        {/* Chin with power light */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-highlight/80 shadow-[0_0_8px_rgba(0,255,65,0.6)]"></div>
+        {/* Chin area with details */}
+        <div className="absolute bottom-0 left-0 right-0 h-[52px] flex items-center justify-center gap-4">
+          {/* Vent lines */}
+          <div className="flex gap-1">
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="w-8 h-1 rounded-full bg-black/30" />
+            ))}
+          </div>
+          {/* Power light */}
+          <div
+            className="w-2 h-2 rounded-full"
+            style={{
+              background: '#00FF41',
+              boxShadow: '0 0 8px rgba(0,255,65,0.8), 0 0 16px rgba(0,255,65,0.4)',
+            }}
+          />
         </div>
       </div>
     </div>
