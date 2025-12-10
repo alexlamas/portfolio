@@ -216,13 +216,131 @@ class Synth {
 
 const synth = new Synth();
 
-// Stars background component
+// Stars background component (Space theme)
 function StarField() {
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
       <div className="stars"></div>
       <div className="stars2"></div>
       <div className="stars3"></div>
+    </div>
+  );
+}
+
+// Clouds background component (Sky theme)
+function SkyField() {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none sky-gradient">
+      <div className="cloud x1"></div>
+      <div className="cloud x2"></div>
+      <div className="cloud x3"></div>
+      <div className="cloud x4"></div>
+      <div className="cloud x5"></div>
+    </div>
+  );
+}
+
+// Music Maker Game Component
+function MusicMaker({ onClose, playSound }) {
+  const [sequence, setSequence] = useState(Array(16).fill(null).map(() => Array(8).fill(false)));
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentStep, setCurrentStep] = useState(-1);
+  const audioCtxRef = useRef(null);
+  const intervalRef = useRef(null);
+
+  const notes = [523.25, 493.88, 440, 392, 349.23, 329.63, 293.66, 261.63]; // C5 to C4
+  const noteNames = ['C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4'];
+
+  const playNote = useCallback((freq) => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    const ctx = audioCtxRef.current;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.3);
+  }, []);
+
+  const toggleCell = (step, note) => {
+    playSound?.('click');
+    playNote(notes[note]);
+    const newSeq = sequence.map((s, i) =>
+      i === step ? s.map((n, j) => j === note ? !n : n) : s
+    );
+    setSequence(newSeq);
+  };
+
+  const togglePlay = () => {
+    if (isPlaying) {
+      clearInterval(intervalRef.current);
+      setIsPlaying(false);
+      setCurrentStep(-1);
+    } else {
+      setIsPlaying(true);
+      let step = 0;
+      intervalRef.current = setInterval(() => {
+        setCurrentStep(step);
+        sequence[step].forEach((active, noteIdx) => {
+          if (active) playNote(notes[noteIdx]);
+        });
+        step = (step + 1) % 16;
+      }, 150);
+    }
+  };
+
+  const clearAll = () => {
+    setSequence(Array(16).fill(null).map(() => Array(8).fill(false)));
+    playSound?.('click');
+  };
+
+  useEffect(() => {
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
+  return (
+    <div className="space-y-3">
+      <div className="flex justify-between items-center text-[11px]">
+        <span className="text-highlight">♫ MUSIC MAKER</span>
+        <div className="flex gap-2">
+          <button onClick={togglePlay} className="text-highlight hover:text-foreground">
+            {isPlaying ? '■ Stop' : '▶ Play'}
+          </button>
+          <button onClick={clearAll} className="text-highlight/50 hover:text-highlight">Clear</button>
+          <button onClick={onClose} className="text-highlight/50 hover:text-highlight">✕</button>
+        </div>
+      </div>
+      <div className="flex gap-1">
+        <div className="flex flex-col gap-[2px] text-[9px] text-highlight/40 pr-1">
+          {noteNames.map(n => <div key={n} className="h-[14px] flex items-center">{n}</div>)}
+        </div>
+        <div className="flex gap-[2px]">
+          {sequence.map((step, stepIdx) => (
+            <div key={stepIdx} className="flex flex-col gap-[2px]">
+              {step.map((active, noteIdx) => (
+                <button
+                  key={noteIdx}
+                  onClick={() => toggleCell(stepIdx, noteIdx)}
+                  className={`w-[14px] h-[14px] rounded-sm transition-all ${
+                    active
+                      ? 'bg-highlight'
+                      : currentStep === stepIdx
+                        ? 'bg-highlight/30'
+                        : 'bg-highlight/10 hover:bg-highlight/20'
+                  }`}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="text-[10px] text-foreground/40">Click cells to add notes. Press Play to hear your tune!</div>
     </div>
   );
 }
@@ -286,7 +404,8 @@ function Terminal() {
   const [showChoices, setShowChoices] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [openMenu, setOpenMenu] = useState(null);
-  const [theme, setTheme] = useState("matrix");
+  const [theme, setTheme] = useState("space");
+  const [showMusicMaker, setShowMusicMaker] = useState(false);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
@@ -453,6 +572,8 @@ function Terminal() {
         { label: "About", action: () => handleChoice("whoami") },
         { label: "Contact", action: () => handleChoice("contact") },
         { divider: true },
+        { label: "Music Maker", action: () => setShowMusicMaker(true) },
+        { divider: true },
         { label: "Restart", action: handleRestart, shortcut: "⌘R" },
       ],
     },
@@ -471,11 +592,8 @@ function Terminal() {
       id: "view",
       label: "View",
       items: [
-        { label: theme === "matrix" ? "● Matrix" : "○ Matrix", action: () => setTheme("matrix") },
-        { label: theme === "beach" ? "● Beach" : "○ Beach", action: () => setTheme("beach") },
-        { label: theme === "sunset" ? "● Sunset" : "○ Sunset", action: () => setTheme("sunset") },
-        { label: theme === "electric" ? "● Electric" : "○ Electric", action: () => setTheme("electric") },
-        { label: theme === "neutral" ? "● Neutral" : "○ Neutral", action: () => setTheme("neutral") },
+        { label: theme === "space" ? "● Space" : "○ Space", action: () => setTheme("space") },
+        { label: theme === "sky" ? "● Sky" : "○ Sky", action: () => setTheme("sky") },
       ],
     },
   ];
@@ -483,15 +601,17 @@ function Terminal() {
   const choices = showChoices ? STORY[currentNode]?.choices : [];
 
   return (
-    <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-4 relative bg-background`}>
-      <StarField />
+    <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-4 relative`}>
+      {theme === "sky" ? <SkyField /> : <StarField />}
 
       {/* Terminal window with glow */}
       <div
         className="relative border border-highlight/40 w-[580px] rounded-sm shadow-2xl"
         style={{
-          background: 'rgba(13, 18, 8, 0.92)',
-          boxShadow: '0 0 60px rgba(0, 255, 65, 0.15), 0 0 100px rgba(0, 255, 65, 0.05), inset 0 0 60px rgba(0, 0, 0, 0.5)',
+          background: theme === "sky" ? 'rgba(255, 255, 255, 0.85)' : 'rgba(13, 18, 8, 0.92)',
+          boxShadow: theme === "sky"
+            ? '0 0 60px rgba(135, 206, 235, 0.3), 0 0 100px rgba(135, 206, 235, 0.1), inset 0 0 60px rgba(255, 255, 255, 0.3)'
+            : '0 0 60px rgba(0, 255, 65, 0.15), 0 0 100px rgba(0, 255, 65, 0.05), inset 0 0 60px rgba(0, 0, 0, 0.5)',
         }}
       >
         {/* Title bar */}
@@ -569,7 +689,7 @@ function Terminal() {
             </div>
           ))}
 
-          {showChoices && choices.length > 0 && (
+          {showChoices && choices.length > 0 && !showMusicMaker && (
             <div className="mt-4 space-y-1">
               {choices.map((c, i) => (
                 <button
@@ -580,6 +700,12 @@ function Terminal() {
                   <span className="text-highlight">[{i + 1}]</span> {c.label}
                 </button>
               ))}
+            </div>
+          )}
+
+          {showMusicMaker && (
+            <div className="mt-4 p-3 border border-highlight/30 rounded bg-background/50">
+              <MusicMaker onClose={() => setShowMusicMaker(false)} playSound={playSound} />
             </div>
           )}
           <div ref={bottomRef} />
