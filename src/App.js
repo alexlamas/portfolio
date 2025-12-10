@@ -92,13 +92,17 @@ const COMMANDS = {
   },
 };
 
+const ASCII_ART = `
+   ▄▀█ █   █▀▀ ▀▄▀
+   █▀█ █▄▄ ██▄ █ █
+`.trim();
+
 const INITIAL_LINES = [
-  { type: "system", text: "Last login: " + new Date().toLocaleString() },
-  { type: "system", text: "" },
-  { type: "output", text: "Welcome. This is not my portfolio." },
-  { type: "output", text: "It's more of an... intermediate page." },
+  { type: "ascii", text: ASCII_ART },
   { type: "output", text: "" },
-  { type: "output", text: "Type 'help' to see available commands." },
+  { type: "output", text: "Product Designer at Anthropic" },
+  { type: "output", text: "" },
+  { type: "system", text: "Type a command or click one below." },
   { type: "output", text: "" },
 ];
 
@@ -208,34 +212,34 @@ function Terminal() {
       className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center p-4 md:p-8"
       onClick={focusInput}
     >
-      {/* Terminal window */}
-      <div className="w-full max-w-2xl h-[80vh] max-h-[600px] border border-border rounded-lg overflow-hidden flex flex-col shadow-2xl bg-background">
-        {/* Terminal header */}
-        <div className="flex-none border-b border-border px-4 py-3 flex items-center justify-between bg-foreground/5">
-          <div className="flex items-center gap-2">
-            <div className="flex gap-1.5">
-              <div className="w-3 h-3 rounded-full bg-foreground/20"></div>
-              <div className="w-3 h-3 rounded-full bg-foreground/20"></div>
-              <div className="w-3 h-3 rounded-full bg-foreground/20"></div>
-            </div>
-            <span className="ml-4 text-foreground/50">alex@lama</span>
-          </div>
+      {/* Emacs-style window */}
+      <div className="w-full max-w-2xl h-[80vh] max-h-[600px] border border-highlight/30 overflow-hidden flex flex-col bg-background">
+        {/* Menu bar */}
+        <div className="flex-none px-2 py-1 flex items-center gap-4 bg-foreground/10 text-xs border-b border-highlight/20">
+          <span className="text-foreground/50">File</span>
+          <span className="text-foreground/50">Edit</span>
+          <span className="text-foreground/50">Options</span>
+          <span className="text-foreground/50">Buffers</span>
+          <span className="text-foreground/50">Tools</span>
+          <span className="text-foreground/50">Help</span>
         </div>
 
-        {/* Terminal content */}
+        {/* Buffer content */}
         <div
           ref={terminalRef}
           className="flex-1 overflow-y-auto p-4 cursor-text"
         >
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
-              {line.type === "command" ? (
+              {line.type === "ascii" ? (
+                <pre className="text-highlight leading-tight">{line.text}</pre>
+              ) : line.type === "command" ? (
                 <div className="flex">
-                  <span className="text-highlight">❯</span>
+                  <span className="text-highlight">λ</span>
                   <span className="ml-2">{line.text}</span>
                 </div>
               ) : line.type === "system" ? (
-                <div className="text-foreground/30">{line.text}</div>
+                <div className="text-foreground/40">{line.text}</div>
               ) : line.type === "link" ? (
                 <div className="whitespace-pre">
                   <span className="text-foreground/50">  {line.label.padEnd(10)}</span>
@@ -259,17 +263,26 @@ function Terminal() {
           <div ref={bottomRef} />
         </div>
 
-        {/* Input area */}
-        <div className="flex-none border-t border-border">
-          {/* Suggestions */}
-          <div className="px-4 py-2 border-b border-border flex flex-wrap gap-2 items-center">
-            <span className="text-foreground/30 text-xs">Try:</span>
+        {/* Mode line */}
+        <div className="flex-none px-2 py-1 bg-foreground/10 text-xs border-t border-highlight/20 flex justify-between">
+          <div className="flex gap-4">
+            <span className="text-foreground/70">-UUU:----</span>
+            <span className="text-foreground/70">*scratch*</span>
+          </div>
+          <span className="text-foreground/50">({lines.length} lines)</span>
+        </div>
+
+        {/* Minibuffer / command input */}
+        <div className="flex-none border-t border-highlight/20">
+          {/* Suggestions as M-x commands */}
+          <div className="px-2 py-1 border-b border-highlight/10 flex flex-wrap gap-3 items-center bg-background">
+            <span className="text-foreground/30 text-xs">M-x</span>
             {suggestions.map((cmd) => (
               <button
                 key={cmd}
                 onClick={() => handleSuggestionClick(cmd)}
                 disabled={isTyping}
-                className="px-2 py-0.5 text-xs border border-border rounded hover:border-highlight hover:text-highlight transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="text-xs text-foreground/50 hover:text-highlight transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {cmd}
               </button>
@@ -277,8 +290,8 @@ function Terminal() {
           </div>
 
           {/* Input */}
-          <form onSubmit={handleSubmit} className="px-4 py-3 flex items-center">
-            <span className="text-highlight">❯</span>
+          <form onSubmit={handleSubmit} className="px-2 py-1 flex items-center bg-background">
+            <span className="text-highlight text-xs">M-x:</span>
             <input
               ref={inputRef}
               type="text"
@@ -286,7 +299,7 @@ function Terminal() {
               onChange={(e) => setInput(e.target.value)}
               disabled={isTyping}
               className="flex-1 ml-2 bg-transparent outline-none border-none focus:ring-0 text-foreground placeholder:text-foreground/30 caret-highlight"
-              placeholder={isTyping ? "..." : "Type a command..."}
+              placeholder={isTyping ? "" : ""}
               autoFocus
               autoComplete="off"
               autoCorrect="off"
