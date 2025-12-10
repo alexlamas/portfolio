@@ -247,34 +247,45 @@ function MusicMaker({ onClose, playSound }) {
   const [currentStep, setCurrentStep] = useState(-1);
   const audioCtxRef = useRef(null);
   const intervalRef = useRef(null);
+  const sequenceRef = useRef(sequence);
+  const stepRef = useRef(0);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    sequenceRef.current = sequence;
+  }, [sequence]);
 
   const notes = [523.25, 493.88, 440, 392, 349.23, 329.63, 293.66, 261.63]; // C5 to C4
   const noteNames = ['C5', 'B4', 'A4', 'G4', 'F4', 'E4', 'D4', 'C4'];
 
   const playNote = useCallback((freq) => {
-    if (!audioCtxRef.current) {
-      audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    try {
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      const ctx = audioCtxRef.current;
+      if (ctx.state === 'suspended') ctx.resume();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+    } catch (e) {
+      console.error('Audio error:', e);
     }
-    const ctx = audioCtxRef.current;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.15, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.3);
   }, []);
 
   const toggleCell = (step, note) => {
     playSound?.('click');
     playNote(notes[note]);
-    const newSeq = sequence.map((s, i) =>
+    setSequence(prev => prev.map((s, i) =>
       i === step ? s.map((n, j) => j === note ? !n : n) : s
-    );
-    setSequence(newSeq);
+    ));
   };
 
   const togglePlay = () => {
@@ -283,14 +294,19 @@ function MusicMaker({ onClose, playSound }) {
       setIsPlaying(false);
       setCurrentStep(-1);
     } else {
+      // Initialize audio context on user interaction
+      if (!audioCtxRef.current) {
+        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+      }
       setIsPlaying(true);
-      let step = 0;
+      stepRef.current = 0;
       intervalRef.current = setInterval(() => {
+        const step = stepRef.current;
         setCurrentStep(step);
-        sequence[step].forEach((active, noteIdx) => {
+        sequenceRef.current[step].forEach((active, noteIdx) => {
           if (active) playNote(notes[noteIdx]);
         });
-        step = (step + 1) % 16;
+        stepRef.current = (step + 1) % 16;
       }, 150);
     }
   };
