@@ -218,88 +218,112 @@ function Terminal() {
 
   return (
     <div
-      className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center p-4"
+      className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center"
       onClick={focusInput}
     >
-      {/* Little computer window */}
-      <div className="w-full max-w-xl h-[480px] border border-highlight/40 overflow-hidden flex flex-col bg-background shadow-[0_0_60px_rgba(0,255,65,0.1)]">
-        {/* Menu bar - functional */}
-        <div className="flex-none px-1 py-1 flex items-center gap-1 bg-highlight/10 text-xs border-b border-highlight/30">
-          {menuItems.map((item) => (
-            <button
-              key={item.cmd}
-              onClick={() => handleSuggestionClick(item.cmd)}
-              disabled={isTyping}
-              className="px-2 py-0.5 text-foreground/70 hover:bg-highlight/20 hover:text-highlight transition-colors disabled:opacity-50"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Buffer content - scrollable */}
+      {/* Computer frame */}
+      <div className="relative">
+        {/* Outer bezel */}
         <div
-          ref={terminalRef}
-          className="flex-1 overflow-y-auto p-4 cursor-text min-h-0"
+          className="rounded-[24px] p-6 pb-12"
+          style={{
+            width: '580px',
+            background: 'linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), 0 20px 60px rgba(0,0,0,0.5)',
+          }}
         >
-          {lines.map((line, i) => (
-            <div key={i} className="leading-relaxed">
-              {line.type === "ascii" ? (
-                <pre className="text-highlight leading-tight">{line.text}</pre>
-              ) : line.type === "command" ? (
-                <div className="flex">
-                  <span className="text-highlight">λ</span>
-                  <span className="ml-2">{line.text}</span>
-                </div>
-              ) : line.type === "system" ? (
-                <div className="text-foreground/40">{line.text}</div>
-              ) : line.type === "link" ? (
-                <div className="whitespace-pre">
-                  <span className="text-foreground/50">  {line.label.padEnd(10)}</span>
-                  <a
-                    href={line.url}
-                    target={line.url.startsWith("mailto:") ? undefined : "_blank"}
-                    rel="noreferrer"
-                    className="text-highlight hover:underline"
-                    onClick={(e) => e.stopPropagation()}
+          {/* Screen bezel */}
+          <div
+            className="rounded-[4px] p-1"
+            style={{
+              background: '#111',
+              boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.8)',
+            }}
+          >
+            {/* Screen */}
+            <div className="w-[520px] h-[380px] overflow-hidden flex flex-col bg-background rounded-[2px]">
+              {/* Menu bar */}
+              <div className="flex-none h-6 flex items-center bg-gradient-to-b from-foreground/15 to-foreground/5 border-b border-highlight/20 text-[11px]">
+                {/* Logo */}
+                <div className="px-3 text-highlight font-bold">◆</div>
+                {/* Menu items */}
+                {menuItems.map((item) => (
+                  <button
+                    key={item.cmd}
+                    onClick={() => handleSuggestionClick(item.cmd)}
+                    disabled={isTyping}
+                    className="h-full px-3 text-foreground/80 hover:bg-highlight/20 hover:text-highlight transition-colors disabled:opacity-50"
                   >
-                    {line.display}
-                  </a>
-                </div>
-              ) : (
-                <div className="text-foreground/70 whitespace-pre">
-                  {line.text}
-                </div>
-              )}
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Buffer content - scrollable */}
+              <div
+                ref={terminalRef}
+                className="flex-1 overflow-y-auto p-3 cursor-text min-h-0"
+              >
+                {lines.map((line, i) => (
+                  <div key={i} className="leading-relaxed">
+                    {line.type === "ascii" ? (
+                      <pre className="text-highlight leading-tight">{line.text}</pre>
+                    ) : line.type === "command" ? (
+                      <div className="flex">
+                        <span className="text-highlight">λ</span>
+                        <span className="ml-2">{line.text}</span>
+                      </div>
+                    ) : line.type === "system" ? (
+                      <div className="text-foreground/40">{line.text}</div>
+                    ) : line.type === "link" ? (
+                      <div className="whitespace-pre">
+                        <span className="text-foreground/50">  {line.label.padEnd(10)}</span>
+                        <a
+                          href={line.url}
+                          target={line.url.startsWith("mailto:") ? undefined : "_blank"}
+                          rel="noreferrer"
+                          className="text-highlight hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {line.display}
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="text-foreground/70 whitespace-pre">
+                        {line.text}
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <div ref={bottomRef} />
+              </div>
+
+              {/* Input */}
+              <form onSubmit={handleSubmit} className="flex-none px-3 py-2 flex items-center border-t border-highlight/30 bg-background">
+                <span className="text-highlight text-xs">→</span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={isTyping}
+                  style={{ outline: 'none', boxShadow: 'none' }}
+                  className="flex-1 ml-2 bg-transparent border-none text-foreground caret-highlight"
+                  autoFocus
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                />
+              </form>
             </div>
-          ))}
-          <div ref={bottomRef} />
+          </div>
         </div>
 
-        {/* Mode line */}
-        <div className="flex-none px-2 py-1 bg-highlight/10 text-xs border-t border-highlight/30 flex justify-between text-foreground/50">
-          <span>*scratch*</span>
-          <span>L{lines.length}</span>
+        {/* Chin with power light */}
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-highlight/80 shadow-[0_0_8px_rgba(0,255,65,0.6)]"></div>
         </div>
-
-        {/* Input */}
-        <form onSubmit={handleSubmit} className="flex-none px-2 py-1.5 flex items-center border-t border-highlight/30 bg-background">
-          <span className="text-highlight">→</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            disabled={isTyping}
-            style={{ outline: 'none', boxShadow: 'none' }}
-            className="flex-1 ml-2 bg-transparent border-none text-foreground caret-highlight"
-            autoFocus
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="off"
-            spellCheck="false"
-          />
-        </form>
       </div>
     </div>
   );
