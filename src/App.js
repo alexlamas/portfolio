@@ -450,7 +450,7 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme
         disabled={disabled}
         className={`px-3 py-1 text-[11px] transition-colors ${
           isOpen
-            ? 'bg-highlight text-background'
+            ? (isDark ? 'bg-highlight/30 text-highlight' : 'bg-highlight text-white')
             : 'text-highlight/70 hover:text-highlight hover:bg-highlight/10'
         }`}
       >
@@ -477,10 +477,10 @@ function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound, theme
                   onSound?.();
                   item.action?.();
                 }}
-                className={`w-full px-3 py-1.5 text-left text-[11px] transition-colors flex justify-between whitespace-nowrap ${
+                className={`w-full px-3 py-1.5 text-left text-[11px] transition-colors flex justify-between whitespace-nowrap text-highlight ${
                   isDark
-                    ? 'text-highlight/80 hover:bg-highlight/20 hover:text-highlight'
-                    : 'text-highlight/80 hover:bg-highlight hover:text-white'
+                    ? 'hover:bg-highlight/20'
+                    : 'hover:bg-highlight/20'
                 }`}
               >
                 <span>{item.label}</span>
