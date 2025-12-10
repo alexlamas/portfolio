@@ -1323,6 +1323,13 @@ video {
   --twc-border-opacity: 0.19;
   --twc-highlight: 135.3 100% 50%;
 }
+.beach,[data-theme="beach"] {
+  --twc-foreground: 185 100% 95%;
+  --twc-background: 200 50% 6%;
+  --twc-border: 185 70% 50%;
+  --twc-border-opacity: 0.2;
+  --twc-highlight: 185 70% 55%;
+}
 
 body {
   margin: 0;

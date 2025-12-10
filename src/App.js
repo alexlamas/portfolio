@@ -286,6 +286,7 @@ function Terminal() {
   const [showChoices, setShowChoices] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [openMenu, setOpenMenu] = useState(null);
+  const [theme, setTheme] = useState("matrix");
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
@@ -466,12 +467,23 @@ function Terminal() {
         { label: "Life", action: () => handleChoice("hobbies") },
       ],
     },
+    {
+      id: "view",
+      label: "View",
+      items: [
+        { label: theme === "matrix" ? "● Matrix" : "○ Matrix", action: () => setTheme("matrix") },
+        { label: theme === "beach" ? "● Beach" : "○ Beach", action: () => setTheme("beach") },
+        { label: theme === "sunset" ? "● Sunset" : "○ Sunset", action: () => setTheme("sunset") },
+        { label: theme === "electric" ? "● Electric" : "○ Electric", action: () => setTheme("electric") },
+        { label: theme === "neutral" ? "● Neutral" : "○ Neutral", action: () => setTheme("neutral") },
+      ],
+    },
   ];
 
   const choices = showChoices ? STORY[currentNode]?.choices : [];
 
   return (
-    <div className="h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-4 relative">
+    <div className={`${theme} h-screen w-screen text-foreground font-mono text-xs flex items-center justify-center p-4 relative bg-background`}>
       <StarField />
 
       {/* Terminal window with glow */}
@@ -503,12 +515,14 @@ function Terminal() {
           </div>
           <button
             onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
-            className={`text-[10px] px-2 py-0.5 transition-colors ${
-              soundEnabled ? 'text-highlight' : 'text-highlight/30'
+            className={`px-3 py-1 text-[11px] transition-colors ${
+              soundEnabled
+                ? 'text-highlight bg-highlight/10'
+                : 'text-highlight/50 hover:text-highlight hover:bg-highlight/10'
             }`}
             title={soundEnabled ? "Sound On" : "Sound Off"}
           >
-            {soundEnabled ? '♪' : '♪̸'}
+            {soundEnabled ? '♪ Sound' : '♪ Sound'}
           </button>
         </div>
 
@@ -616,10 +630,10 @@ function Terminal() {
 
 function App() {
   return (
-    <div className="matrix bg-[#050808]">
+    <>
       <Terminal />
       <Analytics />
-    </div>
+    </>
   );
 }
 
