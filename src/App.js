@@ -224,29 +224,16 @@ function StarField() {
   );
 }
 
-// Menu dropdown
-function MenuDropdown({ label, items, disabled, onSound }) {
-  const [isOpen, setIsOpen] = useState(false);
+// Menu dropdown - controlled component
+function MenuDropdown({ label, items, disabled, isOpen, onToggle, onSound }) {
   const ref = useRef(null);
-
-  useEffect(() => {
-    const handleClick = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("click", handleClick);
-      return () => document.removeEventListener("click", handleClick);
-    }
-  }, [isOpen]);
 
   return (
     <div ref={ref} className="relative">
       <button
         onClick={(e) => {
           e.stopPropagation();
-          setIsOpen(!isOpen);
+          onToggle();
           onSound?.();
         }}
         disabled={disabled}
@@ -273,7 +260,6 @@ function MenuDropdown({ label, items, disabled, onSound }) {
                 onClick={() => {
                   onSound?.();
                   item.action?.();
-                  setIsOpen(false);
                 }}
                 className="w-full px-3 py-1.5 text-left text-[11px] text-highlight/70 hover:bg-highlight hover:text-background transition-colors flex justify-between"
               >
@@ -296,9 +282,22 @@ function Terminal() {
   const [currentNode, setCurrentNode] = useState("start");
   const [showChoices, setShowChoices] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
+  const [openMenu, setOpenMenu] = useState(null);
   const inputRef = useRef(null);
   const terminalRef = useRef(null);
   const bottomRef = useRef(null);
+  const menuRef = useRef(null);
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpenMenu(null);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   const playSound = useCallback((type) => {
     if (soundEnabled) {
@@ -444,6 +443,7 @@ function Terminal() {
 
   const menus = [
     {
+      id: "file",
       label: "File",
       items: [
         { label: "About", action: () => handleChoice("whoami") },
@@ -453,6 +453,7 @@ function Terminal() {
       ],
     },
     {
+      id: "go",
       label: "Go",
       items: [
         { label: "Start", action: () => handleChoice("start") },
@@ -460,12 +461,6 @@ function Terminal() {
         { label: "Now", action: () => handleChoice("now") },
         { label: "Work", action: () => handleChoice("work") },
         { label: "Life", action: () => handleChoice("hobbies") },
-      ],
-    },
-    {
-      label: "Sound",
-      items: [
-        { label: soundEnabled ? "✓ Enabled" : "  Disabled", action: () => setSoundEnabled(!soundEnabled) },
       ],
     },
   ];
@@ -489,19 +484,29 @@ function Terminal() {
           <div className="flex items-center gap-3 flex-1">
             <span className="text-highlight text-lg">◆</span>
             <span className="text-highlight text-[12px] font-bold tracking-wider">LAMASOFT.EXE</span>
-            <div className="flex gap-1 ml-2">
+            <div ref={menuRef} className="flex gap-1 ml-2">
               {menus.map(menu => (
                 <MenuDropdown
-                  key={menu.label}
+                  key={menu.id}
                   label={menu.label}
                   items={menu.items}
                   disabled={isTyping || !isBooted}
+                  isOpen={openMenu === menu.id}
+                  onToggle={() => setOpenMenu(openMenu === menu.id ? null : menu.id)}
                   onSound={() => playSound('click')}
                 />
               ))}
             </div>
           </div>
-          <div className="text-[10px] text-highlight/40">v1.0</div>
+          <button
+            onClick={() => { setSoundEnabled(!soundEnabled); playSound('click'); }}
+            className={`text-[10px] px-2 py-0.5 transition-colors ${
+              soundEnabled ? 'text-highlight' : 'text-highlight/30'
+            }`}
+            title={soundEnabled ? "Sound On" : "Sound Off"}
+          >
+            {soundEnabled ? '♪' : '♪̸'}
+          </button>
         </div>
 
         {/* Terminal content */}
