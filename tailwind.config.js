@@ -14,6 +14,7 @@ module.exports = {
     animation: {
       "spin-slow": "spin 3s linear infinite",
       spin: "spin 1s linear infinite",
+      blink: "blink 1s step-end infinite",
     },
     extend: {
       transitionProperty: {
@@ -26,6 +27,10 @@ module.exports = {
         ticker: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
         },
       },
       opacity: {
