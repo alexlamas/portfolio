@@ -432,7 +432,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         <div
           className="text-center transition-opacity duration-1000"
           style={{
-            marginTop: '80px',
+            marginTop: '120px',
             fontFamily: 'system-ui, sans-serif',
             fontWeight: 300,
             fontSize: '1.25rem',
@@ -448,7 +448,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         <div
           className="text-center zen-fade-text"
           style={{
-            marginTop: '24px',
+            marginTop: '32px',
             fontFamily: 'system-ui, sans-serif',
             fontWeight: 200,
             fontSize: '0.875rem',
@@ -465,7 +465,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
           <div
             className="text-center"
             style={{
-              marginTop: '48px',
+              marginTop: '32px',
               fontFamily: 'monospace',
               fontSize: '0.75rem',
               letterSpacing: '0.1em',
@@ -477,13 +477,14 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
         )}
       </div>
 
-      {/* Wake up prompt */}
+      {/* Wake up prompt - absolutely positioned at bottom */}
       <div
         style={{
-          position: 'fixed',
-          bottom: '48px',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          position: 'absolute',
+          bottom: '3rem',
+          left: 0,
+          right: 0,
+          textAlign: 'center',
           zIndex: 20,
           opacity: showPrompt ? 1 : 0,
           transition: 'opacity 2s ease',
