@@ -448,7 +448,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
 
       {/* Wake up prompt - outside main content for proper fixed positioning */}
       <div
-        className={`fixed bottom-12 left-0 right-0 z-20 text-center transition-opacity duration-2000 ${
+        className={`fixed bottom-12 inset-x-0 z-20 flex justify-center transition-opacity duration-2000 ${
           showPrompt ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -458,6 +458,7 @@ function ZenScreen({ onWakeUp, soundEnabled }) {
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
             color: 'rgba(255, 255, 255, 0.4)',
+            textAlign: 'center',
           }}
         >
           click anywhere to wake
@@ -715,13 +716,19 @@ function Terminal() {
     }
   }, [soundEnabled]);
 
-  const displayNode = useCallback(async (nodeId) => {
+  const displayNode = useCallback(async (nodeId, showDivider = false) => {
     const node = STORY[nodeId];
     if (!node) return;
 
     setIsTyping(true);
     setShowChoices(false);
     setCurrentNode(nodeId);
+
+    // Add divider before new content (except on first load)
+    if (showDivider) {
+      setLines(prev => [...prev, { type: "system", text: "─".repeat(40) }]);
+      await new Promise(r => setTimeout(r, 50));
+    }
 
     for (const line of node.text) {
       await new Promise(r => setTimeout(r, 25));
@@ -798,7 +805,7 @@ function Terminal() {
     playSound('select');
     setShowChoices(false);
     setLines(prev => [...prev, { type: "output", text: "" }]);
-    await displayNode(goto);
+    await displayNode(goto, true);
   }, [displayNode, playSound]);
 
   const handleCommand = useCallback(async (cmd) => {
@@ -825,7 +832,7 @@ function Terminal() {
     const target = SHORTCUTS[trimmed];
     if (target && STORY[target]) {
       setLines(prev => [...prev, { type: "output", text: "" }]);
-      await displayNode(target);
+      await displayNode(target, true);
       return;
     }
 
