@@ -207,27 +207,40 @@ function Terminal() {
 
   const suggestions = ["whoami", "history", "skills", "contact"];
 
+  const menuItems = [
+    { label: "About", cmd: "whoami" },
+    { label: "History", cmd: "history" },
+    { label: "Skills", cmd: "skills" },
+    { label: "Hobbies", cmd: "hobbies" },
+    { label: "Contact", cmd: "contact" },
+    { label: "Clear", cmd: "clear" },
+  ];
+
   return (
     <div
-      className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center p-4 md:p-8"
+      className="h-screen w-screen bg-background text-foreground font-mono text-sm flex items-center justify-center p-4"
       onClick={focusInput}
     >
-      {/* Emacs-style window */}
-      <div className="w-full max-w-2xl h-[80vh] max-h-[600px] border border-highlight/30 overflow-hidden flex flex-col bg-background">
-        {/* Menu bar */}
-        <div className="flex-none px-2 py-1 flex items-center gap-4 bg-foreground/10 text-xs border-b border-highlight/20">
-          <span className="text-foreground/50">File</span>
-          <span className="text-foreground/50">Edit</span>
-          <span className="text-foreground/50">Options</span>
-          <span className="text-foreground/50">Buffers</span>
-          <span className="text-foreground/50">Tools</span>
-          <span className="text-foreground/50">Help</span>
+      {/* Little computer window */}
+      <div className="w-full max-w-xl h-[480px] border border-highlight/40 overflow-hidden flex flex-col bg-background shadow-[0_0_60px_rgba(0,255,65,0.1)]">
+        {/* Menu bar - functional */}
+        <div className="flex-none px-1 py-1 flex items-center gap-1 bg-highlight/10 text-xs border-b border-highlight/30">
+          {menuItems.map((item) => (
+            <button
+              key={item.cmd}
+              onClick={() => handleSuggestionClick(item.cmd)}
+              disabled={isTyping}
+              className="px-2 py-0.5 text-foreground/70 hover:bg-highlight/20 hover:text-highlight transition-colors disabled:opacity-50"
+            >
+              {item.label}
+            </button>
+          ))}
         </div>
 
-        {/* Buffer content */}
+        {/* Buffer content - scrollable */}
         <div
           ref={terminalRef}
-          className="flex-1 overflow-y-auto p-4 cursor-text"
+          className="flex-1 overflow-y-auto p-4 cursor-text min-h-0"
         >
           {lines.map((line, i) => (
             <div key={i} className="leading-relaxed">
@@ -264,50 +277,29 @@ function Terminal() {
         </div>
 
         {/* Mode line */}
-        <div className="flex-none px-2 py-1 bg-foreground/10 text-xs border-t border-highlight/20 flex justify-between">
-          <div className="flex gap-4">
-            <span className="text-foreground/70">-UUU:----</span>
-            <span className="text-foreground/70">*scratch*</span>
-          </div>
-          <span className="text-foreground/50">({lines.length} lines)</span>
+        <div className="flex-none px-2 py-1 bg-highlight/10 text-xs border-t border-highlight/30 flex justify-between text-foreground/50">
+          <span>*scratch*</span>
+          <span>L{lines.length}</span>
         </div>
 
-        {/* Minibuffer / command input */}
-        <div className="flex-none border-t border-highlight/20">
-          {/* Suggestions as M-x commands */}
-          <div className="px-2 py-1 border-b border-highlight/10 flex flex-wrap gap-3 items-center bg-background">
-            <span className="text-foreground/30 text-xs">M-x</span>
-            {suggestions.map((cmd) => (
-              <button
-                key={cmd}
-                onClick={() => handleSuggestionClick(cmd)}
-                disabled={isTyping}
-                className="text-xs text-foreground/50 hover:text-highlight transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {cmd}
-              </button>
-            ))}
-          </div>
-
-          {/* Input */}
-          <form onSubmit={handleSubmit} className="px-2 py-1 flex items-center bg-background">
-            <span className="text-highlight text-xs">M-x:</span>
-            <input
-              ref={inputRef}
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              disabled={isTyping}
-              className="flex-1 ml-2 bg-transparent outline-none border-none focus:ring-0 text-foreground placeholder:text-foreground/30 caret-highlight"
-              placeholder={isTyping ? "" : ""}
-              autoFocus
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="off"
-              spellCheck="false"
-            />
-          </form>
-        </div>
+        {/* Input */}
+        <form onSubmit={handleSubmit} className="flex-none px-2 py-1.5 flex items-center border-t border-highlight/30 bg-background">
+          <span className="text-highlight">→</span>
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={isTyping}
+            style={{ outline: 'none', boxShadow: 'none' }}
+            className="flex-1 ml-2 bg-transparent border-none text-foreground caret-highlight"
+            autoFocus
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+          />
+        </form>
       </div>
     </div>
   );
