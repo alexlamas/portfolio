@@ -136,7 +136,6 @@ const STORY = {
       "Piano—twenty years now, classical mostly.",
       "",
       "Photography, architectural stuff.",
-      "Been published a few times.",
       "",
       "Languages—I speak five at various levels.",
       "Arabic's the hardest, obviously.",
@@ -1077,7 +1076,7 @@ function Terminal() {
                   </a>
                 </div>
               ) : line.text === "" ? (
-                <div className="h-3" />
+                <div className="h-5" />
               ) : (
                 <div className="text-foreground/80">{line.text}</div>
               )}
